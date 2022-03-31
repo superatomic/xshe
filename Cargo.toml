@@ -1,0 +1,22 @@
+[package]
+name = "xshe"
+version = "0.1.0"
+edition = "2021"
+description = "Xshe allows for setting environment variables across multiple shells."
+readme = "README.md"
+homepage = "https://github.com/superatomic/xshe/"
+repository = "https://github.com/superatomic/xshe/"
+keywords = ["cli", "shell", "environment-variables", "configuration", "command"]
+categories = ["command-line-utilities", "config", "parsing"]
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+clap = { version = "3.1.6", features = ["derive", "env", "wrap_help"] }
+exitcode = "1.1.2"
+toml = "0.5"
+serde = { version = "1.0", features = ["derive"] }
+indexmap = { version = "1.8.1", features = ["serde"] }
+shellexpand = "2.1.0"
+human-panic = "1.0.3"
