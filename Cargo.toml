@@ -6,7 +6,7 @@ description = "Xshe allows for setting environment variables across multiple she
 readme = "README.md"
 homepage = "https://github.com/superatomic/xshe/"
 repository = "https://github.com/superatomic/xshe/"
-keywords = ["cli", "shell", "environment-variables", "configuration", "command"]
+keywords = ["cli", "shell", "environment-variable", "configuration", "command"]
 categories = ["command-line-utilities", "config", "parsing"]
 license = "MIT OR Apache-2.0"
 
