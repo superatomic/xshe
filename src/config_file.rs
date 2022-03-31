@@ -15,6 +15,7 @@
 
 
 use std::{path::PathBuf, string::String, fs};
+use std::collections::HashMap;
 use indexmap::IndexMap;
 use serde::Deserialize;
 
@@ -25,6 +26,8 @@ pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
 pub(crate) struct ConfigFile {
     #[serde(flatten)]
     pub(crate) vars: EnvironmentVariables,
+
+    pub(crate) shell: HashMap<String, EnvironmentVariables>,
 }
 
 impl ConfigFile {

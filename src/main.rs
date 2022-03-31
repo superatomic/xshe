@@ -29,7 +29,7 @@ mod cli;
 mod config_file;
 
 use std::{path::PathBuf, process::exit, string::String};
-use clap::Parser;
+use clap::{ArgEnum, Parser};
 use shellexpand;
 use human_panic::setup_panic;
 
@@ -89,14 +89,39 @@ fn main() {
 
     };
 
+    let shell: Shell = cli_options.shell;
+
     // Output the file data converted to the correct shell format to the standard output.
-    let output = to_shell_source(file_data.vars, &cli_options.shell);
-    print!("{}", output);
+    let general_output = to_shell_source(&file_data.vars, &shell);
+    print!("{}", general_output);
+
+    // ...
+    match get_specific_shell(&shell, &file_data) {
+        Some(specific_vars) => {
+            let shell_specific_output = to_shell_source(specific_vars, &shell);
+            print!("{}", shell_specific_output);
+        }
+        None => {},
+    };
 
 }
 
+fn get_specific_shell<'a>(shell: &Shell, file_data: &'a ConfigFile) -> Option<&'a EnvironmentVariables> {
+    //! Gets the specific environment variables IndexMap for a specific shell.
+    //!
+    //! ie. This will return the map for `Shell::Zsh`, which looks like this in TOML:
+    //! ```toml
+    //! [shell.zsh]
+    //! ...
+    //! ```
+    //! This function's output is meant to be passed into `to_shell_source(...)`.
 
-fn to_shell_source(vars: EnvironmentVariables, shell: &Shell) -> String {
+    let field_name = shell.to_possible_value()?.get_name();
+    Some(file_data.shell.get(field_name)?)
+}
+
+
+fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
     //! Converts the hash table of `vars` into a script for the given `shell`.
 
     let mut output = String::new();
@@ -104,7 +129,7 @@ fn to_shell_source(vars: EnvironmentVariables, shell: &Shell) -> String {
 
         // Convert an array to a string, but log if it was an array.
         // Any array are treated
-        let (value, is_path) = match raw_value {
+        let (value, is_path) = match raw_value.clone() {
             EnvValue::String(s) => (s, false),
             EnvValue::Array(v) => (v.join(":"), true),
         };

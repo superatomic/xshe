@@ -35,6 +35,22 @@ For example, in **bash**, this line becomes:
 export CARGO_HOME="$XDG_DATA_HOME/cargo";
 ```
 
+#### Shell Specific Environment Variables
+
+To set environment variables for only one shell, add a new table called `[shell.NAME]` after all standard definitions,
+where `NAME` is on of `bash`, `zsh`, or `fish`.
+Then list the environment variables that will only be added if `xshe` is being used for the given shell.
+
+For example, to make `$HISTFILE` be different between shells and `$ZSH_CACHE_DIR` only be set in **zsh**, do this:
+```toml
+[shell.bash]
+HISTFILE = "$XDG_STATE_HOME/bash_history"
+
+[shell.zsh]
+HISTFILE = "$XDG_STATE_HOME/zsh_history"
+ZSH_CACHE_DIR = "$XDG_CACHE_HOME/oh-my-zsh"
+```
+
 ### Sourcing the `xshe.toml` file
 
 Put the line corresponding to your shell in whatever file runs when loading environment variables.
