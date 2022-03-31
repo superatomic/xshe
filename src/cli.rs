@@ -21,7 +21,7 @@ use clap::{ArgEnum, Parser};
 #[derive(Parser)]
 #[clap(version, about, long_about = None)]
 pub(crate) struct Cli {
-    /// h
+
     #[clap(arg_enum)]
     #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
