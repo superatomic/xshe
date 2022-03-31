@@ -96,7 +96,8 @@ fn main() {
 }
 
 
-fn to_shell_source(vars: EnvironmentVariables, shell: &Shell) -> String {
+
+fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
     //! Converts the hash table of `vars` into a script for the given `shell`.
 
     let mut output = String::new();
@@ -104,7 +105,7 @@ fn to_shell_source(vars: EnvironmentVariables, shell: &Shell) -> String {
 
         // Convert an array to a string, but log if it was an array.
         // Any array are treated
-        let (value, is_path) = match raw_value {
+        let (value, is_path) = match raw_value.clone() {
             EnvValue::String(s) => (s, false),
             EnvValue::Array(v) => (v.join(":"), true),
         };
