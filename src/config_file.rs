@@ -13,11 +13,10 @@
 
 //! Defines the structure of the TOML configuration file.
 
-
-use std::{path::PathBuf, string::String, fs};
-use std::collections::HashMap;
 use indexmap::IndexMap;
 use serde::Deserialize;
+use std::collections::HashMap;
+use std::{fs, path::PathBuf, string::String};
 
 pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
 
