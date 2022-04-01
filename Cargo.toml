@@ -2,7 +2,7 @@
 name = "xshe"
 version = "0.2.0"
 edition = "2021"
-description = "Xshe allows for setting environment variables across multiple shells."
+description = "Set environment variables across multiple shells with a single configuration file."
 readme = "README.md"
 homepage = "https://github.com/superatomic/xshe/"
 repository = "https://github.com/superatomic/xshe/"
