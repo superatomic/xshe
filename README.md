@@ -2,8 +2,8 @@
 
 Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single configuration file.
 
-![Fork me on GitHub!](https://img.shields.io/badge/-Fork%20me%20on%20Github!-blueviolet?style=flat-square&logo=github)
-![Leave a GitHub Repo Star](https://img.shields.io/badge/-Star%20Repo-blue?style=flat-square&logo=github)
+[![Fork me on GitHub!](https://img.shields.io/badge/-Fork%20me%20on%20Github!-blueviolet?style=flat-square&logo=github)](https://github.com/superatomic/xshe/fork)
+[![Leave a GitHub Repo Star](https://img.shields.io/badge/-Star%20Repo-blue?style=flat-square&logo=github)](https://github.com/superatomic/xshe/)
 
 [![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
 ![Crates.io](https://img.shields.io/crates/l/xshe?style=for-the-badge)
