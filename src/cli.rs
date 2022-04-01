@@ -13,27 +13,23 @@
 
 //! Defines the CLI interface for Xshe.
 
-
-use std::path::PathBuf;
 use clap::{ArgEnum, Parser};
+use std::path::PathBuf;
 
 /// CLI Parser.
 #[derive(Parser)]
 #[clap(version, about, long_about = None)]
 pub(crate) struct Cli {
-
     #[clap(arg_enum)]
     #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
 
     #[clap(short, long, parse(from_os_str), value_name = "FILE")]
     #[clap(help = "Specify a custom location to read from")]
-    #[clap(long_help =
-    "Specifies a custom location to read from. \n\
+    #[clap(long_help = "Specifies a custom location to read from. \n\
      This defaults to $XDG_CONFIG_HOME, or ~/.config if not set. \n\
      \n\
-     The file must be in TOML format <https://toml.io/en/>."
-    )]
+     The file must be in TOML format <https://toml.io/en/>.")]
     pub file: Option<PathBuf>,
 }
 
