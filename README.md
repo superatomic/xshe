@@ -131,8 +131,8 @@ eval "$(/path/to/xshe zsh)"
 
 Licensed under either of
 
-* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE.txt) or http://www.apache.org/licenses/LICENSE-2.0)
-* MIT license ([LICENSE-MIT](LICENSE-MIT.txt) or http://opensource.org/licenses/MIT)
+* Apache License, Version 2.0 ([LICENSE-APACHE](LICENSE-APACHE.txt) or https://www.apache.org/licenses/LICENSE-2.0)
+* MIT license ([LICENSE-MIT](LICENSE-MIT.txt) or https://opensource.org/licenses/MIT)
 
 at your option.
 
@@ -144,4 +144,4 @@ additional terms or conditions.
 
 ---
 
-[![built with love](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
+![built with love](https://forthebadge.com/images/badges/built-with-love.svg)
