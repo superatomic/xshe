@@ -13,9 +13,11 @@
 
 //! Defines the structure of the TOML configuration file.
 
+use atty::Stream;
 use indexmap::IndexMap;
 use serde::Deserialize;
 use std::collections::HashMap;
+use std::io::Read;
 use std::path::Path;
 use std::{fs, string::String};
 
@@ -32,15 +34,31 @@ pub(crate) struct ConfigFile {
 
 impl ConfigFile {
     pub(crate) fn load(path: &Path) -> FileResult {
-        let toml_string = match fs::read_to_string(path) {
-            Ok(valid_file) => valid_file,
-            Err(_) => return FileResult::NotFound,
+        // If there isn't an input stream or the file path is specifically "-", read from stdin.
+        let use_stdin = atty::isnt(Stream::Stdin) || path.to_string_lossy() == "-";
+        let toml_string = match use_stdin {
+            true => Self::read_stdin(),
+
+            // Otherwise, read the specified file.
+            false => match fs::read_to_string(path) {
+                Ok(valid_file) => valid_file,
+                Err(_) => return FileResult::NotFound,
+            },
         };
+
+        // Parse
         let config = match toml::from_str(toml_string.as_str()) {
             Ok(config) => config,
             Err(_) => return FileResult::Invalid,
         };
         FileResult::Success(config)
+    }
+
+    fn read_stdin() -> String {
+        //! Read all text from stdin.
+        let mut buffer = String::new();
+        std::io::stdin().read_to_string(&mut buffer).unwrap();
+        buffer
     }
 }
 
