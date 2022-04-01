@@ -64,6 +64,15 @@ While in **fish**, this line is:
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo";
 ```
 
+#### Dealing with `PATH` variables
+
+To set variables that are arrays of values, like `$PATH`, use this syntax:
+
+```toml
+PATH = ["$PATH", "$BIN_HOME", "$CARGO_HOME/bin"]
+```
+`xshe` will join each element together based on the shell that is specified.
+
 ### Sourcing the `xshe.toml` file
 
 Put the line corresponding to your shell in whatever file runs when loading environment variables.
