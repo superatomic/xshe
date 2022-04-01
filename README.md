@@ -1,4 +1,4 @@
-# Xshe – Cross-Shell Env Vars
+# Xshe – Cross-Shell Environment Vars
 
 Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single configuration file.
 
