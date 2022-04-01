@@ -16,7 +16,8 @@
 use indexmap::IndexMap;
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::{fs, path::PathBuf, string::String};
+use std::path::Path;
+use std::{fs, string::String};
 
 pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
 
@@ -30,7 +31,7 @@ pub(crate) struct ConfigFile {
 }
 
 impl ConfigFile {
-    pub(crate) fn load(path: &PathBuf) -> FileResult {
+    pub(crate) fn load(path: &Path) -> FileResult {
         let toml_string = match fs::read_to_string(path) {
             Ok(valid_file) => valid_file,
             Err(_) => return FileResult::NotFound,
