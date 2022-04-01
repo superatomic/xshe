@@ -1,5 +1,15 @@
 # Xshe – Cross-Shell Env Vars
+
 Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single configuration file.
+
+![Fork me on GitHub!](https://img.shields.io/badge/-Fork%20me%20on%20Github!-blueviolet?style=flat-square&logo=github)
+![Leave a GitHub Repo Star](https://img.shields.io/badge/-Star%20Repo-blue?style=flat-square&logo=github)
+
+[![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
+![Crates.io](https://img.shields.io/crates/l/xshe?style=for-the-badge)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/latest)
+![GitHub top language](https://img.shields.io/github/languages/top/superatomic/xshe?label=made%20with%20rust&color=blueviolet&logo=rust&style=for-the-badge)
 
 ## Installation
 
