@@ -9,33 +9,38 @@ Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a sing
 ---
 
 [![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
-![Crates.io](https://img.shields.io/crates/l/xshe?style=for-the-badge)
+[![Crates.io License](https://img.shields.io/crates/l/xshe?style=for-the-badge)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+extension%3Atxt+path%3A%2F+filename%3ALICENSE+language%3AText&type=Code)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/latest)
-![GitHub top language](https://img.shields.io/github/languages/top/superatomic/xshe?label=made%20with%20rust&color=blueviolet&logo=rust&style=for-the-badge)
+[![GitHub top language](https://img.shields.io/github/languages/top/superatomic/xshe?label=made%20with%20rust&color=blueviolet&logo=rust&style=for-the-badge)](https://www.rust-lang.org/)
 
 ---
 
 ## Installation
 
 You can install `xshe` from [Cargo](https://doc.rust-lang.org/cargo/) (Rust's package manager) if you have it installed on your system.
-If you don't have Cargo or don't want to use it, you can download the binaries for your system directly from GitHub.
+If you don't have Cargo or don't want to use it,
+you can also [download the binaries for your system](https://github.com/superatomic/xshe/releases/latest) directly from GitHub,
+or [install Cargo](https://www.rust-lang.org/tools/install) first before proceeding.
 
 **Note:** After installing `xshe`, you might have to add the resulting `xshe` binary to your `PATH`.
-[<sup>*(what's that?)*</sup>](https://askubuntu.com/questions/551990/what-does-path-mean)
+[<sup>(what's that?)</sup>](https://askubuntu.com/questions/551990/what-does-path-mean)
 
 ### With Cargo
 
 Install [`xshe`](https://crates.io/crates/xshe) from [crates.io](https://crates.io/crates/xshe) with [Cargo](https://doc.rust-lang.org/cargo/).
 
 ```shell
-cargo install xshe
+cargo install -f xshe
 ```
 
 ### As a File Download
 
 Instead of using Cargo, you can download the [**latest release binary**](https://github.com/superatomic/xshe/releases/latest) that corresponds with your system
 (or view [**all releases**](https://github.com/superatomic/xshe/releases)).
+
+Make sure to add the `xshe` binary to your `PATH`,
+or remember to use the full path to the binary whenever you run `xshe`.
 
 ---
 
