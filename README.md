@@ -117,7 +117,16 @@ eval "$(xshe zsh)"
 eval "$(xshe fish)"
 ```
 
+#### Use without `xshe` on `PATH`
+If `xshe` isn't on your `PATH` (this is the cause of the error `command not found: xshe`), you will have to manually type out the location:
+
+```zsh
+eval "$(/path/to/xshe zsh)"
+```
+
 #### Options
+
+##### Using `--file` (or `-f`)
 
 To specify a custom file that is not located at `~/.config/xshe.toml`, pass the `--file` option, like so:
 
@@ -125,10 +134,14 @@ To specify a custom file that is not located at `~/.config/xshe.toml`, pass the 
 eval "$(xshe zsh --file ~/some/other/location.toml)"
 ```
 
-If `xshe` isn't on your `PATH` (this is the cause of the error `command not found: xshe`), you will have to manually type out the location:
+##### Using `--toml` (or `-t`)
 
+To directly specify TOML to parse as a config file, use `--toml`.
+
+For example, this line reads the file `~/path/to/xshe.toml` with `cat`,
+and then directly parses the text:
 ```zsh
-eval "$(/path/to/xshe zsh)"
+xshe zsh --toml "$(cat ~/path/to/xshe.toml)
 ```
 
 ---
