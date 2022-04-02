@@ -57,12 +57,15 @@ fn main() {
         Ok(valid_toml) => valid_toml,
 
         // The file isn't a valid TOML format!
-        Err(_) => {
+        Err(e) => {
             // Display the error and exit.
             eprintln!(
                  "The file {} is not in a valid TOML format or is not in the form Xshe is expecting.",
                  file_name,
              );
+            if let Some((line, column)) = e.line_col() {
+                eprintln!("Parse error at line {:}, column {:}", line + 1, column + 1);
+            }
             exit(exitcode::CONFIG)
         }
     };

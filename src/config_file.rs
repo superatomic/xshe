@@ -31,7 +31,7 @@ pub(crate) struct ConfigFile {
 
 impl ConfigFile {
     pub(crate) fn load(toml_string: String) -> Result<ConfigFile, toml::de::Error> {
-        toml::from_str(toml_string.as_str())
+        toml::from_str(&*toml_string)
     }
 }
 
