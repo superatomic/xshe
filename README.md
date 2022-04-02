@@ -9,7 +9,7 @@ Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a sing
 ---
 
 [![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
-[![Crates.io License](https://img.shields.io/crates/l/xshe?style=for-the-badge)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+extension%3Atxt+path%3A%2F+filename%3ALICENSE+language%3AText&type=Code)
+[![Crates.io License](https://img.shields.io/crates/l/xshe?style=for-the-badge)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/latest)
 [![GitHub top language](https://img.shields.io/github/languages/top/superatomic/xshe?label=made%20with%20rust&color=blueviolet&logo=rust&style=for-the-badge)](https://www.rust-lang.org/)
