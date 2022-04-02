@@ -33,6 +33,12 @@ pub(crate) struct Cli {
      \n\
      The file must be in TOML format (https://toml.io/en/).")]
     pub file: Option<PathBuf>,
+
+    #[clap(short, long, value_name = "TOML")]
+    #[clap(help = "Directly specify TOML to parse", conflicts_with = "file")]
+    #[clap(long_help = "Directly specify TOML to parse. \n\
+     The passed string must be in TOML format (https://toml.io/en/).")]
+    pub toml: Option<String>,
 }
 
 /// Enum of every supported shell.
