@@ -141,7 +141,7 @@ To directly specify TOML to parse as a config file, use `--toml`.
 For example, this line reads the file `~/path/to/xshe.toml` with `cat`,
 and then directly parses the text:
 ```zsh
-xshe zsh --toml "$(cat ~/path/to/xshe.toml)
+xshe zsh --toml "$(cat ~/path/to/xshe.toml)"
 ```
 
 ---
