@@ -26,7 +26,7 @@ pub(crate) struct ConfigFile {
     #[serde(flatten)]
     pub(crate) vars: EnvironmentVariables,
 
-    pub(crate) shell: HashMap<String, EnvironmentVariables>,
+    pub(crate) shell: Option<HashMap<String, EnvironmentVariables>>,
 }
 
 impl ConfigFile {

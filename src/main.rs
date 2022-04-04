@@ -145,7 +145,7 @@ fn get_specific_shell<'a>(
     //! This function's output is meant to be passed into `to_shell_source(...)`.
 
     let field_name = shell.to_possible_value()?.get_name();
-    file_data.shell.get(field_name)
+    file_data.shell.as_ref()?.get(field_name)
 }
 
 fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
