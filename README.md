@@ -1,8 +1,8 @@
 # Xshe – Cross-Shell Environment Vars
 
-[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-blue?style=flat&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
-[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white)](https://github.com/superatomic/xshe/)
-[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-yellowgreen?style=flat&logo=issue-opened&logoColor=white)](https://github.com/superatomic/xshe/issues/new)
+[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
+[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278)](https://github.com/superatomic/xshe/)
+[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black)](https://github.com/superatomic/xshe/issues/new)
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single TOML configuration file.
 
@@ -60,7 +60,7 @@ or remember to use the full path to the binary whenever you run `xshe`.
 
 Create a file called `xshe.toml` in `~/.config`. This is a [TOML file](https://toml.io/en/) that represents environment variables.
 
-[![An example configuration is here: xshe example](https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-grey?colorA=blue&colorB=lightblue&logo=file&logoColor=white)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
+[![An example configuration is here: xshe example](https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
 
 One variable is set per line. The file is read in order from top to bottom,
 so variables that appear earlier in the file can be used to define ones that appear later.
