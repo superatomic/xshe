@@ -19,10 +19,10 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 
 ---
 
-[![GitHub Release Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
-[![Crates.io License](https://img.shields.io/crates/l/xshe?style=for-the-badge)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
-[![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
-[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
+[![GitHub Release Workflow Status](https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
+[![Crates.io License](https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
+[![Crates.io](https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white)](https://crates.io/crates/xshe)
+[![GitHub release (latest by date including pre-releases)](https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
 
 ---
 
