@@ -1,5 +1,8 @@
 # Xshe – Cross-Shell Environment Vars
 
+![Shells - bash | zsh | fish](https://img.shields.io/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=iterm2&logoColor=white)
+![Coming Soon - elvish | dash | xonsh | tsch](https://img.shields.io/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow)
+
 Set <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single configuration file.
 
 [![Fork me on GitHub](https://img.shields.io/badge/-Fork%20me%20on%20Github-blueviolet?style=flat-square&logo=github)](https://github.com/superatomic/xshe/fork)
