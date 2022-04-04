@@ -138,10 +138,9 @@ eval "$(xshe zsh --file ~/some/other/location.toml)"
 
 To directly specify TOML to parse as a config file, use `--toml`.
 
-For example, this line reads the file `~/path/to/xshe.toml` with `cat`,
-and then directly parses the text:
+For example, this line directly parses the provided line and converts it to zsh:
 ```zsh
-xshe zsh --toml "$(cat ~/path/to/xshe.toml)"
+xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
 ```
 
 ---
