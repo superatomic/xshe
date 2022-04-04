@@ -1,8 +1,8 @@
 # Xshe – Cross-Shell Environment Vars
 
-[![Fork me on GitHub](https://img.shields.io/badge/-Fork%20me%20on%20Github-blue?style=flat-square&logo=github)](https://github.com/superatomic/xshe/fork)
-[![Leave a GitHub Repo Star](https://img.shields.io/badge/-Star%20Repo-action?style=flat-square&logo=github)](https://github.com/superatomic/xshe/)
-[![Open an Issue](https://img.shields.io/badge/-Open%20an%20Issue-yellowgreen?style=flat-square&logo=github)](https://github.com/superatomic/xshe/issues/new)
+[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-blue?style=flat-square&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
+[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat-square&logo=star&logoColor=white)](https://github.com/superatomic/xshe/)
+[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-yellowgreen?style=flat-square&logo=issue-opened&logoColor=white)](https://github.com/superatomic/xshe/issues/new)
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single TOML configuration file.
 
@@ -14,12 +14,12 @@ CARGO_HOME = "~/.cargo"
 
 Create a file like this once and use it everywhere, for every shell! `xshe` can convert this format into the format for every supported shell.
 
-![Shells - bash | zsh | fish](https://img.shields.io/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=iterm2&logoColor=white)
-![Coming Soon - elvish | dash | xonsh | tsch](https://img.shields.io/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow)
+![Shells - bash | zsh | fish](https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white)
+![Coming Soon - elvish | dash | xonsh | tsch](https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow?logo=checklist&logoColor=white)
 
 ---
 
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
+[![GitHub Release Workflow Status](https://img.shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
 [![Crates.io License](https://img.shields.io/crates/l/xshe?style=for-the-badge)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
 [![Crates.io](https://img.shields.io/crates/v/xshe?logo=rust&style=for-the-badge)](https://crates.io/crates/xshe)
 [![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
@@ -60,7 +60,7 @@ or remember to use the full path to the binary whenever you run `xshe`.
 
 Create a file called `xshe.toml` in `~/.config`. This is a [TOML file](https://toml.io/en/) that represents environment variables.
 
-[![An example configuration is here: xshe example](https://img.shields.io/badge/Example-xshe.toml-grey?colorA=blue)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
+[![An example configuration is here: xshe example](https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-grey?colorA=blue&colorB=lightblue&logo=file&logoColor=white)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
 
 One variable is set per line. The file is read in order from top to bottom,
 so variables that appear earlier in the file can be used to define ones that appear later.
