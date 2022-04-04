@@ -1,8 +1,8 @@
 # Xshe – Cross-Shell Environment Vars
 
-[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-blue?style=flat-square&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
-[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat-square&logo=star&logoColor=white)](https://github.com/superatomic/xshe/)
-[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-yellowgreen?style=flat-square&logo=issue-opened&logoColor=white)](https://github.com/superatomic/xshe/issues/new)
+[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-blue?style=flat&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
+[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white)](https://github.com/superatomic/xshe/)
+[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-yellowgreen?style=flat&logo=issue-opened&logoColor=white)](https://github.com/superatomic/xshe/issues/new)
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single TOML configuration file.
 
