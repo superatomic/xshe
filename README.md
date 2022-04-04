@@ -53,7 +53,7 @@ or remember to use the full path to the binary whenever you run `xshe`.
 
 Create a file called `xshe.toml` in `~/.config`. This is a [TOML file](https://toml.io/en/) that represents environment variables.
 
-[![An example configuration is here: xshe example](https://img.shields.io/badge/Example-xshe.toml-blue)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
+[![An example configuration is here: xshe example](https://img.shields.io/badge/Example-xshe.toml-grey?colorA=blue)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
 
 One variable is set per line. The file is read in order from top to bottom,
 so variables that appear earlier in the file can be used to define ones that appear later.
