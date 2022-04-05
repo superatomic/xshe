@@ -1,8 +1,12 @@
+<div align=center>
+
 # Xshe – Cross-Shell Environment Vars
 
 [![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
 [![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278)](https://github.com/superatomic/xshe/)
 [![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black)](https://github.com/superatomic/xshe/issues/new)
+
+</div>
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single TOML configuration file.
 
@@ -19,10 +23,14 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 
 ---
 
+<div align=center>
+
 [![GitHub Release Workflow Status](https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
 [![Crates.io License](https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
 [![Crates.io](https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white)](https://crates.io/crates/xshe)
 [![GitHub release (latest by date including pre-releases)](https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
+
+</div>
 
 ---
 
