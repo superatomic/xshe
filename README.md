@@ -8,7 +8,7 @@
 
 </div>
 
-`xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment variables across multiple shells with a single TOML configuration file.
+`xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML configuration file.
 
 Simply write lines in a `xshe.toml` file like this:
 
@@ -26,9 +26,9 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 <div align=center>
 
 [![GitHub Release Workflow Status](https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
-[![Crates.io License](https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
-[![Crates.io](https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white)](https://crates.io/crates/xshe)
-[![GitHub release (latest by date including pre-releases)](https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
+[![License](https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
+[![Latest Crates.io Release](https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white)](https://crates.io/crates/xshe)
+[![Latest GitHub Release](https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
 
 </div>
 
@@ -39,7 +39,7 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 You can install `xshe` from [Cargo](https://doc.rust-lang.org/cargo/) (Rust's package manager) if you have it installed on your system.
 If you don't have Cargo or don't want to use it,
 you can also [download the binaries for your system](https://github.com/superatomic/xshe/releases/latest) directly from GitHub,
-or [install Cargo](https://www.rust-lang.org/tools/install) first before proceeding.
+or [install Cargo/Rust](https://www.rust-lang.org/tools/install) first before proceeding.
 
 **Note:** After installing `xshe`, you might have to add the resulting `xshe` binary to your `PATH`.
 [<sup>(what's that?)</sup>](https://askubuntu.com/questions/551990/what-does-path-mean)
