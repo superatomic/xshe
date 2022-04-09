@@ -17,9 +17,7 @@ use atty::Stream;
 use indexmap::IndexMap;
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::io::Read;
-use std::path::Path;
-use std::{fs, string::String};
+use std::{fs, string::String, io::Read};
 
 pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
 
@@ -29,29 +27,12 @@ pub(crate) struct ConfigFile {
     #[serde(flatten)]
     pub(crate) vars: EnvironmentVariables,
 
-    pub(crate) shell: HashMap<String, EnvironmentVariables>,
+    pub(crate) shell: Option<HashMap<String, EnvironmentVariables>>,
 }
 
 impl ConfigFile {
-    pub(crate) fn load(path: &Path) -> FileResult {
-        // If there isn't an input stream or the file path is specifically "-", read from stdin.
-        let use_stdin = atty::isnt(Stream::Stdin) || path.to_string_lossy() == "-";
-        let toml_string = match use_stdin {
-            true => Self::read_stdin(),
-
-            // Otherwise, read the specified file.
-            false => match fs::read_to_string(path) {
-                Ok(valid_file) => valid_file,
-                Err(_) => return FileResult::NotFound,
-            },
-        };
-
-        // Parse
-        let config = match toml::from_str(toml_string.as_str()) {
-            Ok(config) => config,
-            Err(_) => return FileResult::Invalid,
-        };
-        FileResult::Success(config)
+    pub(crate) fn load(toml_string: String) -> Result<ConfigFile, toml::de::Error> {
+        toml::from_str(&*toml_string)
     }
 
     fn read_stdin() -> String {
@@ -68,13 +49,4 @@ impl ConfigFile {
 pub(crate) enum EnvValue {
     String(String),
     Array(Vec<String>),
-}
-
-/// Enum of all potential outcomes of attempting to read the configuration file.
-pub(crate) enum FileResult {
-    Success(ConfigFile),
-
-    // Errors
-    NotFound,
-    Invalid,
 }

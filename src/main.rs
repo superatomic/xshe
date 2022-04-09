@@ -29,10 +29,12 @@ mod config_file;
 
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
-use std::{path::PathBuf, process::exit, string::String};
+use std::io::ErrorKind;
+use std::path::Path;
+use std::{fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
-use crate::config_file::{ConfigFile, EnvValue, EnvironmentVariables, FileResult};
+use crate::config_file::{ConfigFile, EnvValue, EnvironmentVariables};
 
 fn main() {
     //! Main function.
@@ -42,41 +44,28 @@ fn main() {
     setup_panic!();
 
     // Parse the commandline options.
-    let cli_options = Cli::parse();
+    let cli_options: Cli = Cli::parse();
 
-    // Get the target TOML file with the environment variables.
-    // If they are not manually set, use the XDG Base Directory Specification defaults.
-    let raw_file: Option<PathBuf> = cli_options.file;
-    let file = raw_file.clone().unwrap_or_else(get_file_path_default);
+    // If --toml was specified, use that. Otherwise, get the file and read from it.
+    let (toml_string, file_name) = match cli_options.toml {
+        None => read_config_file(&cli_options),
+        Some(toml) => (toml, String::from("<INPUT>")),
+    };
 
     // Load file data from the TOML file.
-    let file_data = match ConfigFile::load(&file) {
-        FileResult::Success(res) => res,
-
-        // The file doesn't exist!
-        FileResult::NotFound => {
-            // Select an informative help message.
-            let help_msg = match raw_file {
-                None => "Try setting `--file` to the correct location, or create the file.",
-                Some(_) => "Is `--file` set correctly?",
-            };
-
-            // Display the error and exit.
-            eprintln!(
-                "The file {} does not exist or is a directory. {}",
-                file.display(),
-                help_msg,
-            );
-            exit(exitcode::NOINPUT)
-        }
+    let file_data = match ConfigFile::load(toml_string) {
+        Ok(valid_toml) => valid_toml,
 
         // The file isn't a valid TOML format!
-        FileResult::Invalid => {
+        Err(e) => {
             // Display the error and exit.
             eprintln!(
-                "The file {} is not in a valid TOML format or is not in the form Xshe is expecting.",
-                file.display(),
-            );
+                 "The file {} is not in a valid TOML format or is not in the form Xshe is expecting.",
+                 file_name,
+             );
+            if let Some((line, column)) = e.line_col() {
+                eprintln!("Parse error at line {:}, column {:}", line + 1, column + 1);
+            }
             exit(exitcode::CONFIG)
         }
     };
@@ -94,6 +83,54 @@ fn main() {
     };
 }
 
+fn read_config_file(cli_options: &Cli) -> (String, String) {
+    //! Read from the config file that should be selected based on the `--file` option.
+    // Get the target TOML file with the environment variables.
+    // If they are not manually set, use the XDG Base Directory Specification defaults.
+    let raw_file: &Option<PathBuf> = &cli_options.file;
+    let file = &raw_file.clone().unwrap_or_else(get_file_path_default);
+
+    // Read the contents of the file.
+    // Exit with an error message and exit code if an error occurs.
+    let toml_string = match fs::read_to_string(file) {
+        Ok(string) => string,
+        Err(e) => exit(display_file_error(e.kind(), cli_options, file)),
+    };
+    (toml_string, file.display().to_string())
+}
+
+fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
+    //! Displays a message and returns an specific error code for an general file read error.
+    match kind {
+        // The file doesn't exist!
+        ErrorKind::NotFound => {
+            // Select an informative help message.
+            let help_msg = match cli_options.file {
+                None => "Try setting `--file` to the correct location, or create the file.",
+                Some(_) => "Is `--file` set correctly?",
+            };
+
+            eprintln!(
+                "The file {:?} does not exist or is a directory. {}",
+                file, help_msg,
+            );
+            exitcode::NOINPUT
+        }
+
+        // Permission Error!
+        ErrorKind::PermissionDenied => {
+            eprintln!("Can't access {:?}: Permission denied", file,);
+            exitcode::NOPERM
+        }
+
+        // Other. Just display the name, and exit.
+        _ => {
+            eprintln!("{:?} Error while trying to access {:?}", kind, file);
+            exitcode::UNAVAILABLE
+        }
+    }
+}
+
 fn get_specific_shell<'a>(
     shell: &Shell,
     file_data: &'a ConfigFile,
@@ -108,7 +145,7 @@ fn get_specific_shell<'a>(
     //! This function's output is meant to be passed into `to_shell_source(...)`.
 
     let field_name = shell.to_possible_value()?.get_name();
-    file_data.shell.get(field_name)
+    file_data.shell.as_ref()?.get(field_name)
 }
 
 fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
