@@ -13,11 +13,12 @@
 
 //! Defines the CLI interface for Xshe.
 
-use clap::{ArgEnum, Parser};
+use clap::{ArgEnum, ArgGroup, Parser};
 use std::path::PathBuf;
 
 /// CLI Parser.
 #[derive(Parser)]
+#[clap(group = ArgGroup::new("mode").multiple(false))]
 #[clap(version, about, long_about = None, arg_required_else_help = true)]
 #[clap(after_help = "Documentation: https://lib.rs/crates/xshe\n\
 GitHub: https://github.com/superatomic/xshe")]
@@ -26,22 +27,36 @@ pub(crate) struct Cli {
     #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
 
+
+    #[clap(group="mode")]
     #[clap(short, long, parse(from_os_str), value_name = "FILE")]
     #[clap(help = "Specify a custom location to read from")]
-    #[clap(long_help = "Specifies a custom location to read from. \n\
-     This defaults to $XDG_CONFIG_HOME, or ~/.config if not set. \n\
-     \n\
+    #[clap(long_help = "Specifies a custom location to read from.
+     This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.
+
      The file must be in TOML format (https://toml.io/en/).")]
     pub file: Option<PathBuf>,
 
+    #[clap(group="mode")]
     #[clap(short, long, value_name = "TOML")]
-    #[clap(help = "Directly specify TOML to parse", conflicts_with = "file")]
-    #[clap(long_help = "Directly specify TOML to parse. \n\
+    #[clap(help = "Directly specify TOML to parse")]
+    #[clap(long_help = "Directly specify TOML to parse.
      The passed string must be in TOML format (https://toml.io/en/).")]
     pub toml: Option<String>,
+
+    #[clap(group="mode")]
+    #[clap(short, long, value_name = "PIPE", aliases = &["stdin", "input"])]
+    #[clap(help = "Get TOML data from standard input")]
+    #[clap(long_help = "Flag to get TOML data from the standard input.
+    This is normally used to pass a configuration in from a pipe, like so:
+
+    $ cat xshe.toml | xshe bash
+
+     The passed string must be in TOML format (https://toml.io/en/).")]
+    #[clap(takes_value = false)]
+    pub pipe: bool,
 }
 
-/// Enum of every supported shell.
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
 pub(crate) enum Shell {
     Bash,

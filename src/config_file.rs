@@ -13,11 +13,10 @@
 
 //! Defines the structure of the TOML configuration file.
 
-use atty::Stream;
 use indexmap::IndexMap;
 use serde::Deserialize;
 use std::collections::HashMap;
-use std::{fs, string::String, io::Read};
+use std::string::String;
 
 pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
 
@@ -33,13 +32,6 @@ pub(crate) struct ConfigFile {
 impl ConfigFile {
     pub(crate) fn load(toml_string: String) -> Result<ConfigFile, toml::de::Error> {
         toml::from_str(&*toml_string)
-    }
-
-    fn read_stdin() -> String {
-        //! Read all text from stdin.
-        let mut buffer = String::new();
-        std::io::stdin().read_to_string(&mut buffer).unwrap();
-        buffer
     }
 }
 
