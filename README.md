@@ -162,6 +162,17 @@ For example, this line directly parses the provided line and converts it to zsh:
 xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
 ```
 
+##### Using `--pipe` (or `-p`)
+
+To pass a TOML configuration from the standard input, use `--pipe`.
+
+As an example, this command concatenates two files named
+`global_xshe.toml` and `local_xshe.toml` by using `cat`,
+and then pipes the output into `xshe` to be parsed:
+```zsh
+cat global_xshe.toml local_xshe.toml | xshe zsh --pipe
+```
+
 ---
 
 ## License
