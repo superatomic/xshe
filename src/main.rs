@@ -166,7 +166,7 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
     let mut output = String::new();
     for (name, raw_value) in vars {
         // Convert an array to a string, but log if it was an array.
-        // Any array are treated
+        // Any arrays are treated as a path.
         let (value, is_path) = match raw_value.clone() {
             EnvValue::String(s) => (s, false),
             EnvValue::Array(v) => (v.join(":"), true),
@@ -183,6 +183,7 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
             .replace('\r', r"\r") // Carriage Return
             .replace('\"', "\\\""); // Double Quote
 
+        // Select the correct form for the chosen shell.
         match shell {
             Shell::Bash | Shell::Zsh => {
                 output += &*format!("export {}=\"{}\";\n", name, value);
