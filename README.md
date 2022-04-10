@@ -133,7 +133,7 @@ eval "$(xshe zsh)"
 
 ##### Fish
 ```fish
-eval "$(xshe fish)"
+xshe fish | source
 ```
 
 #### Use without `xshe` on `PATH`
