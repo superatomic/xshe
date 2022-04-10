@@ -167,10 +167,10 @@ xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
 To pass a TOML configuration from the standard input, use `--pipe`.
 
 As an example, this command concatenates two files named
-`global_xshe.toml` and `local_xshe.toml` by using `cat`,
+`global_xshe.toml` and `user_xshe.toml` by using `cat`,
 and then pipes the output into `xshe` to be parsed:
 ```zsh
-cat global_xshe.toml local_xshe.toml | xshe zsh --pipe
+cat global_xshe.toml user_xshe.toml | xshe zsh --pipe
 ```
 
 ---
