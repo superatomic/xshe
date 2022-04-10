@@ -46,7 +46,14 @@ fn main() {
     // Parse the commandline options.
     let cli_options: Cli = Cli::parse();
 
-    let (toml_string, file_name) = if cli_options.pipe {
+    // Pipe if `cli_options.pipe` is used or if `cli_options.file` is used and equal to "-".
+    let pipe = cli_options.pipe
+        || cli_options
+            .file
+            .as_ref()
+            .map_or(false, |x| x.to_string_lossy() == "-");
+
+    let (toml_string, file_name) = if pipe {
         // If --pipe was specified, use that as the direct toml.
         (read_stdin(), String::from("<STDIN>"))
     } else if let Some(toml) = cli_options.toml {
