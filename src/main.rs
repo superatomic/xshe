@@ -29,7 +29,7 @@ mod config_file;
 
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
-use std::io::ErrorKind;
+use std::io::{ErrorKind, Read};
 use std::path::Path;
 use std::{fs, path::PathBuf, process::exit, string::String};
 
@@ -46,10 +46,22 @@ fn main() {
     // Parse the commandline options.
     let cli_options: Cli = Cli::parse();
 
-    // If --toml was specified, use that. Otherwise, get the file and read from it.
-    let (toml_string, file_name) = match cli_options.toml {
-        None => read_config_file(&cli_options),
-        Some(toml) => (toml, String::from("<INPUT>")),
+    // Pipe if `cli_options.pipe` is used or if `cli_options.file` is used and equal to "-".
+    let pipe = cli_options.pipe
+        || cli_options
+            .file
+            .as_ref()
+            .map_or(false, |x| x.to_string_lossy() == "-");
+
+    let (toml_string, file_name) = if pipe {
+        // If --pipe was specified, use that as the direct toml.
+        (read_stdin(), String::from("<STDIN>"))
+    } else if let Some(toml) = cli_options.toml {
+        // If --toml was specified, use that. Otherwise, get the file and read from it.
+        (toml, String::from("<INPUT>"))
+    } else {
+        // Otherwise, read from the chosen file.
+        read_config_file(&cli_options)
     };
 
     // Load file data from the TOML file.
@@ -201,4 +213,11 @@ fn get_file_path_default() -> PathBuf {
         .into();
 
     xdg_config_home.join("xshe.toml")
+}
+
+fn read_stdin() -> String {
+    //! Read all text from stdin.
+    let mut buffer = String::new();
+    std::io::stdin().lock().read_to_string(&mut buffer).unwrap();
+    buffer
 }
