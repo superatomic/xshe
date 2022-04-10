@@ -27,32 +27,31 @@ pub(crate) struct Cli {
     #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
 
-
-    #[clap(group="mode")]
+    #[clap(group = "mode")]
     #[clap(short, long, parse(from_os_str), value_name = "FILE")]
     #[clap(help = "Specify a custom location to read from")]
-    #[clap(long_help = "Specifies a custom location to read from.
-     This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.
-
-     The file must be in TOML format (https://toml.io/en/).")]
+    #[clap(long_help = "Specifies a custom location to read from\n\
+    This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.\n\
+    \n\
+    The file must be in TOML format (https://toml.io/en/).")]
     pub file: Option<PathBuf>,
 
-    #[clap(group="mode")]
+    #[clap(group = "mode")]
     #[clap(short, long, value_name = "TOML")]
     #[clap(help = "Directly specify TOML to parse")]
-    #[clap(long_help = "Directly specify TOML to parse.
-     The passed string must be in TOML format (https://toml.io/en/).")]
+    #[clap(long_help = "Directly specify TOML to parse\n\
+    \n\
+    The passed string must be in TOML format (https://toml.io/en/).")]
     pub toml: Option<String>,
 
-    #[clap(group="mode")]
+    #[clap(group = "mode")]
     #[clap(short, long, value_name = "PIPE", aliases = &["stdin", "input"])]
     #[clap(help = "Get TOML data from standard input")]
-    #[clap(long_help = "Flag to get TOML data from the standard input.
-    This is normally used to pass a configuration in from a pipe, like so:
-
-    $ cat xshe.toml | xshe bash
-
-     The passed string must be in TOML format (https://toml.io/en/).")]
+    #[clap(long_help = "Flag to get TOML data from the standard input\n\
+    This is normally used to pass a configuration in from a pipe, like so:\n\
+    \n    cat xshe.toml | xshe bash
+    \n\
+    The passed string must be in TOML format (https://toml.io/en/).")]
     #[clap(takes_value = false)]
     pub pipe: bool,
 }
