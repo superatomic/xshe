@@ -13,7 +13,7 @@
 
 //! Defines the CLI interface for Xshe.
 
-use clap::{ArgEnum, ArgGroup, Parser};
+use clap::{ArgEnum, ArgGroup, ValueHint, Parser};
 use std::path::PathBuf;
 
 /// CLI Parser.
@@ -28,7 +28,7 @@ pub(crate) struct Cli {
     pub shell: Shell,
 
     #[clap(group = "mode")]
-    #[clap(short, long, parse(from_os_str), value_name = "FILE")]
+    #[clap(short, long, parse(from_os_str), value_name = "FILE", value_hint = ValueHint::FilePath)]
     #[clap(help = "Specify a custom location to read from")]
     #[clap(long_help = "Specifies a custom location to read from\n\
     This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.\n\
@@ -37,7 +37,7 @@ pub(crate) struct Cli {
     pub file: Option<PathBuf>,
 
     #[clap(group = "mode")]
-    #[clap(short, long, value_name = "TOML")]
+    #[clap(short, long, value_name = "TOML", value_hint = ValueHint::Other)]
     #[clap(help = "Directly specify TOML to parse")]
     #[clap(long_help = "Directly specify TOML to parse\n\
     \n\
@@ -45,7 +45,7 @@ pub(crate) struct Cli {
     pub toml: Option<String>,
 
     #[clap(group = "mode")]
-    #[clap(short, long, value_name = "PIPE", aliases = &["stdin", "input"])]
+    #[clap(short, long, value_name = "PIPE", visible_aliases = &["stdin", "input"])]
     #[clap(help = "Get TOML data from standard input")]
     #[clap(long_help = "Flag to get TOML data from the standard input\n\
     This is normally used to pass a configuration in from a pipe, like so:\n\
