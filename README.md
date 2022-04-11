@@ -5,19 +5,9 @@
   [![Fork me on GitHub][icon-fork]][fork]
   [![Leave a GitHub Repo Star][icon-star]][repo]
   [![Open an Issue][icon-issue]][new issue]
-  [![View on Lib.rs][icon-librs]][lib.rs]
+  [![View on Lib.rs][icon-lib.rs]][lib.rs]
 
 </div>
-
-[icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
-[icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
-[icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
-[icon-librs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white
-
-[fork]: https://github.com/superatomic/xshe/fork
-[repo]: https://github.com/superatomic/xshe/
-[new issue]: https://github.com/superatomic/xshe/issues/new
-[lib.rs]: https://lib.rs/crates/xshe
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML configuration file.
 
@@ -37,7 +27,7 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 <div align=center>
 
   [![GitHub Release Status][icon-release]][release workflows]
-  [![Libraries.io dependency status for latest release][icon-depend]][libraries.io]
+  [![Libraries.io dependency status][icon-depend]][libraries.io]
   [![License][icon-license]][license]
   [![Latest Crates.io Release][icon-crates]][crates]
   [![Latest GitHub Release][icon-gh-release]][gh release]
@@ -45,35 +35,21 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 
 </div>
 
-[icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white
-[icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=for-the-badge&logo=package-dependencies&logoColor=white
-[icon-license]: https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white
-[icon-crates]: https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white
-[icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge
-[icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
-
-[release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
-[libraries.io]: https://libraries.io/cargo/xshe
-[license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
-[crates]: https://crates.io/crates/xshe
-[gh release]: https://github.com/superatomic/xshe/releases/
-[lib.rs install]: https://lib.rs/install/xshe
-
 ---
 
 ## Installation
 
-You can install `xshe` from [Cargo](https://doc.rust-lang.org/cargo/) (Rust's package manager) if you have it installed on your system.
+You can install `xshe` from [Cargo] (Rust's package manager) if you have it installed on your system.
 If you don't have Cargo or don't want to use it,
-you can also [download the binaries for your system](https://github.com/superatomic/xshe/releases/latest) directly from GitHub,
-or [install Cargo/Rust](https://www.rust-lang.org/tools/install) first before proceeding.
+you can also [download the binaries for your system][gh release latest] directly from GitHub,
+or [install Cargo/Rust] first before proceeding.
 
 **Note:** After installing `xshe`, you might have to add the resulting `xshe` binary to your `PATH`.
-[<sup>(what's that?)</sup>](https://askubuntu.com/questions/551990/what-does-path-mean)
+[<sup>(what's that?)</sup>][path?]
 
 ### With Cargo
 
-Install [`xshe`](https://crates.io/crates/xshe) from [crates.io](https://crates.io/crates/xshe) with [Cargo](https://doc.rust-lang.org/cargo/).
+Install [`xshe`][crates] from [crates.io][crates] with [Cargo].
 
 ```shell
 cargo install -f xshe
@@ -81,8 +57,8 @@ cargo install -f xshe
 
 ### As a File Download
 
-Instead of using Cargo, you can download the [**latest release binary**](https://github.com/superatomic/xshe/releases/latest) that corresponds with your system
-(or view [**all releases**](https://github.com/superatomic/xshe/releases)).
+Instead of using Cargo, you can download the [**latest release binary**][gh release latest] that corresponds with your system
+(or view [**all releases**][gh release]).
 
 Make sure to add the `xshe` binary to your `PATH`,
 or remember to use the full path to the binary whenever you run `xshe`.
@@ -93,9 +69,9 @@ or remember to use the full path to the binary whenever you run `xshe`.
 
 ### Creating a `xshe.toml` file
 
-Create a file called `xshe.toml` in `~/.config`. This is a [TOML file](https://toml.io/en/) that represents environment variables.
+Create a file called `xshe.toml` in `~/.config`. This is a [TOML file][toml] that represents environment variables.
 
-[![An example configuration is here: xshe example](https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white)](https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250)
+[![An example configuration is here: xshe example][icon-example]][example]
 
 One variable is set per line. The file is read in order from top to bottom,
 so variables that appear earlier in the file can be used to define ones that appear later.
@@ -218,4 +194,43 @@ additional terms or conditions.
 
 ---
 
-![built with love](https://forthebadge.com/images/badges/built-with-love.svg)
+![built with love][icon-love]
+
+
+[icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
+[icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
+[icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
+[icon-lib.rs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white
+
+[icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white
+[icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=for-the-badge&logo=package-dependencies&logoColor=white
+[icon-license]: https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white
+[icon-crates]: https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white
+[icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge
+[icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
+
+[icon-example]: https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white
+
+[icon-love]: https://forthebadge.com/images/badges/built-with-love.svg
+
+[fork]: https://github.com/superatomic/xshe/fork
+[new issue]: https://github.com/superatomic/xshe/issues/new
+
+[repo]: https://github.com/superatomic/xshe/
+[lib.rs]: https://lib.rs/crates/xshe
+[lib.rs install]: https://lib.rs/install/xshe
+[libraries.io]: https://libraries.io/cargo/xshe
+[crates]: https://crates.io/crates/xshe
+
+[license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
+
+[gh release]: https://github.com/superatomic/xshe/releases/
+[gh release latest]: https://github.com/superatomic/xshe/releases/latest
+[release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
+
+[Cargo]: https://doc.rust-lang.org/cargo/
+[install Cargo/Rust]: https://www.rust-lang.org/tools/install
+[toml]: https://toml.io/en/
+
+[example]: https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250
+[path?]: https://askubuntu.com/questions/551990/what-does-path-mean
