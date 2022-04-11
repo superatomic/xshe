@@ -33,6 +33,8 @@ pub(crate) struct Cli {
     #[clap(long_help = "Specifies a custom location to read from\n\
     This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.\n\
     \n\
+    Use --pipe or --file=- to pipe from stdin.\n\
+    \n\
     The file must be in TOML format (https://toml.io/en/).")]
     pub file: Option<PathBuf>,
 
