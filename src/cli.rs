@@ -13,7 +13,7 @@
 
 //! Defines the CLI interface for Xshe.
 
-use clap::{ArgEnum, ArgGroup, ValueHint, Parser};
+use clap::{ArgEnum, ArgGroup, Parser, ValueHint};
 use std::path::PathBuf;
 
 /// CLI Parser.
