@@ -1,13 +1,23 @@
 <div align=center>
 
-# Xshe – Cross-Shell Environment Vars
+  # Xshe – Cross-Shell Environment Vars
 
-[![Fork me on GitHub](https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white)](https://github.com/superatomic/xshe/fork)
-[![Leave a GitHub Repo Star](https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278)](https://github.com/superatomic/xshe/)
-[![Open an Issue](https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black)](https://github.com/superatomic/xshe/issues/new)
-[![View on Lib.rs](https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white)](https://lib.rs/crates/xshe)
+  [![Fork me on GitHub][icon-fork]][fork]
+  [![Leave a GitHub Repo Star][icon-star]][repo]
+  [![Open an Issue][icon-issue]][new issue]
+  [![View on Lib.rs][icon-librs]][lib.rs]
 
 </div>
+
+[icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
+[icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
+[icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
+[icon-librs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white
+
+[fork]: https://github.com/superatomic/xshe/fork
+[repo]: https://github.com/superatomic/xshe/
+[new issue]: https://github.com/superatomic/xshe/issues/new
+[lib.rs]: https://lib.rs/crates/xshe
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML configuration file.
 
@@ -26,12 +36,12 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 
 <div align=center>
 
-  [![GitHub Release Status][icon-release]][release-workflows]
-  [![Libraries.io dependency status for latest release][icon-depend]][librariesio]
+  [![GitHub Release Status][icon-release]][release workflows]
+  [![Libraries.io dependency status for latest release][icon-depend]][libraries.io]
   [![License][icon-license]][license]
   [![Latest Crates.io Release][icon-crates]][crates]
-  [![Latest GitHub Release][icon-gh-release]][gh-release]
-  [![Crates.io downloads][icon-crates-downloads]][librs-install]
+  [![Latest GitHub Release][icon-gh-release]][gh release]
+  [![Crates.io downloads][icon-crates-downloads]][lib.rs install]
 
 </div>
 
@@ -42,12 +52,12 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 [icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge
 [icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
 
-[release-workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
-[librariesio]: https://libraries.io/cargo/xshe
+[release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
+[libraries.io]: https://libraries.io/cargo/xshe
 [license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
 [crates]: https://crates.io/crates/xshe
-[gh-release]: https://github.com/superatomic/xshe/releases/
-[librs-install]: https://lib.rs/install/xshe
+[gh release]: https://github.com/superatomic/xshe/releases/
+[lib.rs install]: https://lib.rs/install/xshe
 
 ---
 
