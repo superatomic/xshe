@@ -9,7 +9,8 @@
 
 </div>
 
-`xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML configuration file.
+`xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML
+configuration file.
 
 Simply write lines in a `xshe.toml` file like this:
 
@@ -17,21 +18,23 @@ Simply write lines in a `xshe.toml` file like this:
 CARGO_HOME = "~/.cargo"
 ```
 
-Create a file like this once and use it everywhere, for every shell! `xshe` can convert this format into the format for every supported shell.
+Create a file like this once and use it everywhere, for every shell! `xshe` can convert this format into the format for
+every supported shell.
 
-![Shells - bash | zsh | fish](https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white)
-![Coming Soon - elvish | dash | xonsh | tsch](https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow?logo=checklist&logoColor=white)
+<!--When updating this list, update the icon *AND* the alt text -->
+[![Shells - bash | zsh | fish][icon-shells]](#sourcing-the-xshetoml-file)
+[![Coming Soon - elvish | dash | xonsh | tsch][icon-future-shells]][future shells]
 
 ---
 
 <div align=center>
 
-  [![GitHub Release Status][icon-release]][release workflows]
-  [![Libraries.io dependency status][icon-depend]][libraries.io tree]
-  [![License][icon-license]][license]
-  [![Latest Crates.io Release][icon-crates]][crates]
-  [![Latest GitHub Release][icon-gh-release]][gh release]
-  [![Crates.io downloads][icon-crates-downloads]][lib.rs install]
+[![GitHub Release Status][icon-release]][release workflows]
+[![Libraries.io dependency status][icon-depend]][libraries.io tree]
+[![License][icon-license]][license]
+[![Latest Crates.io Release][icon-crates]][crates]
+[![Latest GitHub Release][icon-gh-release]][gh release]
+[![Crates.io downloads][icon-crates-downloads]][lib.rs install]
 
 </div>
 
@@ -198,38 +201,62 @@ additional terms or conditions.
 
 
 [icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
+
 [icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
+
 [icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
+
 [icon-lib.rs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white
 
 [icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white
+
 [icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=for-the-badge&logo=package-dependencies&logoColor=white
+
 [icon-license]: https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white
+
 [icon-crates]: https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white
+
 [icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge
+
 [icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
+
+[icon-shells]: https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white
+
+[icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow?logo=checklist&logoColor=white
 
 [icon-example]: https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white
 
 [icon-love]: https://forthebadge.com/images/badges/built-with-love.svg
 
+
 [fork]: https://github.com/superatomic/xshe/fork
+
 [new issue]: https://github.com/superatomic/xshe/issues/new
 
 [repo]: https://github.com/superatomic/xshe/
+
 [lib.rs]: https://lib.rs/crates/xshe
+
 [lib.rs install]: https://lib.rs/install/xshe
+
 [libraries.io]: https://libraries.io/cargo/xshe
+
 [crates]: https://crates.io/crates/xshe
 
+[future shells]: https://github.com/users/superatomic/projects/1
+
 [license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
+
 [libraries.io tree]: https://libraries.io/cargo/xshe/tree?kind=normal
 
 [gh release]: https://github.com/superatomic/xshe/releases/
+
 [gh release latest]: https://github.com/superatomic/xshe/releases/latest
+
 [release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
 
 [Cargo]: https://doc.rust-lang.org/cargo/
+
 [install Cargo/Rust]: https://www.rust-lang.org/tools/install
 [toml]: https://toml.io/en/
 
