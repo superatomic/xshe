@@ -26,12 +26,28 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 
 <div align=center>
 
-[![GitHub Release Workflow Status](https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white)](https://github.com/superatomic/xshe/actions/workflows/release.yml)
-[![License](https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white)](https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code)
-[![Latest Crates.io Release](https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white)](https://crates.io/crates/xshe)
-[![Latest GitHub Release](https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge)](https://github.com/superatomic/xshe/releases/)
+  [![GitHub Release Status][icon-release]][release-workflows]
+  [![Libraries.io dependency status for latest release][icon-depend]][librariesio]
+  [![License][icon-license]][license]
+  [![Latest Crates.io Release][icon-crates]][crates]
+  [![Latest GitHub Release][icon-gh-release]][gh-release]
+  [![Crates.io downloads][icon-crates-downloads]][librs-install]
 
 </div>
+
+[icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white
+[icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=for-the-badge&logo=package-dependencies&logoColor=white
+[icon-license]: https://custom-icon-badges.herokuapp.com/crates/l/xshe?style=for-the-badge&logo=law&logoColor=white
+[icon-crates]: https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=for-the-badge&logoColor=white
+[icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=for-the-badge
+[icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
+
+[release-workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
+[librariesio]: https://libraries.io/cargo/xshe
+[license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
+[crates]: https://crates.io/crates/xshe
+[gh-release]: https://github.com/superatomic/xshe/releases/
+[librs-install]: https://lib.rs/install/xshe
 
 ---
 
