@@ -45,7 +45,7 @@ pub(crate) struct Cli {
     pub toml: Option<String>,
 
     #[clap(group = "mode")]
-    #[clap(short, long, value_name = "PIPE", visible_aliases = &["stdin", "input"])]
+    #[clap(short, long, value_name = "PIPE", visible_alias = "stdin")]
     #[clap(help = "Get TOML data from standard input")]
     #[clap(long_help = "Flag to get TOML data from the standard input\n\
     This is normally used to pass a configuration in from a pipe, like so:\n\
