@@ -27,7 +27,7 @@ Create a file like this once and use it everywhere, for every shell! `xshe` can 
 <div align=center>
 
   [![GitHub Release Status][icon-release]][release workflows]
-  [![Libraries.io dependency status][icon-depend]][libraries.io]
+  [![Libraries.io dependency status][icon-depend]][libraries.io tree]
   [![License][icon-license]][license]
   [![Latest Crates.io Release][icon-crates]][crates]
   [![Latest GitHub Release][icon-gh-release]][gh release]
@@ -223,6 +223,7 @@ additional terms or conditions.
 [crates]: https://crates.io/crates/xshe
 
 [license]: https://github.com/search?q=repo%3Asuperatomic%2Fxshe+path%3A%2F+filename%3ALICENSE&type=Code
+[libraries.io tree]: https://libraries.io/cargo/xshe/tree?kind=normal
 
 [gh release]: https://github.com/superatomic/xshe/releases/
 [gh release latest]: https://github.com/superatomic/xshe/releases/latest
