@@ -10,7 +10,6 @@ body:
     - label: "I have searched for existing issues that resolve this bug"
       required: true
     - label: "I agree to follow this project's [Code of Conduct](.github/CODE_OF_CONDUCT.md)"
-        required: true
       required: true
 - type: textarea
   attributes:
