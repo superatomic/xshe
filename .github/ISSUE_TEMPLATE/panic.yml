@@ -1,0 +1,64 @@
+name: Crash Report
+description: Submit a crash report
+labels: ["bug", "panic"]
+body:
+- type: markdown
+  attributes:
+    value: |
+      **If Xshe didn't crash and generate a crash report, file a bug report instead.**
+- type: checkboxes
+  attributes:
+    label: "Please verify the following:"
+    options:
+    - label: "I have searched for existing issues that resolve this bug"
+      required: true
+    - label: "I agree to follow this project's [Code of Conduct](/.github/CODE_OF_CONDUCT.md)"
+      required: true
+- type: input
+  attributes:
+    label: "Xshe Version"
+    description: "The version of Xshe with this bug present."
+    placeholder: "eg. 0.3.2"
+- type: textarea
+  attributes:
+    label: Crash Report
+    description: |
+      Paste in the contents of the generated crash file.
+      
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+    render: Text
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Steps To Reproduce
+    description: "Steps to reproduce the behavior."
+  validations:
+    required: false
+- type: checkboxes
+  id: operating-systems
+  attributes:
+    label: Which operating systems are affected?
+    description: You may select more than one.
+    options:
+      - label: macOS
+      - label: Windows
+      - label: Linux
+- type: checkboxes
+  id: shell
+  attributes:
+    label: Which shells does this affect?
+    description: You may select more than one.
+    options:
+      - label: Bash
+      - label: Zsh
+      - label: Fish
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
