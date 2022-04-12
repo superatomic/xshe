@@ -8,7 +8,9 @@ name: 'Dependency Review'
 on:
   pull_request:
     paths-ignore:
-      ".github/**"
+      - ".github/**"
+      - "**.md"
+      - "LICENSE*.txt"
 
 permissions:
   contents: read
