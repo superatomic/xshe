@@ -21,10 +21,9 @@ body:
   attributes:
     value: |
         **If you are requesting support for a new shell**, make sure to provide the following information:
-          
-            - Link to the webpage for the new shell
-            - Documentation reference and example for setting environment variables with the shell
-            - Documentation reference and example for evaling or sourcing scripts
+          - Link to the webpage for the new shell
+          - Documentation reference and example for setting environment variables with the shell
+          - Documentation reference and example for evaling or sourcing scripts
 - type: textarea
   attributes:
     label: Possible implementation
