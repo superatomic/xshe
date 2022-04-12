@@ -1,0 +1,59 @@
+name: Bug Report
+description: File a bug/issue
+labels: ["bug"]
+body:
+- type: checkboxes
+  attributes:
+    label: "Please verify the following:"
+    description: Please search to see if an issue already exists for the bug you encountered and read the Code of Conduct.
+    options:
+    - label: "I have searched for existing issues that resolve this bug"
+      required: true
+    - label: "I agree to follow this project's [Code of Conduct](.github/CODE_OF_CONDUCT.md)"
+        required: true
+      required: true
+- type: textarea
+  attributes:
+    label: Current Behavior
+    description: "A concise description of what you're experiencing."
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: "A concise description of what you expected to happen."
+  validations:
+    required: false
+- type: textarea
+  attributes:
+    label: Steps To Reproduce
+    description: "Steps to reproduce the behavior."
+  validations:
+    required: false
+- type: checkboxes
+  id: operating-systems
+  attributes:
+    label: Which operating systems have you used?
+    description: You may select more than one.
+    options:
+      - label: macOS
+      - label: Windows
+      - label: Linux
+- type: checkboxes
+  id: shell
+  attributes:
+    label: Which shells does this affect?
+    description: You may select more than one. Leave black for all.
+    options:
+      - label: Bash
+      - label: Zsh
+      - label: Fish
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
