@@ -17,13 +17,6 @@ body:
     description: "A description of how the feature you are requesting should look like. You are **strongly encouraged** to attach a snippet of (pseudo)code."
   validations:
     required: true
-- type: markdown
-  attributes:
-    value: |
-        **If you are requesting support for a new shell**, make sure to provide the following information:
-          - Link to the webpage for the new shell
-          - Documentation reference and example for setting environment variables with the shell
-          - Documentation reference and example for evaling or sourcing scripts
 - type: textarea
   attributes:
     label: Possible implementation
@@ -37,7 +30,13 @@ body:
     options:
       - label: "I am able to help implement this feature myself"
       - label: "I am requesting support for a new shell"
-
+- type: markdown
+  attributes:
+    value: |
+        **If you are requesting support for a new shell**, make sure you have provided the following information:
+          - Link to the webpage for the new shell
+          - Documentation reference and example for setting environment variables with the shell
+          - Documentation reference and example for evaling or sourcing scripts
 - type: textarea
   attributes:
     label: Anything else?
