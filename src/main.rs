@@ -131,7 +131,7 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
 
         // Permission Error!
         ErrorKind::PermissionDenied => {
-            eprintln!("Can't access {:?}: Permission denied", file,);
+            eprintln!("Can't access {:?}: Permission denied", file);
             exitcode::NOPERM
         }
 
