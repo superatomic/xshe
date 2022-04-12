@@ -5,12 +5,16 @@ body:
 - type: checkboxes
   attributes:
     label: "Please verify the following:"
-    description: Please search to see if an issue already exists for the bug you encountered and read the Code of Conduct.
     options:
     - label: "I have searched for existing issues that resolve this bug"
       required: true
     - label: "I agree to follow this project's [Code of Conduct](.github/CODE_OF_CONDUCT.md)"
       required: true
+- type: input
+  attributes:
+    label: "Xshe Version"
+    description: "The version of Xshe with this bug present.
+    placeholder: eg. 0.3.2
 - type: textarea
   attributes:
     label: Current Behavior
