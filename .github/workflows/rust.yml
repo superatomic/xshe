@@ -2,8 +2,16 @@ name: Rust Continuous Integration
 
 on:
   push:
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
+      - "LICENSE*.txt"
     branches: [ main ]
   pull_request:
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
+      - "LICENSE*.txt"
     branches: [ main ]
 
 env:
