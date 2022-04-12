@@ -1,0 +1,45 @@
+name: Feature Request
+description: Request a new feature or additional improvements to an existing feature
+labels: ["enhancement"]
+# Inspired by https://raw.githubusercontent.com/clap-rs/clap/master/.github/ISSUE_TEMPLATE/feature_request.yml
+body:
+- type: checkboxes
+  attributes:
+    label: "Please verify the following:"
+    options:
+    - label: "I have searched for existing issues that request this feature"
+      required: true
+    - label: "I agree to follow this project's [Code of Conduct](.github/CODE_OF_CONDUCT.md)"
+      required: true
+- type: textarea
+  attributes:
+    label: Describe the feature that you want
+    description: "A description of how the feature you are requesting should look like. You are **strongly encouraged** to attach a snippet of (pseudo)code."
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Possible implementation
+    description: "A concise description how this feature should work, if possible."
+  validations:
+    required: false
+- type: checkboxes
+  attributes:
+    label: "Additional Information"
+    description: "Select all that apply."
+    options:
+      - label: "I am able to help implement this feature myself"
+      - label: |
+          I am requesting support for a new shell and I have provided the following information:
+            - Link to the webpage for the new shell
+            - Documentation reference and example for setting environment variables with the shell
+            - Documentation reference and example for evaling or sourcing scripts
+- type: textarea
+  attributes:
+    label: Anything else?
+    description: |
+      Links? References? Anything that will give us more context about the feature you are requesting!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
