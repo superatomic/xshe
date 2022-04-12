@@ -17,7 +17,7 @@ body:
 - type: input
   attributes:
     label: "Xshe Version"
-    description: "The version of Xshe with this bug present."
+    description: "The version of Xshe with this bug present. Run `xshe -V` to display the version."
     placeholder: "eg. 0.3.2"
 - type: textarea
   attributes:
