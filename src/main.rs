@@ -27,6 +27,9 @@
 mod cli;
 mod config_file;
 
+#[macro_use]
+extern crate log;
+
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
 use std::io::{ErrorKind, Read};
@@ -45,6 +48,15 @@ fn main() {
 
     // Parse the commandline options.
     let cli_options: Cli = Cli::parse();
+
+    // Setup logging
+    env_logger::Builder::new()
+        .filter_level(cli_options.verbose.log_level_filter())
+        .format_timestamp(None)
+        .format_module_path(false)
+        .format_target(false)
+        .format_indent(Some(8)) // Aligns the first line with the other lines
+        .init();
 
     // Pipe if `cli_options.pipe` is used or if `cli_options.file` is used and equal to "-".
     let pipe = cli_options.pipe

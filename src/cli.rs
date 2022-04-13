@@ -13,12 +13,14 @@
 
 //! Defines the CLI interface for Xshe.
 
-use clap::{ArgEnum, ArgGroup, Parser, ValueHint};
+use clap::{AppSettings, ArgEnum, ArgGroup, Parser, ValueHint};
+use clap_verbosity_flag::{Verbosity, WarnLevel};
 use std::path::PathBuf;
 
 /// CLI Parser.
 #[derive(Parser)]
 #[clap(group = ArgGroup::new("mode").multiple(false))]
+#[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(version, about, long_about = None, arg_required_else_help = true)]
 #[clap(after_help = "Documentation: https://lib.rs/crates/xshe\n\
 GitHub: https://github.com/superatomic/xshe")]
@@ -56,6 +58,9 @@ pub(crate) struct Cli {
     The passed string must be in TOML format (https://toml.io/en/).")]
     #[clap(takes_value = false)]
     pub pipe: bool,
+
+    #[clap(flatten)]
+    pub verbose: Verbosity<WarnLevel>,
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
