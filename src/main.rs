@@ -144,17 +144,30 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
                 Some(_) => "Is `--file` set correctly?",
             };
 
-            error!(
-                "The file {:?} does not exist or is a directory. {}",
-                file, help_msg,
-            );
+            error!("The file {:?} does not exist\n{}", file, help_msg);
             exitcode::NOINPUT
         }
+
+        // Unstable API. Uncomment when it becomes stable.
+
+        // ErrorKind::IsADirectory => {
+        //     error!("{:?} is a directory", file);
+        //     exitcode::DATAERR
+        // }
 
         // Permission Error!
         ErrorKind::PermissionDenied => {
             error!("Can't access {:?}: Permission denied", file);
             exitcode::NOPERM
+        }
+
+        ErrorKind::InvalidData => {
+            error!(
+                "The file {:?} is not a UTF-8 text file\n\
+                Did you specify a file with a different encoding by accident?",
+                file,
+            );
+            exitcode::DATAERR
         }
 
         // Other. Just display the name, and exit.
