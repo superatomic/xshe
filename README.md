@@ -221,7 +221,7 @@ additional terms or conditions.
 
 
 [fork]: https://github.com/superatomic/xshe/fork
-[new issue]: https://github.com/superatomic/xshe/issues/new
+[new issue]: https://github.com/superatomic/xshe/issues/new/choose
 [repo]: https://github.com/superatomic/xshe/
 [lib.rs]: https://lib.rs/crates/xshe
 [lib.rs install]: https://lib.rs/install/xshe
