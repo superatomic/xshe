@@ -161,6 +161,7 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
             exitcode::NOPERM
         }
 
+        // Not UTF-8
         ErrorKind::InvalidData => {
             error!(
                 "The file {:?} is not a UTF-8 text file\n\
