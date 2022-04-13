@@ -7,7 +7,7 @@ body:
   attributes:
     label: "Please verify the following:"
     options:
-      - label: "I have searched for existing issues that resolve this bug"
+      - label: "I have searched for existing issues that request this feature"
         required: true
       - label: "I have read and understand the [Contributing Guidelines](https://github.com/superatomic/xshe/blob/main/CONTRIBUTING.md)"
         required: true
