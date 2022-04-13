@@ -70,11 +70,12 @@ fn main() {
         (read_stdin(), String::from("<STDIN>"))
     } else if let Some(toml) = cli_options.toml {
         // If --toml was specified, use that. Otherwise, get the file and read from it.
-        (toml, String::from("<INPUT>"))
+        (toml, String::from("<STRING>"))
     } else {
         // Otherwise, read from the chosen file.
         read_config_file(&cli_options)
     };
+    info!("Reading file data from {}", file_name);
 
     // Load file data from the TOML file.
     let file_data = match ConfigFile::load(toml_string) {
@@ -83,18 +84,27 @@ fn main() {
         // The file isn't a valid TOML format!
         Err(e) => {
             // Display the error and exit.
-            eprintln!(
+            error!(
                  "The file {} is not in a valid TOML format or is not in the form Xshe is expecting.",
                  file_name,
              );
             if let Some((line, column)) = e.line_col() {
-                eprintln!("Parse error at line {:}, column {:}", line + 1, column + 1);
+                error!("Parse error at line {:}, column {:}", line + 1, column + 1);
             }
             exit(exitcode::CONFIG)
         }
     };
 
     let shell: Shell = cli_options.shell;
+
+    // Deprecation warning
+    if file_data.shell.is_some() {
+        warn!(
+            "Using [shell.SHELL] notation is deprecated\n\
+            See https://github.com/superatomic/xshe/issues/30\n\
+            To be removed in release v1.0.0"
+        );
+    }
 
     // Output the file data converted to the correct shell format to the standard output.
     let general_output = to_shell_source(&file_data.vars, &shell);
@@ -134,7 +144,7 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
                 Some(_) => "Is `--file` set correctly?",
             };
 
-            eprintln!(
+            error!(
                 "The file {:?} does not exist or is a directory. {}",
                 file, help_msg,
             );
@@ -143,13 +153,13 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
 
         // Permission Error!
         ErrorKind::PermissionDenied => {
-            eprintln!("Can't access {:?}: Permission denied", file);
+            error!("Can't access {:?}: Permission denied", file);
             exitcode::NOPERM
         }
 
         // Other. Just display the name, and exit.
         _ => {
-            eprintln!("{:?} Error while trying to access {:?}", kind, file);
+            error!("{:?} Error while trying to access {:?}", kind, file);
             exitcode::UNAVAILABLE
         }
     }
@@ -224,6 +234,11 @@ fn get_file_path_default() -> PathBuf {
         .unwrap_or_else(|_| shellexpand::tilde("~/.config"))
         .into_owned()
         .into();
+
+    info!(
+        "Using default xshe.toml location: {}",
+        xdg_config_home.to_string_lossy()
+    );
 
     xdg_config_home.join("xshe.toml")
 }
