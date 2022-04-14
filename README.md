@@ -178,6 +178,27 @@ and then pipes the output into `xshe` to be parsed:
 cat global_xshe.toml user_xshe.toml | xshe zsh --pipe
 ```
 
+#### Other CLI Options
+
+##### Output Verbosity
+
+You can control how much info is displayed when Xshe is run.
+The default behavior is to only display errors and warnings.
+
+While this default behavior is recommended, you can customize it by adding the following flags:
+
+* `-qq` silences all output (this silences errors and is not advised)
+* `-q` or `--quiet` shows only errors and hides warnings
+* `-v` or `--verbose` shows info messages
+* `-vv` shows debug logs
+* `-vvv` shows trace logs
+
+##### Help and Version Information
+
+Run `xshe --help` to display command usage.
+
+Run `xshe --version` to display version information.
+
 ---
 
 ## License
