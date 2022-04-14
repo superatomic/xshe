@@ -29,12 +29,12 @@ every supported shell.
 
 <div align=center>
 
-[![GitHub Release Status][icon-release]][release workflows]
-[![Libraries.io dependency status][icon-depend]][libraries.io tree]
-[![License][icon-license]][license]
-[![Latest Crates.io Release][icon-crates]][crates]
-[![Latest GitHub Release][icon-gh-release]][gh release]
-[![Crates.io downloads][icon-crates-downloads]][lib.rs install]
+  [![GitHub Release Status][icon-release]][release workflows]
+  [![Libraries.io dependency status][icon-depend]][libraries.io tree]
+  [![License][icon-license]][license]
+  [![Latest Crates.io Release][icon-crates]][crates]
+  [![Latest GitHub Release][icon-gh-release]][gh release]
+  [![Crates.io downloads][icon-crates-downloads]][lib.rs install]
 
 </div>
 
@@ -185,7 +185,7 @@ cat global_xshe.toml user_xshe.toml | xshe zsh --pipe
 You can control how much info is displayed when Xshe is run.
 The default behavior is to only display errors and warnings.
 
-While this default behavior is recommended, you can customize it by adding the following flags:
+While this default behavior is recommended, you can customize it by using the following flags:
 
 * `-qq` silences all output (this silences errors and is not advised)
 * `-q` or `--quiet` shows only errors and hides warnings
