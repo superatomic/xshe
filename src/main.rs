@@ -27,6 +27,9 @@
 mod cli;
 mod config_file;
 
+#[macro_use]
+extern crate log;
+
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
 use std::io::{ErrorKind, Read};
@@ -46,6 +49,15 @@ fn main() {
     // Parse the commandline options.
     let cli_options: Cli = Cli::parse();
 
+    // Setup logging
+    env_logger::Builder::new()
+        .filter_level(cli_options.verbose.log_level_filter())
+        .format_timestamp(None)
+        .format_module_path(false)
+        .format_target(false)
+        .format_indent(Some(8)) // Aligns the first line with the other lines
+        .init();
+
     // Pipe if `cli_options.pipe` is used or if `cli_options.file` is used and equal to "-".
     let pipe = cli_options.pipe
         || cli_options
@@ -58,11 +70,12 @@ fn main() {
         (read_stdin(), String::from("<STDIN>"))
     } else if let Some(toml) = cli_options.toml {
         // If --toml was specified, use that. Otherwise, get the file and read from it.
-        (toml, String::from("<INPUT>"))
+        (toml, String::from("<STRING>"))
     } else {
         // Otherwise, read from the chosen file.
         read_config_file(&cli_options)
     };
+    info!("Reading file data from {}", file_name);
 
     // Load file data from the TOML file.
     let file_data = match ConfigFile::load(toml_string) {
@@ -71,12 +84,12 @@ fn main() {
         // The file isn't a valid TOML format!
         Err(e) => {
             // Display the error and exit.
-            eprintln!(
-                 "The file {} is not in a valid TOML format or is not in the form Xshe is expecting.",
+            error!(
+                 "The file {} is not in a valid TOML format,\nor it is not in the form Xshe is expecting.",
                  file_name,
              );
             if let Some((line, column)) = e.line_col() {
-                eprintln!("Parse error at line {:}, column {:}", line + 1, column + 1);
+                error!("Parse error at line {:}, column {:}", line + 1, column + 1);
             }
             exit(exitcode::CONFIG)
         }
@@ -84,11 +97,21 @@ fn main() {
 
     let shell: Shell = cli_options.shell;
 
+    // Deprecation warning
+    if file_data.shell.is_some() {
+        warn!(
+            "Using [shell.SHELL] notation is deprecated\n\
+            See https://github.com/superatomic/xshe/issues/30\n\
+            To be removed in release v1.0.0"
+        );
+    }
+
     // Output the file data converted to the correct shell format to the standard output.
     let general_output = to_shell_source(&file_data.vars, &shell);
     print!("{}", general_output);
 
     // Output the any specific variables for the shell the same way, if they exist.
+    // This behavior is deprecated.
     if let Some(specific_vars) = get_specific_shell(&shell, &file_data) {
         let shell_specific_output = to_shell_source(specific_vars, &shell);
         print!("{}", shell_specific_output);
@@ -122,22 +145,36 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
                 Some(_) => "Is `--file` set correctly?",
             };
 
-            eprintln!(
-                "The file {:?} does not exist or is a directory. {}",
-                file, help_msg,
-            );
+            error!("The file {:?} does not exist\n{}", file, help_msg);
             exitcode::NOINPUT
         }
 
+        // Unstable API. Uncomment when it becomes stable.
+
+        // ErrorKind::IsADirectory => {
+        //     error!("{:?} is a directory", file);
+        //     exitcode::DATAERR
+        // }
+
         // Permission Error!
         ErrorKind::PermissionDenied => {
-            eprintln!("Can't access {:?}: Permission denied", file);
+            error!("Can't access {:?}: Permission denied", file);
             exitcode::NOPERM
+        }
+
+        // Not UTF-8
+        ErrorKind::InvalidData => {
+            error!(
+                "The file {:?} is not a UTF-8 text file\n\
+                Did you specify a file with a different encoding by accident?",
+                file,
+            );
+            exitcode::DATAERR
         }
 
         // Other. Just display the name, and exit.
         _ => {
-            eprintln!("{:?} Error while trying to access {:?}", kind, file);
+            error!("{:?} Error while trying to access {:?}", kind, file);
             exitcode::UNAVAILABLE
         }
     }
@@ -183,6 +220,15 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
             .replace('\r', r"\r") // Carriage Return
             .replace('\"', "\\\""); // Double Quote
 
+        // Log each processed variable
+        if log_enabled!(log::Level::Trace) {
+            let variable_log_header = match is_path {
+                true => "PATH EnvVar",
+                false => "EnvVariable",
+            };
+            trace!("{}: {} -> {}", variable_log_header, name, value);
+        };
+
         // Select the correct form for the chosen shell.
         match shell {
             Shell::Bash | Shell::Zsh => {
@@ -213,6 +259,11 @@ fn get_file_path_default() -> PathBuf {
         .into_owned()
         .into();
 
+    info!(
+        "Using default xshe.toml location: {}",
+        xdg_config_home.to_string_lossy()
+    );
+
     xdg_config_home.join("xshe.toml")
 }
 
@@ -220,5 +271,6 @@ fn read_stdin() -> String {
     //! Read all text from stdin.
     let mut buffer = String::new();
     std::io::stdin().lock().read_to_string(&mut buffer).unwrap();
+    debug!("The following input was read from stdin:\n{}", &buffer);
     buffer
 }
