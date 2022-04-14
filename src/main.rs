@@ -261,5 +261,6 @@ fn read_stdin() -> String {
     //! Read all text from stdin.
     let mut buffer = String::new();
     std::io::stdin().lock().read_to_string(&mut buffer).unwrap();
+    debug!("The following input was read from stdin:\n{}", &buffer);
     buffer
 }
