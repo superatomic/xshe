@@ -111,6 +111,7 @@ fn main() {
     print!("{}", general_output);
 
     // Output the any specific variables for the shell the same way, if they exist.
+    // This behavior is deprecated.
     if let Some(specific_vars) = get_specific_shell(&shell, &file_data) {
         let shell_specific_output = to_shell_source(specific_vars, &shell);
         print!("{}", shell_specific_output);
@@ -218,6 +219,15 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
             .replace('\x0C', r"\f") // Form Feed
             .replace('\r', r"\r") // Carriage Return
             .replace('\"', "\\\""); // Double Quote
+
+        // Log each processed variable
+        if log_enabled!(log::Level::Trace) {
+            let variable_log_header = match is_path {
+                true => "PATH EnvVar",
+                false => "EnvVariable",
+            };
+            trace!("{}: {} -> {}", variable_log_header, name, value);
+        };
 
         // Select the correct form for the chosen shell.
         match shell {
