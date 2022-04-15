@@ -118,18 +118,26 @@ PATH = ["$PATH", "$BIN_HOME", "$CARGO_HOME/bin"]
 
 #### Shell Specific Environment Variables
 
-To set environment variables for only one shell, add a new table called `[shell.NAME]` after all standard definitions,
-where `NAME` is on of `bash`, `zsh`, or `fish`.
-Then list the environment variables that will only be added if `xshe` is being used for the given shell.
+To set environment variables for only one shell, add a `.NAME` prefix after the name of the environment variable,
+where `NAME` is one of `bash`, `zsh`, or `fish`.
+These environment variables will only be added if the given shell is used.
 
-For example, to make `$HISTFILE` be different between shells and `$ZSH_CACHE_DIR` only be set in **zsh**, do this:
+As an example, these lines make `$HISTFILE` be set to different values between different shells,
+and to have `$ZSH_CACHE_DIR` only be set in **zsh**, do this:
+
 ```toml
-[shell.bash]
-HISTFILE = "$XDG_STATE_HOME/bash_history"
+HISTFILE.bash = "$XDG_STATE_HOME/bash_history"
+HISTFILE.zsh = "$XDG_STATE_HOME/zsh_history"
 
-[shell.zsh]
-HISTFILE = "$XDG_STATE_HOME/zsh_history"
-ZSH_CACHE_DIR = "$XDG_CACHE_HOME/oh-my-zsh"
+ZSH_CACHE_DIR.zsh = "$XDG_CACHE_HOME/oh-my-zsh"
+```
+
+You can use `._` instead of using a shell name to specify a default if an option doesn't apply to any of the shells.
+For example, these lines set the `$EDITOR` to `nano` on **bash**, but [`micro`][micro] on everything else:
+
+```toml
+EDITOR.bash = "$(which nano)"
+EDITOR._ = "$(which micro)"
 ```
 
 ### Sourcing the `xshe.toml` file
@@ -272,6 +280,7 @@ additional terms or conditions.
 [Cargo]: https://doc.rust-lang.org/cargo/
 [install Cargo/Rust]: https://www.rust-lang.org/tools/install
 [toml]: https://toml.io/en/
+[micro]: https://micro-editor.github.io/
 
-[example]: https://gist.github.com/superatomic/8f22ada9864c85984d51e0cc6fae4250
+[example]: https://gist.github.com/superatomic/52a46e53a4afce75ede4db7ba6354e0a
 [path?]: https://askubuntu.com/questions/551990/what-does-path-mean
