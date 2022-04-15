@@ -32,12 +32,13 @@ extern crate log;
 
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
+use indexmap::IndexMap;
 use std::io::{ErrorKind, Read};
 use std::path::Path;
 use std::{fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
-use crate::config_file::{ConfigFile, EnvValue, EnvironmentVariables};
+use crate::config_file::{ConfigFile, EnvVariableOption, EnvVariableValue, EnvironmentVariables};
 
 fn main() {
     //! Main function.
@@ -107,13 +108,26 @@ fn main() {
     }
 
     // Output the file data converted to the correct shell format to the standard output.
-    let general_output = to_shell_source(&file_data.vars, &shell);
-    print!("{}", general_output);
+    let output = to_shell_source(&file_data.vars, &shell);
+    print!("{}", output);
 
+    // Retain compatibility with deprecated https://github.com/superatomic/xshe/issues/30
+    deprecated_to_specific_shell_source(&file_data, &shell);
+}
+
+fn deprecated_to_specific_shell_source(file_data: &ConfigFile, shell: &Shell) {
     // Output the any specific variables for the shell the same way, if they exist.
     // This behavior is deprecated.
-    if let Some(specific_vars) = get_specific_shell(&shell, &file_data) {
-        let shell_specific_output = to_shell_source(specific_vars, &shell);
+    if let Some(specific_vars) = get_specific_shell(shell, file_data) {
+        // wrap `specific_vars` to be compatible with the changed `to_shell_source` function.
+        // This is a hack, but it's only to preserve deprecated behavior until it is removed.
+        let wrap_specific_vars = specific_vars
+            .into_iter()
+            .map(|(key, value)| (key.to_owned(), EnvVariableOption::General(value.to_owned())))
+            .collect();
+
+        let shell_specific_output = to_shell_source(&wrap_specific_vars, shell);
+
         print!("{}", shell_specific_output);
     };
 }
@@ -183,7 +197,7 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
 fn get_specific_shell<'a>(
     shell: &Shell,
     file_data: &'a ConfigFile,
-) -> Option<&'a EnvironmentVariables> {
+) -> Option<&'a IndexMap<String, EnvVariableValue>> {
     //! Gets the specific environment variables IndexMap for a specific shell.
     //!
     //! ie. This will return the map for `Shell::Zsh`, which looks like this in TOML:
@@ -201,12 +215,23 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
     //! Converts the hash table of `vars` into a script for the given `shell`.
 
     let mut output = String::new();
-    for (name, raw_value) in vars {
+    for (name, variable_option) in vars {
+        // Check whether the current item is a single environment var or a table of specific shells.
+        let raw_value = match variable_option.clone() {
+            EnvVariableOption::General(v) => v,
+
+            // If it is a shell specific choice, get the correct value for `shell`, and then...
+            EnvVariableOption::Specific(map) => match value_for_specific(shell, map) {
+                Some(v) => v,     // ...extract the `EnvVariableValue` if it exists
+                None => continue, // ...and skip the value if it does not.
+            },
+        };
+
         // Convert an array to a string, but log if it was an array.
         // Any arrays are treated as a path.
         let (value, is_path) = match raw_value.clone() {
-            EnvValue::String(s) => (s, false),
-            EnvValue::Array(v) => (v.join(":"), true),
+            EnvVariableValue::String(s) => (s, false),
+            EnvVariableValue::Array(v) => (v.join(":"), true),
         };
 
         // Replace TOML escape codes with the literal representation so that they are correctly used.
@@ -245,6 +270,16 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
         };
     }
     output
+}
+
+fn value_for_specific(
+    shell: &Shell,
+    map: IndexMap<String, EnvVariableValue>,
+) -> Option<EnvVariableValue> {
+    //! Given a `shell` and a `map` of all specific shell options, get the correct shell `EnvVariableValue`.
+    //! Used by `to_shell_source` to filter the right `EnvVariableOption::Specific` for the current shell.
+    let shell_name = shell.to_possible_value()?.get_name();
+    Some(map.get(shell_name).or_else(|| map.get("_"))?.to_owned())
 }
 
 fn get_file_path_default() -> PathBuf {

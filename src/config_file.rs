@@ -18,15 +18,16 @@ use serde::Deserialize;
 use std::collections::HashMap;
 use std::string::String;
 
-pub(crate) type EnvironmentVariables = IndexMap<String, EnvValue>;
+pub(crate) type EnvironmentVariables = IndexMap<String, EnvVariableOption>;
 
 /// The TOML file to load environment variables from.
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, Clone, Eq, PartialEq)]
 pub(crate) struct ConfigFile {
     #[serde(flatten)]
     pub(crate) vars: EnvironmentVariables,
 
-    pub(crate) shell: Option<HashMap<String, EnvironmentVariables>>,
+    // Deprecated
+    pub(crate) shell: Option<HashMap<String, IndexMap<String, EnvVariableValue>>>,
 }
 
 impl ConfigFile {
@@ -35,10 +36,17 @@ impl ConfigFile {
     }
 }
 
-/// Enum of possible environment variable value types.
-#[derive(Deserialize, Debug, Clone)]
+#[derive(Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(untagged)]
-pub(crate) enum EnvValue {
+pub(crate) enum EnvVariableOption {
+    Specific(IndexMap<String, EnvVariableValue>),
+    General(EnvVariableValue),
+}
+
+/// Enum of possible environment variable value types.
+#[derive(Deserialize, Debug, Clone, Eq, PartialEq)]
+#[serde(untagged)]
+pub(crate) enum EnvVariableValue {
     String(String),
     Array(Vec<String>),
 }
