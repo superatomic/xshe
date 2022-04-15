@@ -24,6 +24,8 @@
 //!
 //! at your option.
 
+#![forbid(unsafe_code)]
+
 mod cli;
 mod config_file;
 
