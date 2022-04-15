@@ -247,6 +247,9 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
             .replace('\r', r"\r") // Carriage Return
             .replace('\"', "\\\""); // Double Quote
 
+        // Expand tildes
+        let value = shellexpand::tilde(&value);
+
         // Log each processed variable
         if log_enabled!(log::Level::Trace) {
             let variable_log_header = match is_path {
