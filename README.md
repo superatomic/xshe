@@ -183,7 +183,7 @@ To directly specify TOML to parse as a config file, use `--toml`.
 
 For example, this line directly parses the provided line and converts it to zsh:
 ```zsh
-xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
+xshe zsh --toml 'BIN_HOME = "~/.local/bin"'
 ```
 
 ##### Using `--pipe` (or `-p`)
