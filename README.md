@@ -7,18 +7,20 @@
   [![Open an Issue][icon-issue]][new issue]
   [![View on Lib.rs][icon-lib.rs]][lib.rs]
 
+  <!-- Make sure to update the link in addition to the number! -->
+  🎉 **New Release: v0.4.0.** [*See what's new.*][gh release new]
+
 </div>
 
-<div align=left>
-
+<!-- Make sure this is commented on release -->
+<!--
   > The branch `main` is ahead of the current release.
   > If you are looking for the documentation for the latest released version,
   > [switch to the `0.3.2` release branch](https://github.com/superatomic/xshe/tree/v0.3.2),
   > or view the documentation on [Lib.rs][lib.rs] or [Crates.io][crates].
   >
   > ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/superatomic/xshe/latest/main)
-  
-</div>
+-->  
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML
 configuration file.
@@ -183,7 +185,7 @@ To directly specify TOML to parse as a config file, use `--toml`.
 
 For example, this line directly parses the provided line and converts it to zsh:
 ```zsh
-xshe zsh --toml 'BIN_HOME = "~/.local/bin"'
+xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
 ```
 
 ##### Using `--pipe` (or `-p`)
@@ -275,6 +277,7 @@ additional terms or conditions.
 
 [gh release]: https://github.com/superatomic/xshe/releases/
 [gh release latest]: https://github.com/superatomic/xshe/releases/latest
+[gh release new]: https://github.com/superatomic/xshe/releases/tag/v0.4.0
 [release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
 
 [Cargo]: https://doc.rust-lang.org/cargo/
