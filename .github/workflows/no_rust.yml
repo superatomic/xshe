@@ -1,0 +1,22 @@
+# This file is needed because of https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/troubleshooting-required-status-checks#handling-skipped-but-required-checks
+
+name: Rust Continuous Integration
+
+on:
+  push:
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
+      - "LICENSE*.txt"
+    branches: [ main ]
+  pull_request:
+    paths-ignore:
+      - ".github/**"
+      - "**.md"
+      - "LICENSE*.txt"
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "No Cli Checks Required" '
