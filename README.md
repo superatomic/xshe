@@ -65,7 +65,7 @@ or install one of the two package managers before proceeding.
 - [Install Cargo/Rust] for any platform
 - [Install Homebrew][Homebrew] for macOS or Linux
 
-> **Note:** After installing `xshe` with Cargo or from a download, you might have to add the resulting `xshe` binary to your `PATH`.
+**Note:** After installing `xshe` with Cargo or from a download, you might have to add the resulting `xshe` binary to your `PATH`.
 [<sup>(what's that?)</sup>][path?]
 
 ### With Cargo
