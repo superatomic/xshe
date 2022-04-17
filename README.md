@@ -55,20 +55,35 @@ every supported shell.
 
 ## Installation
 
-You can install `xshe` from [Cargo] (Rust's package manager) if you have it installed on your system.
-If you don't have Cargo or don't want to use it,
-you can also [download the binaries for your system][gh release latest] directly from GitHub,
-or [install Cargo/Rust] first before proceeding.
+You can install `xshe` with [Cargo] (Rust's package manager) or with [Homebrew] (a package manager for macOS and Linux),
+provided you have one of them installed on your system.
 
-**Note:** After installing `xshe`, you might have to add the resulting `xshe` binary to your `PATH`.
+If you don't have Cargo or Homebrew, or if you don't want to use either of them,
+you can also [download the binaries for your system][gh release latest] directly from GitHub,
+or install one of the two package managers before proceeding.
+
+- [Install Cargo/Rust] for any platform
+- [Install Homebrew][Homebrew] for macOS or Linux
+
+> **Note:** After installing `xshe` with Cargo or from a download, you might have to add the resulting `xshe` binary to your `PATH`.
 [<sup>(what's that?)</sup>][path?]
 
 ### With Cargo
 
-Install [`xshe`][crates] from [crates.io][crates] with [Cargo].
+If you have [Cargo installed][Install Cargo/Rust], use this command to install [`xshe`][crates] from [crates.io][crates] with [Cargo]:
 
 ```shell
 cargo install -f xshe
+```
+
+### With Homebrew
+
+If you have Homebrew installed, it's recommended to install Xshe with Homebrew instead of Cargo.
+
+Simply type:
+
+```shell
+brew install superatomic/xshe/xshe
 ```
 
 ### As a File Download
@@ -281,7 +296,8 @@ additional terms or conditions.
 [release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
 
 [Cargo]: https://doc.rust-lang.org/cargo/
-[install Cargo/Rust]: https://www.rust-lang.org/tools/install
+[Homebrew]: https://brew.sh
+[Install Cargo/Rust]: https://www.rust-lang.org/tools/install
 [toml]: https://toml.io/en/
 [micro]: https://micro-editor.github.io/
 
