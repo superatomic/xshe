@@ -24,7 +24,7 @@ use std::path::PathBuf;
 #[clap(version, about, long_about = None, arg_required_else_help = true)]
 #[clap(after_help = "Documentation: https://lib.rs/crates/xshe\n\
 GitHub: https://github.com/superatomic/xshe")]
-pub(crate) struct Cli {
+pub struct Cli {
     #[clap(arg_enum)]
     #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
@@ -64,7 +64,7 @@ pub(crate) struct Cli {
 }
 
 #[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
-pub(crate) enum Shell {
+pub enum Shell {
     Bash,
     Zsh,
     Fish,
