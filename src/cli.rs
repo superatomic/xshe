@@ -22,7 +22,7 @@ use std::path::PathBuf;
 #[clap(group = ArgGroup::new("mode").multiple(false))]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(version, about, long_about = None, arg_required_else_help = true)]
-#[clap(after_help = "Documentation: https://lib.rs/crates/xshe\n\
+#[clap(after_help = "Documentation: https://lib.rs/crates/xshe,\n\
 GitHub: https://github.com/superatomic/xshe")]
 pub struct Cli {
     #[clap(arg_enum)]
