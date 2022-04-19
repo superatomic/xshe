@@ -2,20 +2,23 @@
 
   # Xshe – Cross-Shell Environment Vars
 
+  [![View on Crates.io][icon-link-crates]][crates]
   [![Fork me on GitHub][icon-fork]][fork]
   [![Leave a GitHub Repo Star][icon-star]][repo]
   [![Open an Issue][icon-issue]][new issue]
-  [![View on Crates.io][icon-link-crates]][crates]
 
   <!-- Make sure to update the link in addition to the number! -->
-  🎉 **New Release: v0.4.0.** [*See what's new.*][gh release new]
+  <!--
+  🎉 **New Major Release: v0.4.** [*See what's new.*][gh release new]
+  -->
 
 </div>
 
----
-
 <!-- Make sure this is commented on release -->
+<!--
 <div align=center>
+
+  ---
 
   The branch `main` is ahead of the current release.
   If you are looking for the documentation for the latest released version,
@@ -24,9 +27,10 @@
   
   ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/superatomic/xshe/latest/main)
 
-</div>
+  ---
 
----
+</div>
+-->
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML
 configuration file.
@@ -311,7 +315,7 @@ additional terms or conditions.
 
 [gh release]: https://github.com/superatomic/xshe/releases/
 [gh release latest]: https://github.com/superatomic/xshe/releases/latest
-[gh release new]: https://github.com/superatomic/xshe/releases/tag/v0.4.0
+[gh release new]: https://github.com/superatomic/xshe/releases/tag/v0.4.1
 [release workflows]: https://github.com/superatomic/xshe/actions/workflows/release.yml
 
 [Cargo]: https://doc.rust-lang.org/cargo/
