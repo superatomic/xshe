@@ -11,7 +11,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+use crate::cli::Cli;
 use clap::CommandFactory;
+use clap_complete::{generate_to, Shell};
+use clap_mangen::Man;
 use std::{env, fs, io, path};
 
 #[path = "src/cli.rs"]
@@ -23,13 +26,22 @@ fn main() -> io::Result<()> {
     println!("cargo:rerun-if-changed=src/cli.rs");
 
     let out_dir = path::PathBuf::from(env::var_os("OUT_DIR").ok_or(io::ErrorKind::NotFound)?);
-    let cmd = cli::Cli::command();
+    let cmd = Cli::command();
 
-    let man = clap_mangen::Man::new(cmd);
+    let man = Man::new(cmd);
     let mut buffer: Vec<u8> = Default::default();
     man.render(&mut buffer)?;
 
-    fs::write(out_dir.join("xshe.1"), buffer)?;
+    fs::write((&out_dir).join("xshe.1"), buffer)?;
+
+    // We generate Elvish shell completion for anyone who wants to manually install it,
+    // but Homebrew is unable to install Elvish shell completion.
+    let shells = &[Shell::Bash, Shell::Elvish, Shell::Fish, Shell::Zsh];
+
+    for shell in shells {
+        let mut cmd = Cli::command();
+        generate_to(*shell, &mut cmd, "xshe", &out_dir)?;
+    }
 
     Ok(())
 }
