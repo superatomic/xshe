@@ -5,7 +5,7 @@
   [![Fork me on GitHub][icon-fork]][fork]
   [![Leave a GitHub Repo Star][icon-star]][repo]
   [![Open an Issue][icon-issue]][new issue]
-  [![View on Lib.rs][icon-lib.rs]][lib.rs]
+  [![View on Crates.io][icon-link-crates]][crates]
 
   <!-- Make sure to update the link in addition to the number! -->
   🎉 **New Release: v0.4.0.** [*See what's new.*][gh release new]
@@ -260,13 +260,26 @@ additional terms or conditions.
 
 ---
 
-![built with love][icon-love]
+<div align=center>
+  
+  [![GitHub.com][icon-link-github]][repo]
+  [![Crates.io][icon-link-crates]][crates]
+  [![Lib.rs][icon-link-lib.rs]][lib.rs]
+  [![Libraries.io][icon-link-libraries]][libraries.io]
+
+  ![built with love][icon-love]
+
+</div>
+
+[icon-link-github]: https://custom-icon-badges.herokuapp.com/badge/-GitHub.com-2ea44f?logo=github&logoColor=white&style=flat
+[icon-link-crates]: https://custom-icon-badges.herokuapp.com/badge/-Crates.io-ffc832?logo=package&logoColor=black&style=flat
+[icon-link-lib.rs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?logo=book&logoColor=white&style=flat
+[icon-link-libraries]: https://custom-icon-badges.herokuapp.com/badge/-Libraries.io-337ab7?logo=codescan&logoColor=white&style=flat
 
 
 [icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
 [icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
 [icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
-[icon-lib.rs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?style=flat&logo=book&logoColor=white
 
 [icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=for-the-badge&logo=file-zip&logoColor=white
 [icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=for-the-badge&logo=package-dependencies&logoColor=white
