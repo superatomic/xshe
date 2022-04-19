@@ -17,45 +17,55 @@ use clap::{AppSettings, ArgEnum, ArgGroup, Parser, ValueHint};
 use clap_verbosity_flag::{Verbosity, WarnLevel};
 use std::path::PathBuf;
 
-/// CLI Parser.
+// CLI Parser.
 #[derive(Parser)]
 #[clap(group = ArgGroup::new("mode").multiple(false))]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
-#[clap(version, about, long_about = None, arg_required_else_help = true)]
-#[clap(after_help = "Documentation: https://lib.rs/crates/xshe,\n\
-GitHub: https://github.com/superatomic/xshe")]
+#[clap(version, arg_required_else_help = true)]
+#[clap(after_help = "GitHub: https://github.com/superatomic/xshe")]
+/// Cross-Shell Environment Variable Manager
+///
+/// Xshe sets shell environment variables across multiple shells with a single configuration file.
+///
+/// For more, go to https://github.com/superatomic/xshe#readme
 pub struct Cli {
+    /// The shell to generate a script for
+    ///
+    /// Outputs a runnable shell script for the specified shell.
+    ///
+    /// You can directly source these files in your shell.
+    /// Read https://github.com/superatomic/xshe#sourcing-the-xshetoml-file for info.
     #[clap(arg_enum)]
-    #[clap(help = "The shell to generate a script")]
     pub shell: Shell,
 
     #[clap(group = "mode")]
     #[clap(short, long, parse(from_os_str), value_name = "FILE", value_hint = ValueHint::FilePath)]
-    #[clap(help = "Specify a custom location to read from")]
-    #[clap(long_help = "Specifies a custom location to read from\n\
-    This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.\n\
-    \n\
-    Use --pipe or --file=- to pipe from stdin.\n\
-    \n\
-    The file must be in TOML format (https://toml.io/en/).")]
+    /// Specifies a custom location to read from
+    ///
+    /// This defaults to $XDG_CONFIG_HOME, or ~/.config if not set.
+    ///
+    /// Use --pipe or --file=- to pipe from stdin.
+    ///
+    /// The file must be in TOML format (https://toml.io/en/).")
     pub file: Option<PathBuf>,
 
     #[clap(group = "mode")]
     #[clap(short, long, value_name = "TOML", value_hint = ValueHint::Other)]
-    #[clap(help = "Directly specify TOML to parse")]
-    #[clap(long_help = "Directly specify TOML to parse\n\
-    \n\
-    The passed string must be in TOML format (https://toml.io/en/).")]
+    /// Directly specify TOML to parse
+    ///
+    /// The passed string must be in TOML format (https://toml.io/en/).
     pub toml: Option<String>,
 
     #[clap(group = "mode")]
     #[clap(short, long, value_name = "PIPE", visible_alias = "stdin")]
-    #[clap(help = "Get TOML data from standard input")]
-    #[clap(long_help = "Flag to get TOML data from the standard input\n\
-    This is normally used to pass a configuration in from a pipe, like so:\n\
-    \n    cat xshe.toml | xshe bash
-    \n\
-    The passed string must be in TOML format (https://toml.io/en/).")]
+    #[clap(verbatim_doc_comment)]
+    /// Get TOML-formatted data from the standard input
+    ///
+    /// This is normally used to pass a configuration in from a pipe, like so:
+    ///
+    ///     cat xshe.toml | xshe bash
+    ///
+    /// The passed string must be in TOML format (https://toml.io/en/).
     #[clap(takes_value = false)]
     pub pipe: bool,
 
