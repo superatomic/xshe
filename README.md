@@ -271,8 +271,6 @@ additional terms or conditions.
   [![Lib.rs][icon-link-lib.rs]][lib.rs]
   [![Libraries.io][icon-link-libraries]][libraries.io]
 
-  ![built with love][icon-love]
-
 </div>
 
 [icon-link-github]: https://custom-icon-badges.herokuapp.com/badge/-GitHub.com-2ea44f?logo=github&logoColor=white&style=flat
@@ -296,8 +294,6 @@ additional terms or conditions.
 [icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow?logo=checklist&logoColor=white
 
 [icon-example]: https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white
-
-[icon-love]: https://forthebadge.com/images/badges/built-with-love.svg
 
 
 [fork]: https://github.com/superatomic/xshe/fork
