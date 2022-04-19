@@ -15,7 +15,8 @@ use crate::cli::Cli;
 use clap::CommandFactory;
 use clap_complete::{generate_to, Shell};
 use clap_mangen::Man;
-use std::{env, fs, io, path};
+use std::path::Path;
+use std::{env, fs, io, path::PathBuf};
 
 #[path = "src/cli.rs"]
 mod cli;
@@ -25,23 +26,34 @@ mod cli;
 fn main() -> io::Result<()> {
     println!("cargo:rerun-if-changed=src/cli.rs");
 
-    let out_dir = path::PathBuf::from(env::var_os("OUT_DIR").ok_or(io::ErrorKind::NotFound)?);
-    let cmd = Cli::command();
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or(io::ErrorKind::NotFound)?);
 
-    let man = Man::new(cmd);
-    let mut buffer: Vec<u8> = Default::default();
-    man.render(&mut buffer)?;
+    generate_man(&out_dir)?;
+    generate_completion(&out_dir)?;
 
-    fs::write((&out_dir).join("xshe.1"), buffer)?;
+    Ok(())
+}
 
+fn generate_completion(out_dir: &Path) -> io::Result<()> {
     // We generate Elvish shell completion for anyone who wants to manually install it,
     // but Homebrew is unable to install Elvish shell completion.
     let shells = &[Shell::Bash, Shell::Elvish, Shell::Fish, Shell::Zsh];
 
     for shell in shells {
         let mut cmd = Cli::command();
-        generate_to(*shell, &mut cmd, "xshe", &out_dir)?;
+        generate_to(*shell, &mut cmd, "xshe", out_dir)?;
     }
+    Ok(())
+}
 
+fn generate_man(out_dir: &Path) -> io::Result<()> {
+    let cmd = Cli::command();
+
+    // Generate Man File
+    let man = Man::new(cmd);
+    let mut buffer: Vec<u8> = Default::default();
+    man.render(&mut buffer)?;
+
+    fs::write(out_dir.join("xshe.1"), buffer)?;
     Ok(())
 }
