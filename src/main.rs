@@ -232,23 +232,13 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
         // Convert an array to a string, but log if it was an array.
         // Any arrays are treated as a path.
         let (value, is_path) = match raw_value.clone() {
-            EnvVariableValue::String(s) => (s, false),
-            EnvVariableValue::Array(v) => (v.join(":"), true),
+            EnvVariableValue::String(string) => (expand_value(&string), false),
+            EnvVariableValue::Array(array) => {
+                let v_expanded: Vec<String> =
+                    array.iter().map(|value| expand_value(value)).collect();
+                (v_expanded.join(":"), true)
+            }
         };
-
-        // Replace TOML escape codes with the literal representation so that they are correctly used.
-        // We need to do this for every code listed here: https://toml.io/en/v1.0.0#string
-        let value = value
-            .replace('\\', r"\\") // Backslash - Must be first!
-            .replace('\x08', r"\b") // Backspace
-            .replace('\t', r"\t") // Tab
-            .replace('\n', r"\n") // Newline
-            .replace('\x0C', r"\f") // Form Feed
-            .replace('\r', r"\r") // Carriage Return
-            .replace('\"', "\\\""); // Double Quote
-
-        // Expand tildes
-        let value = shellexpand::tilde(&value);
 
         // Log each processed variable
         if log_enabled!(log::Level::Trace) {
@@ -275,6 +265,25 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
         };
     }
     output
+}
+
+fn expand_value(value: &str) -> String {
+    //! Expand the literal representation of a string in the toml
+    //! to a value with escape characters escaped and shell variables expanded.
+
+    // Replace TOML escape codes with the literal representation so that they are correctly used.
+    // We need to do this for every code listed here: https://toml.io/en/v1.0.0#string
+    let value = value
+        .replace('\\', r"\\") // Backslash - Must be first!
+        .replace('\x08', r"\b") // Backspace
+        .replace('\t', r"\t") // Tab
+        .replace('\n', r"\n") // Newline
+        .replace('\x0C', r"\f") // Form Feed
+        .replace('\r', r"\r") // Carriage Return
+        .replace('\"', "\\\""); // Double Quote
+
+    // Expand tildes
+    shellexpand::tilde(&value).to_string()
 }
 
 fn value_for_specific(
