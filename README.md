@@ -57,7 +57,7 @@ every supported shell.
   [![License][icon-license]][license]
   [![Latest Crates.io Release][icon-crates]][crates]
   [![Latest GitHub Release][icon-gh-release]][gh release]
-  [![Crates.io downloads][icon-crates-downloads]][lib.rs install]
+  [![Crates.io downloads][icon-crates-downloads]][crates]
 
 </div>
 
