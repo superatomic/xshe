@@ -22,7 +22,7 @@
 
   The branch `main` is ahead of the current release.
   If you are looking for the documentation for the latest released version,
-  [switch to the `0.4.0` release branch](https://github.com/superatomic/xshe/tree/v0.4.0),
+  [switch to the `0.4.1` release branch](https://github.com/superatomic/xshe/tree/v0.4.1),
   or view the documentation on [Lib.rs][lib.rs] or [Crates.io][crates].
   
   ![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/superatomic/xshe/latest/main)
