@@ -50,14 +50,14 @@ pub struct Cli {
     pub file: Option<PathBuf>,
 
     #[clap(group = "mode")]
-    #[clap(short, long, value_name = "TOML", value_hint = ValueHint::Other)]
+    #[clap(short, long, value_name = "TOML", visible_alias = "toml", value_hint = ValueHint::Other)]
     /// Directly specify TOML to parse
     ///
     /// The passed string must be in TOML format (https://toml.io/en/).
-    pub toml: Option<String>,
+    pub text: Option<String>,
 
     #[clap(group = "mode")]
-    #[clap(short, long, value_name = "PIPE", visible_alias = "stdin")]
+    #[clap(short, long, value_name = "PIPE", alias = "stdin")]
     #[clap(verbatim_doc_comment)]
     /// Get TOML-formatted data from the standard input
     ///
