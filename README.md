@@ -204,13 +204,13 @@ To specify a custom file that is not located at `~/.config/xshe.toml`, pass the 
 eval "$(xshe zsh --file ~/some/other/location.toml)"
 ```
 
-##### Using `--toml` (or `-t`)
+##### Using `--text` (or `-t`)
 
-To directly specify TOML to parse as a config file, use `--toml`.
+To directly specify TOML to parse as a config file, use `--text`.
 
 For example, this line directly parses the provided line and converts it to zsh:
 ```zsh
-xshe zsh --toml 'BIN_HOME = "$HOME/.local/bin"'
+xshe zsh --text 'BIN_HOME = "$HOME/.local/bin"'
 ```
 
 ##### Using `--pipe` (or `-p`)

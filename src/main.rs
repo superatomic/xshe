@@ -71,9 +71,9 @@ fn main() {
     let (toml_string, file_name) = if pipe {
         // If --pipe was specified, use that as the direct toml.
         (read_stdin(), String::from("<STDIN>"))
-    } else if let Some(toml) = cli_options.toml {
-        // If --toml was specified, use that. Otherwise, get the file and read from it.
-        (toml, String::from("<STRING>"))
+    } else if let Some(text) = cli_options.text {
+        // If --text was specified, use that. Otherwise, get the file and read from it.
+        (text, String::from("<STRING>"))
     } else {
         // Otherwise, read from the chosen file.
         read_config_file(&cli_options)
