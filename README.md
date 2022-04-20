@@ -15,7 +15,7 @@
 </div>
 
 <!-- Make sure this is commented on release -->
-<!--
+
 <div align=center>
 
   ---
@@ -30,7 +30,7 @@
   ---
 
 </div>
--->
+
 
 `xshe` allows for setting <u>Sh</u>ell <u>E</u>nvironment Variables across multiple shells with a single TOML
 configuration file.
