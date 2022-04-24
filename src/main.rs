@@ -233,6 +233,8 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
         // Any arrays are treated as a path.
         let (value, is_path) = match raw_value {
             EnvVariableValue::String(string) => (expand_value(string.as_str()), false),
+            EnvVariableValue::Set(true) => ("1".to_string(), false),
+            EnvVariableValue::Set(false) => continue, // todo!
             EnvVariableValue::Array(array) => {
                 let v_expanded: Vec<String> =
                     array.iter().map(|value| expand_value(value)).collect();

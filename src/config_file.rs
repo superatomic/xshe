@@ -49,6 +49,7 @@ pub(crate) enum EnvVariableOption {
 pub(crate) enum EnvVariableValue {
     String(String),
     Array(Vec<String>),
+    Set(bool),
 }
 
 #[cfg(test)]
