@@ -219,7 +219,7 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
     let mut output = String::new();
     for (name, variable_option) in vars {
         // Check whether the current item is a single environment var or a table of specific shells.
-        let raw_value = match variable_option.clone() {
+        let raw_value = match variable_option {
             EnvVariableOption::General(v) => v,
 
             // If it is a shell specific choice, get the correct value for `shell`, and then...
@@ -231,8 +231,8 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
 
         // Convert an array to a string, but log if it was an array.
         // Any arrays are treated as a path.
-        let (value, is_path) = match raw_value.clone() {
-            EnvVariableValue::String(string) => (expand_value(&string), false),
+        let (value, is_path) = match raw_value {
+            EnvVariableValue::String(string) => (expand_value(string.as_str()), false),
             EnvVariableValue::Array(array) => {
                 let v_expanded: Vec<String> =
                     array.iter().map(|value| expand_value(value)).collect();
@@ -286,14 +286,14 @@ fn expand_value(value: &str) -> String {
     shellexpand::tilde(&value).to_string()
 }
 
-fn value_for_specific(
+fn value_for_specific<'a>(
     shell: &Shell,
-    map: IndexMap<String, EnvVariableValue>,
-) -> Option<EnvVariableValue> {
+    map: &'a IndexMap<String, EnvVariableValue>,
+) -> Option<&'a EnvVariableValue> {
     //! Given a `shell` and a `map` of all specific shell options, get the correct shell `EnvVariableValue`.
     //! Used by `to_shell_source` to filter the right `EnvVariableOption::Specific` for the current shell.
     let shell_name = shell.to_possible_value()?.get_name();
-    Some(map.get(shell_name).or_else(|| map.get("_"))?.to_owned())
+    map.get(shell_name).or_else(|| map.get("_"))
 }
 
 fn get_file_path_default() -> PathBuf {
