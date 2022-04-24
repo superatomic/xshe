@@ -250,9 +250,9 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
         };
 
         // Select the correct form for the chosen shell.
-        match shell {
+        output += &match shell {
             Shell::Bash | Shell::Zsh => {
-                output += &*format!("export {}=\"{}\";\n", name, value);
+                format!("export {}=\"{}\";\n", name, value)
             }
             Shell::Fish => {
                 // Add `--path` to the variable if the variable was represented as a list in the TOML.
@@ -260,7 +260,7 @@ fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
                     true => " --path",
                     false => "",
                 };
-                output += &*format!("set -gx{path} {} \"{}\";\n", name, value, path = path);
+                format!("set -gx{path} {} \"{}\";\n", name, value, path = path)
             }
         };
     }
