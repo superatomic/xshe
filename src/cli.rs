@@ -35,7 +35,7 @@ pub struct Cli {
     ///
     /// You can directly source these files in your shell.
     /// Read https://github.com/superatomic/xshe#sourcing-the-xshetoml-file for info.
-    #[clap(arg_enum)]
+    #[clap(arg_enum, index = 1)]
     pub shell: Shell,
 
     #[clap(group = "mode")]
