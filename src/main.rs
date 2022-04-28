@@ -28,6 +28,7 @@
 
 mod cli;
 mod config_file;
+mod convert;
 
 #[macro_use]
 extern crate log;
@@ -40,7 +41,7 @@ use std::path::Path;
 use std::{fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
-use crate::config_file::{ConfigFile, EnvVariableOption, EnvVariableValue, EnvironmentVariables};
+use crate::config_file::{ConfigFile, EnvVariableOption, EnvVariableValue};
 
 fn main() {
     //! Main function.
@@ -110,7 +111,7 @@ fn main() {
     }
 
     // Output the file data converted to the correct shell format to the standard output.
-    let output = to_shell_source(&file_data.vars, &shell);
+    let output = convert::to_shell_source(&file_data.vars, &shell);
     print!("{}", output);
 
     // Retain compatibility with deprecated https://github.com/superatomic/xshe/issues/30
@@ -128,7 +129,7 @@ fn deprecated_to_specific_shell_source(file_data: &ConfigFile, shell: &Shell) {
             .map(|(key, value)| (key.to_owned(), EnvVariableOption::General(value.to_owned())))
             .collect();
 
-        let shell_specific_output = to_shell_source(&wrap_specific_vars, shell);
+        let shell_specific_output = convert::to_shell_source(&wrap_specific_vars, shell);
 
         print!("{}", shell_specific_output);
     };
@@ -211,91 +212,6 @@ fn get_specific_shell<'a>(
 
     let field_name = shell.to_possible_value()?.get_name();
     file_data.shell.as_ref()?.get(field_name)
-}
-
-fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
-    //! Converts the hash table of `vars` into a script for the given `shell`.
-
-    let mut output = String::new();
-    for (name, variable_option) in vars {
-        // Check whether the current item is a single environment var or a table of specific shells.
-        let raw_value = match variable_option {
-            EnvVariableOption::General(v) => v,
-
-            // If it is a shell specific choice, get the correct value for `shell`, and then...
-            EnvVariableOption::Specific(map) => match value_for_specific(shell, map) {
-                Some(v) => v,     // ...extract the `EnvVariableValue` if it exists
-                None => continue, // ...and skip the value if it does not.
-            },
-        };
-
-        // Convert an array to a string, but log if it was an array.
-        // Any arrays are treated as a path.
-        let (value, is_path) = match raw_value {
-            EnvVariableValue::String(string) => (expand_value(string.as_str()), false),
-            EnvVariableValue::Set(true) => ("1".to_string(), false),
-            EnvVariableValue::Set(false) => continue, // todo!
-            EnvVariableValue::Array(array) => {
-                let v_expanded: Vec<String> =
-                    array.iter().map(|value| expand_value(value)).collect();
-                (v_expanded.join(":"), true)
-            }
-        };
-
-        // Log each processed variable
-        if log_enabled!(log::Level::Trace) {
-            let variable_log_header = match is_path {
-                true => "PATH EnvVar",
-                false => "EnvVariable",
-            };
-            trace!("{}: {} -> {}", variable_log_header, name, value);
-        };
-
-        // Select the correct form for the chosen shell.
-        output += &match shell {
-            Shell::Bash | Shell::Zsh => {
-                format!("export {}=\"{}\";\n", name, value)
-            }
-            Shell::Fish => {
-                // Add `--path` to the variable if the variable was represented as a list in the TOML.
-                let path = match is_path {
-                    true => " --path",
-                    false => "",
-                };
-                format!("set -gx{path} {} \"{}\";\n", name, value, path = path)
-            }
-        };
-    }
-    output
-}
-
-fn expand_value(value: &str) -> String {
-    //! Expand the literal representation of a string in the toml
-    //! to a value with escape characters escaped and shell variables expanded.
-
-    // Replace TOML escape codes with the literal representation so that they are correctly used.
-    // We need to do this for every code listed here: https://toml.io/en/v1.0.0#string
-    let value = value
-        .replace('\\', r"\\") // Backslash - Must be first!
-        .replace('\x08', r"\b") // Backspace
-        .replace('\t', r"\t") // Tab
-        .replace('\n', r"\n") // Newline
-        .replace('\x0C', r"\f") // Form Feed
-        .replace('\r', r"\r") // Carriage Return
-        .replace('\"', "\\\""); // Double Quote
-
-    // Expand tildes
-    shellexpand::tilde(&value).to_string()
-}
-
-fn value_for_specific<'a>(
-    shell: &Shell,
-    map: &'a IndexMap<String, EnvVariableValue>,
-) -> Option<&'a EnvVariableValue> {
-    //! Given a `shell` and a `map` of all specific shell options, get the correct shell `EnvVariableValue`.
-    //! Used by `to_shell_source` to filter the right `EnvVariableOption::Specific` for the current shell.
-    let shell_name = shell.to_possible_value()?.get_name();
-    map.get(shell_name).or_else(|| map.get("_"))
 }
 
 fn get_file_path_default() -> PathBuf {
