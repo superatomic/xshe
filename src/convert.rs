@@ -146,3 +146,193 @@ fn expand_value(value: &str) -> String {
     // Expand tildes
     shellexpand::tilde(&value).to_string()
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    use crate::config_file::*;
+
+    use EnvVariableOption::*;
+
+    use indexmap::indexmap;
+    use indoc::indoc;
+    use maplit::hashmap;
+    use pretty_assertions::{assert_eq, assert_str_eq};
+    use std::collections::HashMap;
+
+    // Used to test whether a file in toml format can be converted ito a correct `IndexMap`,
+    // and then whether it can be converted from an `IndexMap`
+    // into an output string to be sourced, for each shell.
+    // This checks both the functionality of `convert::to_shell_source` (in this file)
+    // and whether `config_file::ConfigFile` parses correctly.
+    fn assert_converts(
+        toml_str: &str,
+        map: EnvironmentVariables,
+        shell_sources: HashMap<Shell, &str>,
+    ) {
+        // Verify that the toml converts to the correct representation.
+        assert_eq!(
+            toml::from_str::<ConfigFile>(toml_str)
+                .expect("Invalid toml formatting")
+                .vars,
+            map,
+            "Compare toml data to its `EnvironmentVariables` representation",
+        );
+
+        // Verify that the representation translates into the correct shell-script, for each shell.
+        for (shell, shell_source) in shell_sources {
+            assert_str_eq!(
+                // Trim the trailing newline(s), if they exist.
+                to_shell_source(&map, &shell).trim_end_matches('\n'),
+                shell_source.trim_end_matches('\n'),
+                "Check for correct {:?} syntax",
+                &shell,
+            );
+        }
+    }
+
+    #[test]
+    fn test_config_file_load_string() {
+        assert_converts(
+            indoc! {r#"
+                FOO = "Bar"
+            "#},
+            indexmap! {
+                "FOO".into() => General(EnvVariableValue::String("Bar".into())),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export FOO="Bar";"#),
+                Shell::Zsh => indoc! (r#"export FOO="Bar";"#),
+                Shell::Fish => indoc! (r#"set -gx FOO "Bar";"#),
+            },
+        )
+    }
+
+    #[test]
+    fn test_to_shell_source() {
+        assert_converts(
+            indoc! {r#"
+                PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]
+            "#},
+            indexmap! {
+                "PATH".into() => General(EnvVariableValue::Array(vec![
+                    "/usr/local/bin".into(),
+                    "/usr/bin".into(),
+                    "/bin".into(),
+                    "/usr/sbin".into(),
+                    "/sbin".into(),
+                ])),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
+                Shell::Zsh => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
+                Shell::Fish => indoc! (r#"set -gx --path PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
+            },
+        )
+    }
+
+    #[test]
+    fn test_config_file_load_specific() {
+        assert_converts(
+            indoc! {r#"
+                ONLY_FOR_BASH.bash = "Do people read test cases?"
+            "#},
+            indexmap! {
+                "ONLY_FOR_BASH".into() => Specific(indexmap! {
+                    "bash".into() => EnvVariableValue::String("Do people read test cases?".into()),
+                }),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export ONLY_FOR_BASH="Do people read test cases?";"#),
+                Shell::Zsh => "",
+                Shell::Fish => "",
+            },
+        )
+    }
+
+    #[test]
+    fn test_config_file_load_specific_other() {
+        assert_converts(
+            indoc! {r#"
+                SOME_VARIABLE.fish = "you're pretty"
+                SOME_VARIABLE._ = '[ACCESS DENIED]'
+            "#},
+            indexmap! {
+                "SOME_VARIABLE".into() => Specific(indexmap! {
+                    "fish".into() => EnvVariableValue::String("you're pretty".into()),
+                    "_".into() => EnvVariableValue::String("[ACCESS DENIED]".into()),
+                })
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
+                Shell::Zsh => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
+                Shell::Fish => indoc! (r#"set -gx SOME_VARIABLE "you're pretty";"#),
+            },
+        )
+    }
+
+    #[test]
+    fn test_config_file_load_specific_other_alt() {
+        assert_converts(
+            indoc! {r#"
+                [SOME_VARIABLE]
+                fish = "you're pretty"
+                _ = '[ACCESS DENIED]'
+                
+                [ANOTHER_VARIABLE]
+                zsh = 'Zzz'
+            "#},
+            indexmap! {
+                "SOME_VARIABLE".into() => Specific(indexmap! {
+                    "fish".into() => EnvVariableValue::String("you're pretty".into()),
+                    "_".into() => EnvVariableValue::String("[ACCESS DENIED]".into()),
+                }),
+                "ANOTHER_VARIABLE".into() => Specific(indexmap! {
+                    "zsh".into() => EnvVariableValue::String("Zzz".into()),
+                }),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
+                Shell::Zsh => indoc! (r#"
+                    export SOME_VARIABLE="[ACCESS DENIED]";
+                    export ANOTHER_VARIABLE="Zzz";
+                "#),
+                Shell::Fish => indoc! (r#"set -gx SOME_VARIABLE "you're pretty";"#),
+            },
+        )
+    }
+
+    #[test]
+    fn test_config_file_everything() {
+        assert_converts(
+            indoc! {r#"
+                FOO = 'bar'
+                BAZ.zsh = 'zž'
+                BAZ.fish = ['gone', 'fishing']
+                BAZ._ = 'other'
+            "#},
+            indexmap! {
+                "FOO".into() => General(EnvVariableValue::String("bar".into())),
+                "BAZ".into() => Specific(indexmap! {
+                    "zsh".into() => EnvVariableValue::String("zž".into()),
+                    "fish".into() => EnvVariableValue::Array(vec!["gone".into(), "fishing".into()]),
+                    "_".into() => EnvVariableValue::String("other".into()),
+                })
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"
+                    export FOO="bar";
+                    export BAZ="other";
+                "#),
+                Shell::Zsh => indoc! (r#"
+                    export FOO="bar";
+                    export BAZ="zž";
+                "#),
+                Shell::Fish => indoc! (r#"
+                    set -gx FOO "bar";
+                    set -gx --path BAZ "gone:fishing";
+                "#),
+            },
+        )
+    }
+}
