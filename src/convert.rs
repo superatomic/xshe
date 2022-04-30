@@ -340,10 +340,14 @@ mod test {
     fn test_convert_everything() {
         assert_convert(
             indoc! {r#"
+                # A collection of random things for testing.
                 FOO = 'bar'
                 BAZ.zsh = 'zž'
                 BAZ.fish = ['gone', 'fishing']
                 BAZ._ = 'other'
+                XSHE_IS_THE_BEST = true # look, idk.
+                # Return to poluting the home directory in bash
+                XDG_CONFIG_HOME.bash = false
             "#},
             indexmap! {
                 "FOO".into() => General(EnvVariableValue::String("bar".into())),
@@ -351,20 +355,28 @@ mod test {
                     "zsh".into() => EnvVariableValue::String("zž".into()),
                     "fish".into() => EnvVariableValue::Array(vec!["gone".into(), "fishing".into()]),
                     "_".into() => EnvVariableValue::String("other".into()),
-                })
+                }),
+                "XSHE_IS_THE_BEST".into() => General(EnvVariableValue::Set(true)),
+                "XDG_CONFIG_HOME".into() => Specific(indexmap! {
+                    "bash".into() => EnvVariableValue::Set(false),
+                }),
             },
             hashmap! {
                 Shell::Bash => indoc! (r#"
                     export FOO="bar";
                     export BAZ="other";
+                    export XSHE_IS_THE_BEST="1";
+                    unset XDG_CONFIG_HOME;
                 "#),
                 Shell::Zsh => indoc! (r#"
                     export FOO="bar";
                     export BAZ="zž";
+                    export XSHE_IS_THE_BEST="1";
                 "#),
                 Shell::Fish => indoc! (r#"
                     set -gx FOO "bar";
                     set -gx --path BAZ "gone:fishing";
+                    set -gx XSHE_IS_THE_BEST "1";
                 "#),
             },
         )
