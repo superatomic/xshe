@@ -203,9 +203,9 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export FOO="Bar";"#),
-                Shell::Zsh => indoc! (r#"export FOO="Bar";"#),
-                Shell::Fish => indoc! (r#"set -gx FOO "Bar";"#),
+                Shell::Bash => r#"export FOO="Bar";"#,
+                Shell::Zsh => r#"export FOO="Bar";"#,
+                Shell::Fish => r#"set -gx FOO "Bar";"#,
             },
         )
     }
@@ -228,9 +228,9 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
-                Shell::Zsh => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
-                Shell::Fish => indoc! (r#"set -gx --path PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
+                Shell::Bash => r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#,
+                Shell::Zsh => r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#,
+                Shell::Fish => r#"set -gx --path PATH "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#,
             },
         )
     }
@@ -247,9 +247,9 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
-                Shell::Zsh => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
-                Shell::Fish => indoc! (r#"set -gx HOMEBREW_NO_ANALYTICS "1";"#),
+                Shell::Bash => r#"export HOMEBREW_NO_ANALYTICS="1";"#,
+                Shell::Zsh => r#"export HOMEBREW_NO_ANALYTICS="1";"#,
+                Shell::Fish => r#"set -gx HOMEBREW_NO_ANALYTICS "1";"#,
             },
         )
     }
@@ -266,9 +266,9 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
-                Shell::Zsh => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
-                Shell::Fish => indoc! (r#"set -ge HOMEBREW_NO_ANALYTICS;"#),
+                Shell::Bash => r#"unset HOMEBREW_NO_ANALYTICS;"#,
+                Shell::Zsh => r#"unset HOMEBREW_NO_ANALYTICS;"#,
+                Shell::Fish => r#"set -ge HOMEBREW_NO_ANALYTICS;"#,
             },
         )
     }
@@ -287,7 +287,7 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export ONLY_FOR_BASH="Do people read test cases?";"#),
+                Shell::Bash => r#"export ONLY_FOR_BASH="Do people read test cases?";"#,
                 Shell::Zsh => "",
                 Shell::Fish => "",
             },
@@ -310,9 +310,9 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
-                Shell::Zsh => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
-                Shell::Fish => indoc! (r#"set -gx SOME_VARIABLE "you're pretty";"#),
+                Shell::Bash => r#"export SOME_VARIABLE="[ACCESS DENIED]";"#,
+                Shell::Zsh => r#"export SOME_VARIABLE="[ACCESS DENIED]";"#,
+                Shell::Fish => r#"set -gx SOME_VARIABLE "you're pretty";"#,
             },
         )
     }
@@ -340,12 +340,12 @@ mod test {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
+                Shell::Bash => r#"export SOME_VARIABLE="[ACCESS DENIED]";"#,
                 Shell::Zsh => indoc! (r#"
                     export SOME_VARIABLE="[ACCESS DENIED]";
                     export ANOTHER_VARIABLE="Zzz";
                 "#),
-                Shell::Fish => indoc! (r#"set -gx SOME_VARIABLE "you're pretty";"#),
+                Shell::Fish => r#"set -gx SOME_VARIABLE "you're pretty";"#,
             },
         )
     }
