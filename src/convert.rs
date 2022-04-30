@@ -232,6 +232,40 @@ mod test {
     }
 
     #[test]
+    fn test_convert_set() {
+        assert_convert(
+            indoc! {r#"
+                HOMEBREW_NO_ANALYTICS = true
+            "#},
+            indexmap! {
+                "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(true)),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
+                Shell::Zsh => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
+                Shell::Fish => indoc! (r#"set -gx HOMEBREW_NO_ANALYTICS "1";"#),
+            },
+        )
+    }
+
+    #[test]
+    fn test_convert_unset() {
+        assert_convert(
+            indoc! {r#"
+                HOMEBREW_NO_ANALYTICS = false
+            "#},
+            indexmap! {
+                "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(false)),
+            },
+            hashmap! {
+                Shell::Bash => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
+                Shell::Zsh => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
+                Shell::Fish => indoc! (r#"set -ge HOMEBREW_NO_ANALYTICS;"#),
+            },
+        )
+    }
+
+    #[test]
     fn test_convert_specific() {
         assert_convert(
             indoc! {r#"
