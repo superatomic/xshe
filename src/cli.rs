@@ -18,7 +18,7 @@ use clap_verbosity_flag::{Verbosity, WarnLevel};
 use std::path::PathBuf;
 
 // CLI Parser.
-#[derive(Parser)]
+#[derive(Parser, Debug)]
 #[clap(group = ArgGroup::new("mode").multiple(false))]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(version, arg_required_else_help = true)]
@@ -73,7 +73,7 @@ pub struct Cli {
     pub verbose: Verbosity<WarnLevel>,
 }
 
-#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, ArgEnum)]
+#[derive(ArgEnum, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Shell {
     Bash,
     Zsh,

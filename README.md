@@ -145,6 +145,21 @@ PATH = ["$PATH", "$BIN_HOME", "$CARGO_HOME/bin"]
 ```
 `xshe` will join each element together based on the shell that is specified.
 
+#### Setting and Unsetting variables
+
+Sometimes all that matters is that a variable is set, and the exact value of the variable does not matter.
+**xshe** has a shorthand for this. Just set a variable to `true`. *(This is equivalent to setting it to `"1"`)*
+
+```toml
+HOMEBREW_NO_ANALYTICS = true  # Disable sending analytics when using Homebrew
+```
+
+Additionally, you can set variables in the toml to `false` to unset them!
+This isn't syntactic sugar like setting variables' values to `true`; it's its own construct.
+
+As an example, the line `HOMEBREW_NO_ANALYTICS = false` in the `xshe.toml` file will
+expand to `unset HOMEBREW_NO_ANALYTICS;` on **bash** and **zsh**, and to `set -ge HOMEBREW_NO_ANALYTICS;` on **fish**.
+
 #### Shell Specific Environment Variables
 
 To set environment variables for only one shell, add a `.NAME` prefix after the name of the environment variable,
