@@ -165,7 +165,7 @@ mod test {
     // into an output string to be sourced, for each shell.
     // This checks both the functionality of `convert::to_shell_source` (in this file)
     // and whether `config_file::ConfigFile` parses correctly.
-    fn assert_converts(
+    fn assert_convert(
         toml_str: &str,
         map: EnvironmentVariables,
         shell_sources: HashMap<Shell, &str>,
@@ -192,8 +192,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_load_string() {
-        assert_converts(
+    fn test_convert_string() {
+        assert_convert(
             indoc! {r#"
                 FOO = "Bar"
             "#},
@@ -209,8 +209,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_load_path() {
-        assert_converts(
+    fn test_convert_path() {
+        assert_convert(
             indoc! {r#"
                 PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]
             "#},
@@ -232,8 +232,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_load_specific() {
-        assert_converts(
+    fn test_convert_specific() {
+        assert_convert(
             indoc! {r#"
                 ONLY_FOR_BASH.bash = "Do people read test cases?"
             "#},
@@ -251,8 +251,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_load_specific_other() {
-        assert_converts(
+    fn test_convert_specific_other() {
+        assert_convert(
             indoc! {r#"
                 SOME_VARIABLE.fish = "you're pretty"
                 SOME_VARIABLE._ = '[ACCESS DENIED]'
@@ -272,8 +272,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_load_specific_other_alt() {
-        assert_converts(
+    fn test_convert_specific_other_alt() {
+        assert_convert(
             indoc! {r#"
                 [SOME_VARIABLE]
                 fish = "you're pretty"
@@ -303,8 +303,8 @@ mod test {
     }
 
     #[test]
-    fn test_config_file_everything() {
-        assert_converts(
+    fn test_convert_everything() {
+        assert_convert(
             indoc! {r#"
                 FOO = 'bar'
                 BAZ.zsh = 'zž'
