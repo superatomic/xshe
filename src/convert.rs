@@ -112,7 +112,7 @@ mod add_script_line {
                 format!("unset {};\n", name)
             }
             Shell::Fish => {
-                format!("set -e {};\n", name)
+                format!("set -ge {};\n", name)
             }
         };
     }
