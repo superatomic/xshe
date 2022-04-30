@@ -194,12 +194,14 @@ mod test {
     #[test]
     fn test_convert_string() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 FOO = "Bar"
             "#},
             indexmap! {
                 "FOO".into() => General(EnvVariableValue::String("Bar".into())),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export FOO="Bar";"#),
                 Shell::Zsh => indoc! (r#"export FOO="Bar";"#),
@@ -211,6 +213,7 @@ mod test {
     #[test]
     fn test_convert_path() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]
             "#},
@@ -223,6 +226,7 @@ mod test {
                     "/sbin".into(),
                 ])),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
                 Shell::Zsh => indoc! (r#"export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin";"#),
@@ -234,12 +238,14 @@ mod test {
     #[test]
     fn test_convert_set() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 HOMEBREW_NO_ANALYTICS = true
             "#},
             indexmap! {
                 "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(true)),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
                 Shell::Zsh => indoc! (r#"export HOMEBREW_NO_ANALYTICS="1";"#),
@@ -251,12 +257,14 @@ mod test {
     #[test]
     fn test_convert_unset() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 HOMEBREW_NO_ANALYTICS = false
             "#},
             indexmap! {
                 "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(false)),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
                 Shell::Zsh => indoc! (r#"unset HOMEBREW_NO_ANALYTICS;"#),
@@ -268,6 +276,7 @@ mod test {
     #[test]
     fn test_convert_specific() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 ONLY_FOR_BASH.bash = "Do people read test cases?"
             "#},
@@ -276,6 +285,7 @@ mod test {
                     "bash".into() => EnvVariableValue::String("Do people read test cases?".into()),
                 }),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export ONLY_FOR_BASH="Do people read test cases?";"#),
                 Shell::Zsh => "",
@@ -287,6 +297,7 @@ mod test {
     #[test]
     fn test_convert_specific_other() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 SOME_VARIABLE.fish = "you're pretty"
                 SOME_VARIABLE._ = '[ACCESS DENIED]'
@@ -297,6 +308,7 @@ mod test {
                     "_".into() => EnvVariableValue::String("[ACCESS DENIED]".into()),
                 })
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
                 Shell::Zsh => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
@@ -308,6 +320,7 @@ mod test {
     #[test]
     fn test_convert_specific_other_alt() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 [SOME_VARIABLE]
                 fish = "you're pretty"
@@ -325,6 +338,7 @@ mod test {
                     "zsh".into() => EnvVariableValue::String("Zzz".into()),
                 }),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"export SOME_VARIABLE="[ACCESS DENIED]";"#),
                 Shell::Zsh => indoc! (r#"
@@ -339,6 +353,7 @@ mod test {
     #[test]
     fn test_convert_everything() {
         assert_convert(
+            // language=TOML
             indoc! {r#"
                 # A collection of random things for testing.
                 FOO = 'bar'
@@ -361,6 +376,7 @@ mod test {
                     "bash".into() => EnvVariableValue::Set(false),
                 }),
             },
+            // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"
                     export FOO="bar";
