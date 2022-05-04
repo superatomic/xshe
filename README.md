@@ -46,7 +46,7 @@ every supported shell.
 
 <!--When updating this list, update the icon *AND* the alt text -->
 [![Shells - bash | zsh | fish][icon-shells]](#sourcing-the-xshetoml-file)
-[![Coming Soon - elvish | dash | xonsh | tsch][icon-future-shells]][future shells]
+[![Coming Soon - elvish | dash | xonsh | tcsh][icon-future-shells]][future shells]
 
 ---
 
@@ -306,7 +306,7 @@ additional terms or conditions.
 [icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=for-the-badge&logo=download&logoColor=white
 
 [icon-shells]: https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white
-[icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tsch-yellow?logo=checklist&logoColor=white
+[icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tcsh-yellow?logo=checklist&logoColor=white
 
 [icon-example]: https://custom-icon-badges.herokuapp.com/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white
 
