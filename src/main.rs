@@ -36,8 +36,7 @@ extern crate log;
 use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
 use indexmap::IndexMap;
-use std::io::{ErrorKind, Read};
-use std::path::Path;
+use std::io::{stdin, ErrorKind, Read};
 use std::{fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
@@ -244,7 +243,15 @@ fn get_file_path_default() -> PathBuf {
 fn read_stdin() -> String {
     //! Read all text from stdin.
     let mut buffer = String::new();
-    std::io::stdin().lock().read_to_string(&mut buffer).unwrap();
+    stdin()
+        .lock()
+        .read_to_string(&mut buffer)
+        .unwrap_or_else(|e| {
+            // If something went wrong,
+            // display a nice error message instead of panicking.
+            error!("The following error occurred while reading from standard input:");
+            exit(display_file_error(e.kind(), "<STDIN>", false))
+        });
     debug!("The following input was read from stdin:\n{}", &buffer);
     buffer
 }
