@@ -146,23 +146,30 @@ fn read_config_file(cli_options: &Cli) -> (String, String) {
     // Exit with an error message and exit code if an error occurs.
     let toml_string = match fs::read_to_string(file) {
         Ok(string) => string,
-        Err(e) => exit(display_file_error(e.kind(), cli_options, file)),
+        Err(e) => exit(display_file_error(
+            e.kind(),
+            &file.to_string_lossy(),
+            raw_file.is_some(),
+        )),
     };
     (toml_string, file.display().to_string())
 }
 
-fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
+fn display_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool) -> i32 {
     //! Displays a message and returns an specific error code for an general file read error.
     match kind {
         // The file doesn't exist!
         ErrorKind::NotFound => {
             // Select an informative help message.
-            let help_msg = match cli_options.file {
-                None => "Try setting `--file` to the correct location, or create the file.",
-                Some(_) => "Is `--file` set correctly?",
+            let help_msg = match file_option_set {
+                false => {
+                    "Make sure that you have a xshe.toml file in the default location\n\
+                    or try setting --file to point to a custom location"
+                }
+                true => "Is --file set correctly?",
             };
 
-            error!("The file {:?} does not exist\n{}", file, help_msg);
+            error!("The file {:?} does not exist\n{}", file_name, help_msg);
             exitcode::NOINPUT
         }
 
@@ -175,7 +182,7 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
 
         // Permission Error!
         ErrorKind::PermissionDenied => {
-            error!("Can't access {:?}: Permission denied", file);
+            error!("Can't access {:?}: Permission denied", file_name);
             exitcode::NOPERM
         }
 
@@ -184,14 +191,14 @@ fn display_file_error(kind: ErrorKind, cli_options: &Cli, file: &Path) -> i32 {
             error!(
                 "The file {:?} is not a UTF-8 text file\n\
                 Did you specify a file with a different encoding by accident?",
-                file,
+                file_name,
             );
             exitcode::DATAERR
         }
 
         // Other. Just display the name, and exit.
         _ => {
-            error!("{:?} Error while trying to access {:?}", kind, file);
+            error!("Error while trying to access {:?}: {:}", file_name, kind);
             exitcode::UNAVAILABLE
         }
     }
