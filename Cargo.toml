@@ -29,7 +29,7 @@ log = "0.4.17"
 env_logger = "0.9.0"
 
 [dev-dependencies]
-indoc = "1.0.5"
+indoc = "1.0.6"
 maplit = "1.0.2"
 pretty_assertions = "1.2.1"
 
