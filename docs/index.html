@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>xshe</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/themes/vue.css" />
+        <!-- language=css -->
+        <style>
+            .docsify-copy-code-button {
+                background: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            Loading docs...
+            If the documentation doesn't load,
+            <a href="https://github.com/superatomic/xshe/tree/main/docs">try reading it on GitHub</a>
+        </div>
+        <!-- language=js -->
+        <script>
+            window.$docsify = {
+                repo: 'https://github.com/superatomic/xshe',
+
+                coverpage: true,
+                loadSidebar: true,
+                loadNavbar: true,
+                subMaxLevel: 4,
+
+                themeColor: '#65a43b',
+
+                name: '<code>xshe</code>',
+
+                search: {
+                    maxAge: 86400000, // Expiration time, the default one day
+                    paths: 'auto',
+                    placeholder: 'Type to search',
+
+                    noData: 'No Results!',
+
+                    // Headline depth, 1 - 6
+                    depth: 6,
+
+                    hideOtherSidebarContent: false, // whether or not to hide other sidebar content
+
+                    // To avoid search index collision
+                    // between multiple websites under the same domain
+                    namespace: 'xshe',
+                },
+
+                copyCode: {
+                    buttonText : "\u{1F4CB}",
+                    errorText  : 'Error',
+                    successText: 'Copied!',
+                },
+            }
+        </script>
+        <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+
+        <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-toml.min.js"></script>
+
+        <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+    </body>
+</html>
