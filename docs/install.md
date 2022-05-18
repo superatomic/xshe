@@ -69,6 +69,10 @@ sudo mv target/release/xshe /usr/local/bin  # <-- optional
 Make sure to place the generated binary at `target/release/xshe` on your `PATH`.
 In this example, `xshe` is installed to `/usr/local/bin`, but `xshe` can anywhere on your `PATH`.
 
+# Next steps
+1. [Create an `xshe.toml` file to define your environment variables for every shell.](config_file.md)
+2. [Add `xshe` to the startup script of every shell.](cli.md)
+
 [crates]: https://crates.io/crates/xshe
 [Cargo]: https://doc.rust-lang.org/cargo/
 

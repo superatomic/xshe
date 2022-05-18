@@ -74,6 +74,11 @@ EDITOR.bash = "$(which nano)"
 EDITOR._ = "$(which micro)"
 ```
 
+### Next steps
+
+Once you've made an `xshe.toml` file, you're ready to add `xshe` to your shells.
+[Continue to the next section](cli.md) to learn how.
+
 [icon-example]: https://img.shields.io/badge/Example-xshe.toml-blue?labelColor=blue&color=lightblue&logo=file&logoColor=white&style=for-the-badge
 [example]: https://gist.github.com/superatomic/52a46e53a4afce75ede4db7ba6354e0a
 
