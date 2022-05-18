@@ -42,8 +42,8 @@ Create a file like this once and use it everywhere, for every shell!
 
 ## Usage and Documentation
 
-View the documentation for `xshe` online at [xshe.superatomic.dev][docs]
-or [locally by opening the docs](docs/README.md).
+**View Xshe's documentation online at [xshe.superatomic.dev][docs]** 
+or read the offline documentation in [the `docs/` directory](docs/README.md).
 
 [docs]: https://xshe.superatomic.dev
 
