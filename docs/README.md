@@ -13,10 +13,10 @@
 configuration file.
 
 Instead of writing multiple similar files for each shell you use,
-you can instead create one file and use it for every shell with **xshe**!
+you can instead create one file and use it for every shell with `xshe`!
 
 All you have to do is [add a single line](cli.md#sourcing-the-xshetoml-file) to all of your shells' startup scripts,
-and `xshe` will set your environment variable across all of them.
+and **xshe** will set your environment variable across all of them.
 
 To use **xshe**, you write lines in a `xshe.toml` file like this _(in [TOML] format)_:
 
@@ -26,7 +26,7 @@ EDITOR = "$(which nano)"
 ```
 
 Create a file like this once and use it everywhere, for every shell!
-`xshe` can convert this into the format for every supported shell.
+**Xshe** can convert this into the format for every supported shell.
 
 <!--When updating this list, update the icon *AND* the alt text -->
 
