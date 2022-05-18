@@ -41,10 +41,10 @@ and much more!
 
 
 ## Quick install
-* [With Cargo](install#with-cargo)
-* [With Homebrew](install#with-homebrew)
-* [As a File Download](install#as-a-file-download)
-* [Build from Source](install#build-from-source)
+* [With Cargo](install.md#with-cargo)
+* [With Homebrew](install.md#with-homebrew)
+* [As a File Download](install.md#as-a-file-download)
+* [Build from Source](install.md#build-from-source)
 
 ---
 
