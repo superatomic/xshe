@@ -54,13 +54,13 @@ and much more!
 
 </div>
 
-[icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=flat&logo=file-zip&logoColor=white
-[icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=flat&logo=package-dependencies&logoColor=white
-[icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=flat
-[icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=flat&logo=download&logoColor=white
+[icon-release]: https://shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=flat&logo=file-zip&logoColor=white
+[icon-depend]: https://shields.io/librariesio/release/cargo/xshe?style=flat&logo=package-dependencies&logoColor=white
+[icon-gh-release]: https://shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=flat
+[icon-crates-downloads]: https://shields.io/crates/d/xshe?style=flat&logo=download&logoColor=white
 
-[icon-shells]: https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white&style=flat-square
-[icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tcsh-yellow?logo=checklist&logoColor=white&style=flat-square
+[icon-shells]: https://shields.io/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white&style=flat-square
+[icon-future-shells]: https://shields.io/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tcsh-yellow?logo=checklist&logoColor=white&style=flat-square
 
 [future shells]: https://github.com/users/superatomic/projects/1
 [repo]: https://github.com/superatomic/xshe/

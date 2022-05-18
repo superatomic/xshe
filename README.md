@@ -94,24 +94,24 @@ additional terms or conditions.
 
 </div>
 
-[icon-link-github]: https://custom-icon-badges.herokuapp.com/badge/-GitHub.com-2ea44f?logo=github&logoColor=white&style=flat
-[icon-link-crates]: https://custom-icon-badges.herokuapp.com/badge/-Crates.io-ffc832?logo=package&logoColor=black&style=flat
-[icon-link-lib.rs]: https://custom-icon-badges.herokuapp.com/badge/-Lib.rs-bb44ee?logo=book&logoColor=white&style=flat
-[icon-link-libraries]: https://custom-icon-badges.herokuapp.com/badge/-Libraries.io-337ab7?logo=codescan&logoColor=white&style=flat
+[icon-link-github]: https://shields.io/badge/-GitHub.com-2ea44f?logo=github&logoColor=white&style=flat
+[icon-link-crates]: https://shields.io/badge/-Crates.io-ffc832?logo=package&logoColor=black&style=flat
+[icon-link-lib.rs]: https://shields.io/badge/-Lib.rs-bb44ee?logo=book&logoColor=white&style=flat
+[icon-link-libraries]: https://shields.io/badge/-Libraries.io-337ab7?logo=codescan&logoColor=white&style=flat
 
-[icon-fork]:  https://custom-icon-badges.herokuapp.com/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
-[icon-docs]:  https://custom-icon-badges.herokuapp.com/badge/-Documentation-9cf?style=flat&logo=book&logoColor=black
-[icon-star]:  https://custom-icon-badges.herokuapp.com/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
-[icon-issue]: https://custom-icon-badges.herokuapp.com/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
+[icon-fork]:  https://shields.io/badge/-Fork%20me%20on%20Github-teal?style=flat&logo=repo-forked&logoColor=white
+[icon-docs]:  https://shields.io/badge/-Documentation-9cf?style=flat&logo=book&logoColor=black
+[icon-star]:  https://shields.io/badge/-Star%20Repo-action?style=flat&logo=star&logoColor=white&color=F25278
+[icon-issue]: https://shields.io/badge/-Open%20an%20Issue-palegreen?style=flat&logo=issue-opened&logoColor=black
 
-[icon-release]: https://custom-icon-badges.herokuapp.com/github/workflow/status/superatomic/xshe/release?label=release%20build&style=flat&logo=file-zip&logoColor=white
-[icon-depend]: https://custom-icon-badges.herokuapp.com/librariesio/release/cargo/xshe?style=flat&logo=package-dependencies&logoColor=white
-[icon-crates]: https://custom-icon-badges.herokuapp.com/crates/v/xshe?logo=package&style=flat&logoColor=white
-[icon-gh-release]: https://custom-icon-badges.herokuapp.com/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=flat
-[icon-crates-downloads]: https://custom-icon-badges.herokuapp.com/crates/d/xshe?style=flat&logo=download&logoColor=white
+[icon-release]: https://shields.io/github/workflow/status/superatomic/xshe/release?label=release%20build&style=flat&logo=file-zip&logoColor=white
+[icon-depend]: https://shields.io/librariesio/release/cargo/xshe?style=flat&logo=package-dependencies&logoColor=white
+[icon-crates]: https://shields.io/crates/v/xshe?logo=package&style=flat&logoColor=white
+[icon-gh-release]: https://shields.io/github/v/release/superatomic/xshe?include_prereleases&logo=github&style=flat
+[icon-crates-downloads]: https://shields.io/crates/d/xshe?style=flat&logo=download&logoColor=white
 
-[icon-shells]: https://custom-icon-badges.herokuapp.com/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white&style=flat-square
-[icon-future-shells]: https://custom-icon-badges.herokuapp.com/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tcsh-yellow?logo=checklist&logoColor=white&style=flat-square
+[icon-shells]: https://shields.io/badge/Shells-bash_|_zsh_|_fish-2ea44f?logo=terminal&logoColor=white&style=flat-square
+[icon-future-shells]: https://shields.io/badge/Coming_Soon-elvish_|_dash_|_xonsh_|_tcsh-yellow?logo=checklist&logoColor=white&style=flat-square
 
 [fork]: https://github.com/superatomic/xshe/fork
 [new issue]: https://github.com/superatomic/xshe/issues/new/choose
