@@ -1,6 +1,6 @@
 ## Installation
 
-You can install **Xshe** with [Cargo] (Rust's package manager)
+You can install `xshe` with [Cargo] (Rust's package manager)
 or with [Homebrew] (a package manager for macOS and Linux),
 provided you have one of them installed on your system.
 
@@ -24,7 +24,7 @@ cargo install -f xshe
 ### With Homebrew
 
 If you have [Homebrew installed][Homebrew],
-we recommend that you install Xshe with Homebrew instead of Cargo.
+we recommend that you install `xshe` with Homebrew instead of Cargo.
 
 Simply run:
 
@@ -67,7 +67,11 @@ sudo mv target/release/xshe /usr/local/bin  # <-- optional
 ```
 
 Make sure to place the generated binary at `target/release/xshe` on your `PATH`.
-In this example, **xshe** is installed to `/usr/local/bin`, but `xshe` can anywhere on your `PATH`.
+In this example, `xshe` is installed to `/usr/local/bin`, but `xshe` can anywhere on your `PATH`.
+
+# Next steps
+1. [Create an `xshe.toml` file to define your environment variables for every shell.](config_file.md)
+2. [Add `xshe` to the startup script of every shell.](cli.md)
 
 [crates]: https://crates.io/crates/xshe
 [Cargo]: https://doc.rust-lang.org/cargo/

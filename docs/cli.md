@@ -64,7 +64,7 @@ cat global_xshe.toml user_xshe.toml | xshe bash --pipe
 
 ##### Output verbosity
 
-You can control how much info is displayed when Xshe is run.
+You can control how much info is displayed when `xshe` is run.
 The default behavior is to only display errors and warnings.
 
 While this behavior is recommended, you can customize it by using the following flags:
