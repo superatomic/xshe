@@ -22,19 +22,21 @@ use std::path::PathBuf;
 #[clap(group = ArgGroup::new("mode").multiple(false))]
 #[clap(global_setting(AppSettings::DeriveDisplayOrder))]
 #[clap(version, arg_required_else_help = true)]
-#[clap(after_help = "GitHub: https://github.com/superatomic/xshe")]
 /// Cross-Shell Environment Variable Manager
 ///
 /// Xshe sets shell environment variables across multiple shells with a single configuration file.
 ///
-/// For more, go to https://github.com/superatomic/xshe#readme
+/// Full documentation can be found at https://xshe.superatomic.dev
+/// or in the `docs/` source directory.
+///
+/// Source Repository: https://github.com/superatomic/xshe
 pub struct Cli {
     /// The shell to generate a script for
     ///
     /// Outputs a runnable shell script for the specified shell.
     ///
     /// You can directly source these files in your shell.
-    /// Read https://github.com/superatomic/xshe#sourcing-the-xshetoml-file for info.
+    /// See <https://xshe.superatomic.dev/#/cli> for a detailed explanation.
     #[clap(arg_enum, index = 1)]
     pub shell: Shell,
 
