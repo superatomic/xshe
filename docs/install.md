@@ -23,7 +23,7 @@ cargo install -f xshe
 
 ### With Homebrew
 
-If you have [Homebrew installed][Homebrew],
+If you have [Homebrew] installed,
 we recommend that you install `xshe` with Homebrew instead of Cargo.
 
 Simply run:
@@ -33,6 +33,16 @@ brew install superatomic/xshe/xshe
 ```
 
 Installing `xshe` with Homebrew adds autocompletion to any shells that have completion enabled.
+
+### With Eget
+
+If you have [Eget] installed, just run:
+
+```shell
+eget superatomic/xshe
+```
+
+This will install a prebuilt binary of `xshe`.
 
 ### As a file download
 
@@ -78,6 +88,7 @@ In this example, `xshe` is installed to `/usr/local/bin`, but `xshe` can anywher
 
 [Homebrew]: https://brew.sh
 [Install Cargo/Rust]: https://www.rust-lang.org/tools/install
+[Eget]: https://github.com/zyedidia/eget
 
 [path?]: https://askubuntu.com/questions/551990/what-does-path-mean
 
