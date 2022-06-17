@@ -48,11 +48,11 @@ or read the offline documentation in [the `docs/` directory](docs/README.md).
 [docs]: https://xshe.superatomic.dev
 
 ## Quick install
-* [With Cargo](docs/install.md#with-cargo)
-* [With Homebrew](docs/install.md#with-homebrew)
-* [With Eget](docs/install.md#with-eget)
-* [As a File Download](docs/install.md#as-a-file-download)
-* [Build from Source](docs/install.md#build-from-source)
+* [With Cargo →](docs/install.md#with-cargo)
+* [With Homebrew →](docs/install.md#with-homebrew)
+* [With Eget →](docs/install.md#with-eget)
+* [As a File Download →](docs/install.md#as-a-file-download)
+* [Build from Source →](docs/install.md#build-from-source)
 
 <div align="center">
 
