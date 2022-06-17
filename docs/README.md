@@ -41,11 +41,11 @@ and much more!
 
 
 ## Quick install
-* [With Cargo](install.md#with-cargo)
-* [With Homebrew](install.md#with-homebrew)
-* [With Eget](install.md#with-eget)
-* [As a File Download](install.md#as-a-file-download)
-* [Build from Source](install.md#build-from-source)
+* [With Cargo →](install.md#with-cargo)
+* [With Homebrew →](install.md#with-homebrew)
+* [With Eget →](install.md#with-eget)
+* [As a File Download →](install.md#as-a-file-download)
+* [Build from Source →](install.md#build-from-source)
 
 ---
 
