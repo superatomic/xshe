@@ -29,8 +29,8 @@ and **xshe** will set your environment variable across all of them.
 To use **xshe**, you write lines in a `xshe.toml` file like this _(in [TOML] format)_:
 
 ```toml
-CARGO_HOME = "~/.cargo"
-EDITOR = "$(which nano)"
+CARGO_HOME = '~/.cargo'
+EDITOR = '$(which nano)'
 ```
 
 Create a file like this once and use it everywhere, for every shell!
