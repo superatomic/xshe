@@ -11,7 +11,7 @@ so you can use variables that appear earlier in the file to define ones that app
 A typical line looks like this:
 
 ```toml
-CARGO_HOME = "$XDG_DATA_HOME/cargo"
+CARGO_HOME = '$XDG_DATA_HOME/cargo'
 ```
 
 This will then be converted into the correct format for whatever shell is being used.
@@ -81,7 +81,7 @@ by escaping them with a backslash (i.e. `\)`).
 To set variables that are arrays of values, like `$PATH`, use this syntax:
 
 ```toml
-PATH = ["$PATH", "$BIN_HOME", "$CARGO_HOME/bin"]
+PATH = ['$PATH', '$BIN_HOME', '$CARGO_HOME/bin']
 ```
 `xshe` will join each element together based on the shell that is specified.
 
@@ -111,18 +111,18 @@ As an example, these lines make `$HISTFILE` be set to different values between d
 and to have `$ZSH_CACHE_DIR` only be set in **zsh**, do this:
 
 ```toml
-HISTFILE.bash = "$XDG_STATE_HOME/bash_history"
-HISTFILE.zsh = "$XDG_STATE_HOME/zsh_history"
+HISTFILE.bash = '$XDG_STATE_HOME/bash_history'
+HISTFILE.zsh = '$XDG_STATE_HOME/zsh_history'
 
-ZSH_CACHE_DIR.zsh = "$XDG_CACHE_HOME/oh-my-zsh"
+ZSH_CACHE_DIR.zsh = '$XDG_CACHE_HOME/oh-my-zsh'
 ```
 
 You can use `._` instead of using a shell name to specify a default if an option doesn't apply to any of the shells.
 For example, these lines set the `$EDITOR` to `nano` on **bash**, but [`micro`][micro] on everything else:
 
 ```toml
-EDITOR.bash = "$(which nano)"
-EDITOR._ = "$(which micro)"
+EDITOR.bash = '$(which nano)'
+EDITOR._ = '$(which micro)'
 ```
 
 ### Next steps
