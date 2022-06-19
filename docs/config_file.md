@@ -18,11 +18,11 @@ This will then be converted into the correct format for whatever shell is being 
 For example, in **bash**, this line becomes:
 
 ```bash
-export CARGO_HOME="$XDG_DATA_HOME/cargo";
+export CARGO_HOME=${XDG_DATA_HOME}'/cargo';
 ```
 While in **fish**, this line is:
 ```fish
-set -gx CARGO_HOME "$XDG_DATA_HOME/cargo";
+set -gx CARGO_HOME {$XDG_DATA_HOME}'/cargo';
 ```
 
 #### Special value expansions
