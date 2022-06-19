@@ -277,7 +277,7 @@ pub fn parse_value(raw_value: &str) -> Vec<ValuePart> {
                 // Is the character a valid escape?
                 match (part, char) {
                     // If it is a valid escape sequence, add its literal value.
-                    (_, '\\') | (Literal, '$') | (ShellCommand, '(' | ')') => {
+                    (_, '\\') | (Literal, '$' | '~') | (ShellCommand, '(' | ')') => {
                         current_part.push(char)
                     }
 

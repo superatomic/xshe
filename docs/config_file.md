@@ -47,6 +47,7 @@ XDG_DATA_HOME = '~/.local/share'
 ```
 
 The tilde character (`~`) will only have this behavior if it appears at the start of a value.
+To use a literal tilde character at the beginning of a value, write `\~`.
 
 ##### Expanding environment variables
 
