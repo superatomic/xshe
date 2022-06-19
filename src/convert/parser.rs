@@ -566,6 +566,11 @@ mod test_parsing {
     }
 
     #[test]
+    fn test_escape_tilde() {
+        assert_parses(r"\~", vec![(Literal, r"~")])
+    }
+
+    #[test]
     fn test_escape_backslash() {
         assert_parses(r"$(echo '\\')", vec![(ShellCommand, r"echo '\'")])
     }
