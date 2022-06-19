@@ -246,9 +246,7 @@ mod test_conversion {
     fn test_convert_string() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                FOO = "Bar"
-            "#},
+            r#"FOO = "Bar""#,
             indexmap! {
                 "FOO".into() => General(EnvVariableValue::String("Bar".into())),
             },
@@ -265,9 +263,7 @@ mod test_conversion {
     fn test_convert_path() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]
-            "#},
+            r#"PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]"#,
             indexmap! {
                 "PATH".into() => General(EnvVariableValue::Array(vec![
                     "/usr/local/bin".into(),
@@ -290,9 +286,7 @@ mod test_conversion {
     fn test_convert_set() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                HOMEBREW_NO_ANALYTICS = true
-            "#},
+            "HOMEBREW_NO_ANALYTICS = true",
             indexmap! {
                 "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(true)),
             },
@@ -309,9 +303,7 @@ mod test_conversion {
     fn test_convert_unset() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                HOMEBREW_NO_ANALYTICS = false
-            "#},
+            "HOMEBREW_NO_ANALYTICS = false",
             indexmap! {
                 "HOMEBREW_NO_ANALYTICS".into() => General(EnvVariableValue::Set(false)),
             },
@@ -328,9 +320,7 @@ mod test_conversion {
     fn test_convert_specific() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                ONLY_FOR_BASH.bash = "Do people read test cases?"
-            "#},
+            r#"ONLY_FOR_BASH.bash = "Do people read test cases?""#,
             indexmap! {
                 "ONLY_FOR_BASH".into() => Specific(indexmap! {
                     "bash".into() => EnvVariableValue::String("Do people read test cases?".into()),
@@ -376,7 +366,7 @@ mod test_conversion {
                 [SOME_VARIABLE]
                 fish = "you're pretty"
                 _ = '[ACCESS DENIED]'
-                
+
                 [ANOTHER_VARIABLE]
                 zsh = 'Zzz'
             "#},
@@ -405,9 +395,7 @@ mod test_conversion {
     fn test_shell_variables_inline() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                WHERE_THE_HEART_IS = "$HOME"
-            "#},
+            r#"WHERE_THE_HEART_IS = "$HOME""#,
             indexmap! {
                 "WHERE_THE_HEART_IS".into() => General(EnvVariableValue::String("$HOME".into())),
             },
@@ -424,9 +412,7 @@ mod test_conversion {
     fn test_shell_variables_block() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                AN_EXAMPLE = "${HOME}less"
-            "#},
+            r#"AN_EXAMPLE = "${HOME}less""#,
             indexmap! {
                 "AN_EXAMPLE".into() => General(EnvVariableValue::String("${HOME}less".into())),
             },
@@ -443,9 +429,7 @@ mod test_conversion {
     fn test_shell_commands() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                EDITOR = "$(which micro)"
-            "#},
+            r#"EDITOR = "$(which micro)""#,
             indexmap! {
                 "EDITOR".into() => General(EnvVariableValue::String("$(which micro)".into())),
             },
@@ -462,9 +446,7 @@ mod test_conversion {
     fn test_shell_home_tilde() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                HOME = "~superatomic"
-            "#},
+            r#"HOME = "~superatomic""#,
             indexmap! {
                 "HOME".into() => General(EnvVariableValue::String("~superatomic".into())),
             },
@@ -513,9 +495,7 @@ mod test_conversion {
     fn test_convert_escaping_quotes() {
         assert_convert(
             // language=TOML
-            indoc! {r#"
-                MESSAGE = '''I 'love' books'''
-            "#},
+            "MESSAGE = '''I 'love' books'''",
             indexmap! {
                 "MESSAGE".into() => General(EnvVariableValue::String(r"I 'love' books".into())),
             },
