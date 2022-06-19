@@ -25,6 +25,56 @@ While in **fish**, this line is:
 set -gx CARGO_HOME "$XDG_DATA_HOME/cargo";
 ```
 
+#### Special value expansions
+
+Special syntax within variable values causes special value expansions to occur.
+
+If you want to use the literal value instead of the expansion,
+put a backslash character (`\`) preceding the beginning of the expansion.
+
+To use a literal backslash, put two backslashes: `\\`.
+
+!> For all of these cases, use single quotes to surround the values in the TOML format.
+   If you ever use double quotes, you will have to double the number of backslashes:
+   a normal backslash becomes `\\`, and an escaped backslash becomes `\\\\`.
+
+##### Expanding tildes
+
+Use syntax like `~` or `~username` to inline home directory tilde expansions in values:
+
+```shell
+XDG_DATA_HOME = '~/.local/share'
+```
+
+The tilde character (`~`) will only have this behavior if it appears at the start of a value.
+
+##### Expanding environment variables
+
+Use syntax like `$VAR` or `${VAR}` to inline shell environment variables in values:
+
+```shell
+CARGO_HOME = '$XDG_DATA_HOME/cargo'
+```
+
+To use a literal dollar-sign character, escape it with a backslash: `\$`.
+
+##### Expanding shell commands
+
+Use syntax like `$(command)` to inline shell commands in values:
+
+```shell
+EDITOR = '$(which nano)'
+```
+
+You can escape parentheses characters (`)`) characters within shell commands
+by escaping them with a backslash (i.e. `\)`).
+
+?> If you use double quotes to surround values in your `xshe.toml` file,
+   you must double escape backslashes, like so: `DOUBLE = "\\"`.
+   If you use single quotes, which is recommended unless you need to use double quotes,
+   just use one backslash: `SINGLE = '\'`.
+
+
 #### Dealing with `PATH` variables
 
 To set variables that are arrays of values, like `$PATH`, use this syntax:
