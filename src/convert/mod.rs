@@ -106,7 +106,7 @@ mod add_script_line {
         };
 
         *output += value;
-        *output += ";\n";
+        *output += "\n";
     }
 
     pub fn unset_variable(output: &mut String, shell: &Shell, name: &str) {
@@ -123,7 +123,7 @@ mod add_script_line {
             }
         };
 
-        *output += ";\n";
+        *output += "\n";
     }
 }
 
@@ -252,9 +252,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export FOO='Bar';"#,
-                Shell::Zsh => r#"export FOO='Bar';"#,
-                Shell::Fish => r#"set -gx FOO 'Bar';"#,
+                Shell::Bash => r#"export FOO='Bar'"#,
+                Shell::Zsh => r#"export FOO='Bar'"#,
+                Shell::Fish => r#"set -gx FOO 'Bar'"#,
             },
         )
     }
@@ -275,9 +275,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin';"#,
-                Shell::Zsh => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin';"#,
-                Shell::Fish => r#"set -gx --path PATH '/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin';"#,
+                Shell::Bash => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+                Shell::Zsh => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+                Shell::Fish => r#"set -gx --path PATH '/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
             },
         )
     }
@@ -292,9 +292,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export HOMEBREW_NO_ANALYTICS=1;"#,
-                Shell::Zsh => r#"export HOMEBREW_NO_ANALYTICS=1;"#,
-                Shell::Fish => r#"set -gx HOMEBREW_NO_ANALYTICS 1;"#,
+                Shell::Bash => r#"export HOMEBREW_NO_ANALYTICS=1"#,
+                Shell::Zsh => r#"export HOMEBREW_NO_ANALYTICS=1"#,
+                Shell::Fish => r#"set -gx HOMEBREW_NO_ANALYTICS 1"#,
             },
         )
     }
@@ -309,9 +309,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"unset HOMEBREW_NO_ANALYTICS;"#,
-                Shell::Zsh => r#"unset HOMEBREW_NO_ANALYTICS;"#,
-                Shell::Fish => r#"set -ge HOMEBREW_NO_ANALYTICS;"#,
+                Shell::Bash => r#"unset HOMEBREW_NO_ANALYTICS"#,
+                Shell::Zsh => r#"unset HOMEBREW_NO_ANALYTICS"#,
+                Shell::Fish => r#"set -ge HOMEBREW_NO_ANALYTICS"#,
             },
         )
     }
@@ -328,7 +328,7 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export ONLY_FOR_BASH='Do people read test cases?';"#,
+                Shell::Bash => r#"export ONLY_FOR_BASH='Do people read test cases?'"#,
                 Shell::Zsh => "",
                 Shell::Fish => "",
             },
@@ -351,9 +351,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]';"#,
-                Shell::Zsh => r#"export SOME_VARIABLE='[ACCESS DENIED]';"#,
-                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty';"#,
+                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
+                Shell::Zsh => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
+                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
             },
         )
     }
@@ -381,12 +381,12 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]';"#,
+                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
                 Shell::Zsh => indoc! (r#"
-                    export SOME_VARIABLE='[ACCESS DENIED]';
-                    export ANOTHER_VARIABLE='Zzz';
+                    export SOME_VARIABLE='[ACCESS DENIED]'
+                    export ANOTHER_VARIABLE='Zzz'
                 "#),
-                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty';"#,
+                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
             },
         )
     }
@@ -401,9 +401,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export WHERE_THE_HEART_IS=${HOME};"#,
-                Shell::Zsh => r#"export WHERE_THE_HEART_IS=${HOME};"#,
-                Shell::Fish => r#"set -gx WHERE_THE_HEART_IS {$HOME};"#,
+                Shell::Bash => r#"export WHERE_THE_HEART_IS=${HOME}"#,
+                Shell::Zsh => r#"export WHERE_THE_HEART_IS=${HOME}"#,
+                Shell::Fish => r#"set -gx WHERE_THE_HEART_IS {$HOME}"#,
             },
         )
     }
@@ -418,9 +418,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export AN_EXAMPLE=${HOME}'less';"#,
-                Shell::Zsh => r#"export AN_EXAMPLE=${HOME}'less';"#,
-                Shell::Fish => r#"set -gx AN_EXAMPLE {$HOME}'less';"#,
+                Shell::Bash => r#"export AN_EXAMPLE=${HOME}'less'"#,
+                Shell::Zsh => r#"export AN_EXAMPLE=${HOME}'less'"#,
+                Shell::Fish => r#"set -gx AN_EXAMPLE {$HOME}'less'"#,
             },
         )
     }
@@ -435,9 +435,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export EDITOR=$(eval 'which micro');"#,
-                Shell::Zsh => r#"export EDITOR=$(eval 'which micro');"#,
-                Shell::Fish => r#"set -gx EDITOR (eval 'which micro');"#,
+                Shell::Bash => r#"export EDITOR=$(eval 'which micro')"#,
+                Shell::Zsh => r#"export EDITOR=$(eval 'which micro')"#,
+                Shell::Fish => r#"set -gx EDITOR (eval 'which micro')"#,
             },
         )
     }
@@ -452,9 +452,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export HOME=$(eval echo "~superatomic");"#,
-                Shell::Zsh => r#"export HOME=$(eval echo "~superatomic");"#,
-                Shell::Fish => r#"set -gx HOME (eval echo "~superatomic");"#,
+                Shell::Bash => r#"export HOME=$(eval echo "~superatomic")"#,
+                Shell::Zsh => r#"export HOME=$(eval echo "~superatomic")"#,
+                Shell::Fish => r#"set -gx HOME (eval echo "~superatomic")"#,
             },
         )
     }
@@ -476,16 +476,16 @@ mod test_conversion {
             // language=sh
             hashmap! {
                 Shell::Bash => indoc!(r#"
-                    export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.';
-                    export FAVORITE_CHARACTER='\';
+                    export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.'
+                    export FAVORITE_CHARACTER='\'
                 "#),
                 Shell::Zsh => indoc!(r#"
-                    export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.';
-                    export FAVORITE_CHARACTER='\';
+                    export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.'
+                    export FAVORITE_CHARACTER='\'
                 "#),
                 Shell::Fish => indoc!(r#"
-                    set -gx MESSAGE '$() is literal, and '(eval 'echo \')\'')' is escaped.';
-                    set -gx FAVORITE_CHARACTER '\\';
+                    set -gx MESSAGE '$() is literal, and '(eval 'echo \')\'')' is escaped.'
+                    set -gx FAVORITE_CHARACTER '\\'
                 "#),
             },
         )
@@ -501,9 +501,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export MESSAGE='I '"'"'love'"'"' books';"#,
-                Shell::Zsh => r#"export MESSAGE='I '"'"'love'"'"' books';"#,
-                Shell::Fish => r#"set -gx MESSAGE 'I \'love\' books';"#,
+                Shell::Bash => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
+                Shell::Zsh => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
+                Shell::Fish => r#"set -gx MESSAGE 'I \'love\' books'"#,
             },
         )
     }
@@ -541,26 +541,26 @@ mod test_conversion {
             // language=sh
             hashmap! {
                 Shell::Bash => indoc! (r#"
-                    export FOO='bar';
-                    export BAZ=$(eval echo "~other");
-                    export TTY=$(eval 'tty');
-                    export THE_ECHO=$(eval 'echo ")"');
-                    export XSHE_IS_THE_BEST=1;
-                    unset XDG_CONFIG_HOME;
+                    export FOO='bar'
+                    export BAZ=$(eval echo "~other")
+                    export TTY=$(eval 'tty')
+                    export THE_ECHO=$(eval 'echo ")"')
+                    export XSHE_IS_THE_BEST=1
+                    unset XDG_CONFIG_HOME
                 "#),
                 Shell::Zsh => indoc! (r#"
-                    export FOO='bar';
-                    export BAZ='zž';
-                    export TTY=$(eval 'tty');
-                    export THE_ECHO=$(eval 'echo ")"');
-                    export XSHE_IS_THE_BEST=1;
+                    export FOO='bar'
+                    export BAZ='zž'
+                    export TTY=$(eval 'tty')
+                    export THE_ECHO=$(eval 'echo ")"')
+                    export XSHE_IS_THE_BEST=1
                 "#),
                 Shell::Fish => indoc! (r#"
-                    set -gx FOO 'bar';
-                    set -gx --path BAZ 'gone':{$fishing};
-                    set -gx TTY (eval 'tty');
-                    set -gx THE_ECHO (eval 'echo ")"');
-                    set -gx XSHE_IS_THE_BEST 1;
+                    set -gx FOO 'bar'
+                    set -gx --path BAZ 'gone':{$fishing}
+                    set -gx TTY (eval 'tty')
+                    set -gx THE_ECHO (eval 'echo ")"')
+                    set -gx XSHE_IS_THE_BEST 1
                 "#),
             },
         )
