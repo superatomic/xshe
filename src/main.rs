@@ -27,8 +27,8 @@
 #![forbid(unsafe_code)]
 
 mod cli;
-mod config_file;
 mod convert;
+mod structure;
 
 #[macro_use]
 extern crate log;
@@ -40,7 +40,7 @@ use std::io::{stdin, ErrorKind, Read};
 use std::{fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
-use crate::config_file::{ConfigFile, EnvVariableOption, EnvVariableValue};
+use crate::structure::{ConfigFile, EnvVariableOption, EnvVariableValue};
 
 fn main() {
     //! Main function.
