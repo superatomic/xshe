@@ -197,7 +197,11 @@ fn display_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool) -
 
         // Other. Just display the name, and exit.
         _ => {
-            error!("Error while trying to access {:?}: {:}", file_name, kind);
+            error!(
+                "Error while trying to access {:?}: {}",
+                file_name,
+                kind.to_string(),
+            );
             exitcode::UNAVAILABLE
         }
     }
