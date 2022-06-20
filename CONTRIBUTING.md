@@ -14,7 +14,7 @@ Please note we have a [Code of Conduct], please follow it in all your interactio
 ## Coding conventions
 
   * Indent code by four spaces and markup files with two spaces.
-  * Try to maintain the coding style of the surronding code you are working on.
+  * Try to maintain the coding style of the surrounding code you are working on.
   * Leave plenty of comments that explain what your additions do.
   * Style code with [rustfmt](https://github.com/rust-lang/rustfmt) before submitting code (run `cargo fmt`).
   * Check code with [Clippy](https://github.com/rust-lang/rust-clippy) (run `cargo clippy`).
