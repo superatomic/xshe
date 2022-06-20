@@ -25,8 +25,8 @@ use indexmap::IndexMap;
 use std::string::String;
 
 use crate::cli::Shell;
-use crate::config_file::{EnvVariableOption, EnvVariableValue, EnvironmentVariables};
 use crate::convert::parser::ValuePartKind;
+use crate::structure::{EnvVariableOption, EnvVariableValue, EnvironmentVariables};
 
 /// Converts the hash table of `vars` into a script for the given `shell`.
 pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
@@ -202,7 +202,7 @@ mod test_conversion {
     use super::*;
     use pretty_assertions::{assert_eq, assert_str_eq};
 
-    use crate::config_file::*;
+    use crate::structure::*;
 
     use EnvVariableOption::*;
 
