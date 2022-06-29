@@ -1,6 +1,6 @@
 [package]
 name = "xshe"
-version = "0.5.0"
+version = "0.5.1"
 edition = "2021"
 description = "Set environment variables across multiple shells with a single configuration file."
 readme = "README.md"
