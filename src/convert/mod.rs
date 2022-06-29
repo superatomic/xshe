@@ -154,8 +154,7 @@ fn expand_value(value: &str, shell: &Shell) -> String {
         expanded_value += &match (kind, shell) {
             (Literal, _) => single_quote(value, shell),
 
-            (ShellVariable, Bash | Zsh) => format!("${{{}}}", value),
-            (ShellVariable, Fish) => format!("{{${}}}", value),
+            (ShellVariable, Bash | Zsh | Fish) => format!(r#""${}""#, value),
 
             (ShellCommand, Bash | Zsh) => format!("$(eval {})", single_quote(value, shell)),
             (ShellCommand, Fish) => format!("(eval {})", single_quote(value, shell)),
@@ -401,9 +400,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export WHERE_THE_HEART_IS=${HOME}"#,
-                Shell::Zsh => r#"export WHERE_THE_HEART_IS=${HOME}"#,
-                Shell::Fish => r#"set -gx WHERE_THE_HEART_IS {$HOME}"#,
+                Shell::Bash => r#"export WHERE_THE_HEART_IS="$HOME""#,
+                Shell::Zsh => r#"export WHERE_THE_HEART_IS="$HOME""#,
+                Shell::Fish => r#"set -gx WHERE_THE_HEART_IS "$HOME""#,
             },
         )
     }
@@ -418,9 +417,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export AN_EXAMPLE=${HOME}'less'"#,
-                Shell::Zsh => r#"export AN_EXAMPLE=${HOME}'less'"#,
-                Shell::Fish => r#"set -gx AN_EXAMPLE {$HOME}'less'"#,
+                Shell::Bash => r#"export AN_EXAMPLE="$HOME"'less'"#,
+                Shell::Zsh => r#"export AN_EXAMPLE="$HOME"'less'"#,
+                Shell::Fish => r#"set -gx AN_EXAMPLE "$HOME"'less'"#,
             },
         )
     }
@@ -557,7 +556,7 @@ mod test_conversion {
                 "#),
                 Shell::Fish => indoc! (r#"
                     set -gx FOO 'bar'
-                    set -gx --path BAZ 'gone':{$fishing}
+                    set -gx --path BAZ 'gone':"$fishing"
                     set -gx TTY (eval 'tty')
                     set -gx THE_ECHO (eval 'echo ")"')
                     set -gx XSHE_IS_THE_BEST 1
