@@ -21,7 +21,7 @@ clap = { version = "3.2.7", features = ["derive", "env", "wrap_help"] }
 clap-verbosity-flag = "1.0.1"
 exitcode = "1.1.2"
 toml = "0.5.9"
-serde = { version = "1.0.137", features = ["derive"] }
+serde = { version = "1.0.139", features = ["derive"] }
 indexmap = { version = "1.9.1", features = ["serde"] }
 shellexpand = "2.1.0"
 human-panic = "1.0.3"
