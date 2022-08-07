@@ -29,7 +29,7 @@ we recommend that you install `xshe` with Homebrew instead of Cargo.
 Simply run:
 
 ```shell
-brew install superatomic/xshe/xshe
+brew install superatomic/tap/xshe
 ```
 
 Installing `xshe` with Homebrew adds autocompletion to any shells that have completion enabled.
