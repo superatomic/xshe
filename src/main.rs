@@ -88,7 +88,7 @@ fn main() {
         Err(e) => {
             // Display the error and exit.
             error!(
-                 "The file {} is not in a valid TOML format,\nor it is not in the form Xshe is expecting.",
+                 "The file {} is not in a valid TOML format,\nor it is not in the form xshe is expecting.",
                  file_name,
              );
             if let Some((line, column)) = e.line_col() {
