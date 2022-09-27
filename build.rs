@@ -15,8 +15,8 @@ use crate::cli::Cli;
 use clap::CommandFactory;
 use clap_complete::{generate_to, Shell};
 use clap_mangen::Man;
-use std::path::Path;
-use std::{env, fs, io, path::PathBuf};
+use std::path::{Path, PathBuf};
+use std::{env, fs, io};
 
 #[path = "src/cli.rs"]
 mod cli;
