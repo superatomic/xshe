@@ -87,7 +87,7 @@ pub fn parse_value(raw_value: &str) -> Vec<ValuePart> {
     // vector. Because most shells expect some value, it is important to return at least one
     // element, even if the element itself has an empty value.
     if raw_value.is_empty() {
-        return Vec::from([ValuePart::new(Literal)]);
+        return vec![ValuePart::new(Literal)];
     }
 
     // Result buffer. This is the vector that is returned if the `raw_value` is not empty.
