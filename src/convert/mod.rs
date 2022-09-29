@@ -24,7 +24,7 @@ use clap::ArgEnum;
 use indexmap::IndexMap;
 use std::string::String;
 
-use crate::cli::Shell;
+use crate::cli::Shell::{self, *};
 use crate::convert::parser::ValuePartKind;
 use crate::structure::{EnvVariableOption, EnvVariableValue, EnvironmentVariables};
 
@@ -72,7 +72,7 @@ pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> Str
 // Module for adding a line to the script that will be sourced by the shell.
 // Defines methods for adding the different types of lines.
 mod add_script_line {
-    use super::Shell;
+    use crate::cli::Shell::{self, *};
 
     pub fn set_variable(
         output: &mut String,
@@ -92,10 +92,10 @@ mod add_script_line {
 
         // Select the correct form for the chosen shell.
         *output += &match shell {
-            Shell::Bash | Shell::Zsh => {
+            Bash | Zsh => {
                 format!("export {}=", name)
             }
-            Shell::Fish => {
+            Fish => {
                 // Add `--path` to the variable if the variable is represented as a list.
                 let path = match is_path {
                     true => " --path",
@@ -115,10 +115,10 @@ mod add_script_line {
 
         // Select the correct form for the chosen shell.
         *output += &match shell {
-            Shell::Bash | Shell::Zsh => {
+            Bash | Zsh => {
                 format!("unset {}", name)
             }
-            Shell::Fish => {
+            Fish => {
                 format!("set -ge {}", name)
             }
         };
@@ -140,7 +140,6 @@ fn value_for_specific<'a>(
 /// Expand the literal representation of a string in the toml to a value that can be parsed by the
 /// given shell.
 fn expand_value(value: &str, shell: &Shell) -> String {
-    use Shell::*;
     use ValuePartKind::*;
 
     let value_parts = parser::parse_value(value);
@@ -172,7 +171,6 @@ fn expand_value(value: &str, shell: &Shell) -> String {
 // Specifically, Fish shell has a simpler way of escaping single quotes in a single quoted string,
 // while Bash and Zsh have to do it another way.
 fn single_quote(string: String, shell: &Shell) -> String {
-    use Shell::*;
     match shell {
         Bash | Zsh => string
             // Bash and Zsh can't escape any single quotes within a single-quoted string,
@@ -251,9 +249,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export FOO='Bar'"#,
-                Shell::Zsh => r#"export FOO='Bar'"#,
-                Shell::Fish => r#"set -gx FOO 'Bar'"#,
+                Bash => r#"export FOO='Bar'"#,
+                Zsh => r#"export FOO='Bar'"#,
+                Fish => r#"set -gx FOO 'Bar'"#,
             },
         )
     }
@@ -274,9 +272,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
-                Shell::Zsh => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
-                Shell::Fish => r#"set -gx --path PATH '/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+                Bash => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+                Zsh => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+                Fish => r#"set -gx --path PATH '/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
             },
         )
     }
@@ -291,9 +289,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export HOMEBREW_NO_ANALYTICS=1"#,
-                Shell::Zsh => r#"export HOMEBREW_NO_ANALYTICS=1"#,
-                Shell::Fish => r#"set -gx HOMEBREW_NO_ANALYTICS 1"#,
+                Bash => r#"export HOMEBREW_NO_ANALYTICS=1"#,
+                Zsh => r#"export HOMEBREW_NO_ANALYTICS=1"#,
+                Fish => r#"set -gx HOMEBREW_NO_ANALYTICS 1"#,
             },
         )
     }
@@ -308,9 +306,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"unset HOMEBREW_NO_ANALYTICS"#,
-                Shell::Zsh => r#"unset HOMEBREW_NO_ANALYTICS"#,
-                Shell::Fish => r#"set -ge HOMEBREW_NO_ANALYTICS"#,
+                Bash => r#"unset HOMEBREW_NO_ANALYTICS"#,
+                Zsh => r#"unset HOMEBREW_NO_ANALYTICS"#,
+                Fish => r#"set -ge HOMEBREW_NO_ANALYTICS"#,
             },
         )
     }
@@ -327,9 +325,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export ONLY_FOR_BASH='Do people read test cases?'"#,
-                Shell::Zsh => "",
-                Shell::Fish => "",
+                Bash => r#"export ONLY_FOR_BASH='Do people read test cases?'"#,
+                Zsh => "",
+                Fish => "",
             },
         )
     }
@@ -350,9 +348,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
-                Shell::Zsh => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
-                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
+                Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
+                Zsh => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
+                Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
             },
         )
     }
@@ -380,12 +378,12 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
-                Shell::Zsh => indoc! (r#"
+                Bash => r#"export SOME_VARIABLE='[ACCESS DENIED]'"#,
+                Zsh => indoc! (r#"
                     export SOME_VARIABLE='[ACCESS DENIED]'
                     export ANOTHER_VARIABLE='Zzz'
                 "#),
-                Shell::Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
+                Fish => r#"set -gx SOME_VARIABLE 'you\'re pretty'"#,
             },
         )
     }
@@ -400,9 +398,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export WHERE_THE_HEART_IS="$HOME""#,
-                Shell::Zsh => r#"export WHERE_THE_HEART_IS="$HOME""#,
-                Shell::Fish => r#"set -gx WHERE_THE_HEART_IS "$HOME""#,
+                Bash => r#"export WHERE_THE_HEART_IS="$HOME""#,
+                Zsh => r#"export WHERE_THE_HEART_IS="$HOME""#,
+                Fish => r#"set -gx WHERE_THE_HEART_IS "$HOME""#,
             },
         )
     }
@@ -417,9 +415,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export AN_EXAMPLE="$HOME"'less'"#,
-                Shell::Zsh => r#"export AN_EXAMPLE="$HOME"'less'"#,
-                Shell::Fish => r#"set -gx AN_EXAMPLE "$HOME"'less'"#,
+                Bash => r#"export AN_EXAMPLE="$HOME"'less'"#,
+                Zsh => r#"export AN_EXAMPLE="$HOME"'less'"#,
+                Fish => r#"set -gx AN_EXAMPLE "$HOME"'less'"#,
             },
         )
     }
@@ -434,9 +432,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export EDITOR=$(eval 'which micro')"#,
-                Shell::Zsh => r#"export EDITOR=$(eval 'which micro')"#,
-                Shell::Fish => r#"set -gx EDITOR (eval 'which micro')"#,
+                Bash => r#"export EDITOR=$(eval 'which micro')"#,
+                Zsh => r#"export EDITOR=$(eval 'which micro')"#,
+                Fish => r#"set -gx EDITOR (eval 'which micro')"#,
             },
         )
     }
@@ -451,9 +449,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export HOME=$(eval echo "~superatomic")"#,
-                Shell::Zsh => r#"export HOME=$(eval echo "~superatomic")"#,
-                Shell::Fish => r#"set -gx HOME (eval echo "~superatomic")"#,
+                Bash => r#"export HOME=$(eval echo "~superatomic")"#,
+                Zsh => r#"export HOME=$(eval echo "~superatomic")"#,
+                Fish => r#"set -gx HOME (eval echo "~superatomic")"#,
             },
         )
     }
@@ -474,15 +472,15 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc!(r#"
+                Bash => indoc!(r#"
                     export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.'
                     export FAVORITE_CHARACTER='\'
                 "#),
-                Shell::Zsh => indoc!(r#"
+                Zsh => indoc!(r#"
                     export MESSAGE='$() is literal, and '$(eval 'echo '"'"')'"'")' is escaped.'
                     export FAVORITE_CHARACTER='\'
                 "#),
-                Shell::Fish => indoc!(r#"
+                Fish => indoc!(r#"
                     set -gx MESSAGE '$() is literal, and '(eval 'echo \')\'')' is escaped.'
                     set -gx FAVORITE_CHARACTER '\\'
                 "#),
@@ -500,9 +498,9 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
-                Shell::Zsh => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
-                Shell::Fish => r#"set -gx MESSAGE 'I \'love\' books'"#,
+                Bash => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
+                Zsh => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
+                Fish => r#"set -gx MESSAGE 'I \'love\' books'"#,
             },
         )
     }
@@ -539,7 +537,7 @@ mod test_conversion {
             },
             // language=sh
             hashmap! {
-                Shell::Bash => indoc! (r#"
+                Bash => indoc! (r#"
                     export FOO='bar'
                     export BAZ=$(eval echo "~other")
                     export TTY=$(eval 'tty')
@@ -547,14 +545,14 @@ mod test_conversion {
                     export XSHE_IS_THE_BEST=1
                     unset XDG_CONFIG_HOME
                 "#),
-                Shell::Zsh => indoc! (r#"
+                Zsh => indoc! (r#"
                     export FOO='bar'
                     export BAZ='zž'
                     export TTY=$(eval 'tty')
                     export THE_ECHO=$(eval 'echo ")"')
                     export XSHE_IS_THE_BEST=1
                 "#),
-                Shell::Fish => indoc! (r#"
+                Fish => indoc! (r#"
                     set -gx FOO 'bar'
                     set -gx --path BAZ 'gone':"$fishing"
                     set -gx TTY (eval 'tty')
