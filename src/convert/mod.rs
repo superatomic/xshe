@@ -43,9 +43,8 @@ pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> Str
             },
         };
 
-        // Convert an array to a string, but log if it was an array.
-        // Any arrays are treated as a path.
-        let (value, is_path) = &match raw_value {
+        // Convert all forms into a processed string representation.
+        let value = &match raw_value {
             // If the value of the environment variable is `false`,
             // then add the "unset" script line to the String and skip the rest of this function.
             EnvVariableValue::Set(false) => {
@@ -53,16 +52,17 @@ pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> Str
                 continue;
             }
 
-            EnvVariableValue::String(string) => (expand_value(string.as_str(), shell), false),
-            EnvVariableValue::Set(true) => (String::from("1"), false),
+            EnvVariableValue::String(string) => expand_value(string.as_str(), shell),
+            EnvVariableValue::Set(true) => String::from("1"),
             EnvVariableValue::Array(array) => {
                 let v_expanded: Vec<String> = array
                     .iter()
                     .map(|value| expand_value(value, shell))
                     .collect();
-                (v_expanded.join(":"), true)
+                v_expanded.join(":")
             }
         };
+        let is_path = matches!(raw_value, EnvVariableValue::Array(_));
 
         add_script_line::set_variable(&mut output, shell, name, value, is_path);
     }
@@ -79,7 +79,7 @@ mod add_script_line {
         shell: &Shell,
         name: &str,
         value: &str,
-        is_path: &bool,
+        is_path: bool,
     ) {
         // Log each processed variable
         if log_enabled!(log::Level::Trace) {
