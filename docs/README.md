@@ -16,7 +16,7 @@ Instead of writing multiple similar files for each shell you use,
 you can instead create one file and use it for every shell with `xshe`!
 
 All you have to do is [add a single line](cli.md#sourcing-the-xshetoml-file) to all of your shells' startup scripts,
-and **xshe** will set your environment variable across all of them.
+and **xshe** will set your environment variables across all of them.
 
 To use **xshe**, you write lines in a `xshe.toml` file like this _(in [TOML] format)_:
 
