@@ -138,7 +138,7 @@ fn read_config_file(cli_options: &Cli) -> (String, String) {
     //! Read from the config file that should be selected based on the `--file` option.
     // Get the target TOML file with the environment variables.
     // If they are not manually set, use the XDG Base Directory Specification defaults.
-    let raw_file: &Option<PathBuf> = &cli_options.file;
+    let raw_file = &cli_options.file;
     let file = &raw_file.clone().unwrap_or_else(get_file_path_default);
 
     // Read the contents of the file.
