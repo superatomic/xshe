@@ -145,18 +145,14 @@ fn read_config_file(cli_options: &Cli) -> (String, String) {
     // Exit with an error message and exit code if an error occurs.
     let toml_string = match fs::read_to_string(file) {
         Ok(string) => string,
-        Err(e) => exit(display_file_error(
-            e.kind(),
-            &file.to_string_lossy(),
-            raw_file.is_some(),
-        )),
+        Err(e) => exit_with_file_error(e.kind(), &file.to_string_lossy(), raw_file.is_some()),
     };
     (toml_string, file.display().to_string())
 }
 
-fn display_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool) -> i32 {
-    //! Displays a message and returns an specific error code for an general file read error.
-    match kind {
+fn exit_with_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool) -> ! {
+    //! Displays an error message and exits with a specific exit code.
+    let exit_code: i32 = match kind {
         // The file doesn't exist!
         ErrorKind::NotFound => {
             // Select an informative help message.
@@ -200,7 +196,8 @@ fn display_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool) -
             error!("Error while trying to access {:?}: {:?}", file_name, kind);
             exitcode::UNAVAILABLE
         }
-    }
+    };
+    exit(exit_code);
 }
 
 fn get_specific_shell<'a>(
@@ -256,7 +253,7 @@ fn read_stdin() -> String {
             // If something went wrong,
             // display a nice error message instead of panicking.
             error!("The following error occurred while reading from standard input:");
-            exit(display_file_error(e.kind(), "<STDIN>", false))
+            exit_with_file_error(e.kind(), "<STDIN>", false);
         });
     debug!("The following input was read from stdin:\n{}", &buffer);
     buffer
