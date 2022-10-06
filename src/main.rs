@@ -37,7 +37,7 @@ use clap::{ArgEnum, Parser};
 use human_panic::setup_panic;
 use indexmap::IndexMap;
 use std::io::{stdin, ErrorKind, Read};
-use std::{fs, path::PathBuf, process::exit, string::String};
+use std::{env, fs, path::PathBuf, process::exit, string::String};
 
 use crate::cli::{Cli, Shell};
 use crate::structure::{ConfigFile, EnvVariableOption, EnvVariableValue};
@@ -227,14 +227,20 @@ fn get_file_path_default() -> PathBuf {
     // If `$XDG_CONFIG_HOME` is set, use that,
     // otherwise use the default location determined by the XDG Base Directory Specification.
     // Spec: https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
-    let xdg_config_home: PathBuf = shellexpand::env("$XDG_CONFIG_HOME")
-        .unwrap_or_else(|_| shellexpand::tilde("~/.config"))
-        .into_owned()
-        .into();
+    let xdg_config_home: PathBuf = env::var_os("XDG_CONFIG_HOME")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            dirs::home_dir()
+                .unwrap_or_else(|| {
+                    error!("Could not determine the location of the home directory");
+                    exit(exitcode::NOUSER);
+                })
+                .join(".config")
+        });
 
     info!(
         "Using default xshe.toml location: {}",
-        xdg_config_home.to_string_lossy()
+        xdg_config_home.to_string_lossy(),
     );
 
     xdg_config_home.join("xshe.toml")
