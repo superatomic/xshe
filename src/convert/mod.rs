@@ -19,8 +19,7 @@
 #![allow(clippy::ptr_arg)]
 
 mod parser;
-
-use clap::ArgEnum;
+use clap::ValueEnum;
 use indexmap::IndexMap;
 use std::string::String;
 
@@ -30,43 +29,53 @@ use crate::structure::{EnvVariableOption, EnvVariableValue, EnvironmentVariables
 
 /// Converts the hash table of `vars` into a script for the given `shell`.
 pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> String {
-    let mut output = String::new();
-    for (name, variable_option) in vars {
-        // Check whether the current item is a single environment var or a table of specific shells.
-        let raw_value = match variable_option {
-            EnvVariableOption::General(v) => v,
-
-            // If it is a shell specific choice, get the correct value for `shell`, and then...
-            EnvVariableOption::Specific(map) => match value_for_specific(shell, map) {
-                Some(v) => v,     // ...extract the `EnvVariableValue` if it exists
-                None => continue, // ...and skip the value if it does not.
-            },
-        };
-
-        // Convert all forms into a processed string representation.
-        let value = &match raw_value {
-            // If the value of the environment variable is `false`,
-            // then add the "unset" script line to the String and skip the rest of this function.
-            EnvVariableValue::Set(false) => {
-                add_script_line::unset_variable(&mut output, shell, name);
-                continue;
+    let outputs: Vec<String> = vars
+        .iter()
+        .filter_map(|(name, variable_option)| {
+            // Check whether the current item is a single environment var or a table of
+            // specific shells.
+            match variable_option {
+                EnvVariableOption::General(v) => Some(v),
+                // If it is a shell specific choice, get the correct value for `shell`,
+                // and then extract the `EnvVariableValue` if it exists and skip the value
+                // if it does not
+                EnvVariableOption::Specific(map) => value_for_specific(shell, map),
             }
+            .map(|raw_value| process_variable(shell, name, raw_value))
+        })
+        .collect();
+    outputs.join("\n") + "\n"
+}
 
-            EnvVariableValue::String(string) => expand_value(string.as_str(), shell),
-            EnvVariableValue::Set(true) => String::from("1"),
-            EnvVariableValue::Array(array) => {
-                let v_expanded: Vec<String> = array
-                    .iter()
-                    .map(|value| expand_value(value, shell))
-                    .collect();
-                v_expanded.join(":")
-            }
-        };
-        let is_path = matches!(raw_value, EnvVariableValue::Array(_));
-
-        add_script_line::set_variable(&mut output, shell, name, value, is_path);
-    }
-    output
+fn process_variable(shell: &Shell, name: &str, raw_value: &EnvVariableValue) -> String {
+    // If the value of the environment variable is `false`,
+    // then add the "unset" script line to the String and skip the rest of this function.
+    let script_line = match raw_value {
+        EnvVariableValue::Set(false) => add_script_line::unset_variable(shell, name),
+        EnvVariableValue::Set(true) => add_script_line::set_variable(shell, name, "1", false),
+        EnvVariableValue::String(string) => {
+            let expanded_value = expand_value(string, shell);
+            add_script_line::set_variable(shell, name, &expanded_value, false)
+        }
+        EnvVariableValue::Array(array_of_arrays) => {
+            let flattened_array = array_of_arrays
+                .iter()
+                .flat_map(|array| array.iter())
+                .map(|value| expand_value(value, shell))
+                .collect::<Vec<String>>()
+                .join(":");
+            add_script_line::set_variable(shell, name, &flattened_array, false)
+        }
+        EnvVariableValue::Path(path) => {
+            let path_string = path
+                .iter()
+                .map(|value| expand_value(value, shell))
+                .collect::<Vec<String>>()
+                .join(":");
+            add_script_line::set_variable(shell, name, &path_string, true)
+        }
+    };
+    script_line
 }
 
 // Module for adding a line to the script that will be sourced by the shell.
@@ -74,13 +83,7 @@ pub(crate) fn to_shell_source(vars: &EnvironmentVariables, shell: &Shell) -> Str
 mod add_script_line {
     use crate::cli::Shell::{self, *};
 
-    pub fn set_variable(
-        output: &mut String,
-        shell: &Shell,
-        name: &str,
-        value: &str,
-        is_path: bool,
-    ) {
+    pub fn set_variable(shell: &Shell, name: &str, value: &str, is_path: bool) -> String {
         // Log each processed variable
         if log_enabled!(log::Level::Trace) {
             let variable_log_header = match is_path {
@@ -91,39 +94,23 @@ mod add_script_line {
         };
 
         // Select the correct form for the chosen shell.
-        *output += &match shell {
-            Bash | Zsh => {
-                format!("export {}=", name)
-            }
+        match shell {
+            Bash | Zsh => format!("export {}={}", name, value),
             Fish => {
-                // Add `--path` to the variable if the variable is represented as a list.
-                let path = match is_path {
-                    true => " --path",
-                    false => "",
-                };
-                format!("set -gx{path} {} ", name, path = path)
+                let path_option = if is_path { " --path" } else { "" };
+                format!("set -gx{} {} {}", path_option, name, value)
             }
-        };
-
-        *output += value;
-        *output += "\n";
+        }
     }
 
-    pub fn unset_variable(output: &mut String, shell: &Shell, name: &str) {
-        // Log each processed variable
+    pub fn unset_variable(shell: &Shell, name: &str) -> String {
         trace!("Unset: {}", name);
 
         // Select the correct form for the chosen shell.
-        *output += &match shell {
-            Bash | Zsh => {
-                format!("unset {}", name)
-            }
-            Fish => {
-                format!("set -ge {}", name)
-            }
-        };
-
-        *output += "\n";
+        match shell {
+            Bash | Zsh => format!("unset {}", name),
+            Fish => format!("set -ge {}", name),
+        }
     }
 }
 
@@ -133,7 +120,8 @@ fn value_for_specific<'a>(
     shell: &Shell,
     map: &'a IndexMap<String, EnvVariableValue>,
 ) -> Option<&'a EnvVariableValue> {
-    let shell_name = shell.to_possible_value()?.get_name();
+    let binding = shell.to_possible_value()?;
+    let shell_name = binding.get_name();
     map.get(shell_name).or_else(|| map.get("_"))
 }
 
@@ -144,13 +132,12 @@ fn expand_value(value: &str, shell: &Shell) -> String {
 
     let value_parts = parser::parse_value(value);
 
-    let mut expanded_value = String::new();
+    // Pre-allocate space for the string
+    let mut expanded_value = String::with_capacity(value.len() * 2);
 
     // Handle each part for the specified shell, and concatenate each part together.
-    for part in value_parts {
-        let parser::ValuePart { value, kind } = part;
-
-        expanded_value += &match (kind, shell) {
+    let shell_format = |kind: &ValuePartKind, value: &str| -> String {
+        match (kind, shell) {
             (Literal, _) => single_quote(value, shell),
 
             (ShellVariable, Bash | Zsh | Fish) => format!(r#""${}""#, value),
@@ -163,6 +150,10 @@ fn expand_value(value: &str, shell: &Shell) -> String {
             }
             (Home, Fish) => format!("(eval echo \"~{}\")", value),
         }
+    };
+
+    for parser::ValuePart { value, kind } in value_parts {
+        expanded_value.push_str(&shell_format(&kind, &value));
     }
     expanded_value
 }
@@ -170,7 +161,7 @@ fn expand_value(value: &str, shell: &Shell) -> String {
 // Surround a string in single quotes in a way that is best suited for a specific shell.
 // Specifically, Fish shell has a simpler way of escaping single quotes in a single quoted string,
 // while Bash and Zsh have to do it another way.
-fn single_quote(string: String, shell: &Shell) -> String {
+fn single_quote(string: &str, shell: &Shell) -> String {
     match shell {
         Bash | Zsh => string
             // Bash and Zsh can't escape any single quotes within a single-quoted string,
@@ -262,7 +253,7 @@ mod test_conversion {
             // language=TOML
             r#"PATH = ["/usr/local/bin", "/usr/bin", "/bin", "/usr/sbin", "/sbin"]"#,
             indexmap! {
-                "PATH".into() => General(EnvVariableValue::Array(vec![
+                "PATH".into() => General(EnvVariableValue::Path(vec![
                     "/usr/local/bin".into(),
                     "/usr/bin".into(),
                     "/bin".into(),
@@ -275,6 +266,27 @@ mod test_conversion {
                 Bash => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
                 Zsh => r#"export PATH='/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
                 Fish => r#"set -gx --path PATH '/usr/local/bin':'/usr/bin':'/bin':'/usr/sbin':'/sbin'"#,
+            },
+        )
+    }
+
+    #[test]
+    fn test_convert_array() {
+        assert_convert(
+            // language=TOML
+            r#"ARRAY = [["array_item_1", "array_item_2", "array_item_3"]]"#,
+            indexmap! {
+                "ARRAY".into() => General(EnvVariableValue::Array(vec![vec![
+                    "array_item_1".into(),
+                    "array_item_2".into(),
+                    "array_item_3".into(),
+                ]])),
+            },
+            // language=sh
+            hashmap! {
+                Bash => r#"export ARRAY='array_item_1':'array_item_2':'array_item_3'"#,
+                Zsh => r#"export ARRAY='array_item_1':'array_item_2':'array_item_3'"#,
+                Fish => r#"set -gx ARRAY 'array_item_1':'array_item_2':'array_item_3'"#,
             },
         )
     }
@@ -500,7 +512,7 @@ mod test_conversion {
             hashmap! {
                 Bash => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
                 Zsh => r#"export MESSAGE='I '"'"'love'"'"' books'"#,
-                Fish => r#"set -gx MESSAGE 'I \'love\' books'"#,
+                Fish => r"set -gx MESSAGE 'I \'love\' books'",
             },
         )
     }
@@ -515,6 +527,8 @@ mod test_conversion {
                 BAZ.zsh = 'zž'
                 BAZ.fish = ['gone', '$fishing']
                 BAZ._ = '~other'
+                ARRAY_TEST = [['$home', 'alone']]
+                NOTHING_CHANGES = ['$home', 'alone']
                 TTY = '$(tty)'
                 THE_ECHO = '$(echo "\)")'
                 XSHE_IS_THE_BEST = true # look, idk.
@@ -525,9 +539,17 @@ mod test_conversion {
                 "FOO".into() => General(EnvVariableValue::String("bar".into())),
                 "BAZ".into() => Specific(indexmap! {
                     "zsh".into() => EnvVariableValue::String("zž".into()),
-                    "fish".into() => EnvVariableValue::Array(vec!["gone".into(), "$fishing".into()]),
+                    "fish".into() => EnvVariableValue::Path(vec!["gone".into(), "$fishing".into()]),
                     "_".into() => EnvVariableValue::String("~other".into()),
                 }),
+                "ARRAY_TEST".into() => General(EnvVariableValue::Array(vec![vec![
+                    "$home".into(),
+                    "alone".into(),
+                ]])),
+                "NOTHING_CHANGES".into() => General(EnvVariableValue::Path(vec![
+                    "$home".into(),
+                    "alone".into(),
+                ])),
                 "TTY".into() => General(EnvVariableValue::String("$(tty)".into())),
                 "THE_ECHO".into() => General(EnvVariableValue::String(r#"$(echo "\)")"#.into())),
                 "XSHE_IS_THE_BEST".into() => General(EnvVariableValue::Set(true)),
@@ -540,6 +562,8 @@ mod test_conversion {
                 Bash => indoc! (r#"
                     export FOO='bar'
                     export BAZ=$(eval echo "~other")
+                    export ARRAY_TEST="$home":'alone'
+                    export NOTHING_CHANGES="$home":'alone'
                     export TTY=$(eval 'tty')
                     export THE_ECHO=$(eval 'echo ")"')
                     export XSHE_IS_THE_BEST=1
@@ -548,6 +572,8 @@ mod test_conversion {
                 Zsh => indoc! (r#"
                     export FOO='bar'
                     export BAZ='zž'
+                    export ARRAY_TEST="$home":'alone'
+                    export NOTHING_CHANGES="$home":'alone'
                     export TTY=$(eval 'tty')
                     export THE_ECHO=$(eval 'echo ")"')
                     export XSHE_IS_THE_BEST=1
@@ -555,6 +581,8 @@ mod test_conversion {
                 Fish => indoc! (r#"
                     set -gx FOO 'bar'
                     set -gx --path BAZ 'gone':"$fishing"
+                    set -gx ARRAY_TEST "$home":'alone'
+                    set -gx --path NOTHING_CHANGES "$home":'alone'
                     set -gx TTY (eval 'tty')
                     set -gx THE_ECHO (eval 'echo ")"')
                     set -gx XSHE_IS_THE_BEST 1

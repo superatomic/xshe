@@ -32,22 +32,23 @@ pub(crate) struct ConfigFile {
 
 impl ConfigFile {
     pub(crate) fn load(toml_string: String) -> Result<ConfigFile, toml::de::Error> {
-        toml::from_str(&*toml_string)
+        toml::from_str(&toml_string)
     }
 }
 
 #[derive(Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(untagged)]
 pub(crate) enum EnvVariableOption {
-    Specific(IndexMap<String, EnvVariableValue>),
     General(EnvVariableValue),
+    Specific(IndexMap<String, EnvVariableValue>),
 }
 
 /// Enum of possible environment variable value types.
 #[derive(Deserialize, Debug, Clone, Eq, PartialEq)]
 #[serde(untagged)]
 pub(crate) enum EnvVariableValue {
-    String(String),
-    Array(Vec<String>),
+    Array(Vec<Vec<String>>),
+    Path(Vec<String>),
     Set(bool),
+    String(String),
 }

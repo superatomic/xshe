@@ -33,7 +33,7 @@ mod structure;
 #[macro_use]
 extern crate log;
 
-use clap::{ArgEnum, Parser};
+use clap::{Parser, ValueEnum};
 use human_panic::setup_panic;
 use indexmap::IndexMap;
 use std::io::{stdin, ErrorKind, Read};
@@ -88,12 +88,11 @@ fn main() {
         Err(e) => {
             // Display the error and exit.
             error!(
-                 "The file {} is not in a valid TOML format,\nor it is not in the form xshe is expecting.",
-                 file_name,
-             );
-            if let Some((line, column)) = e.line_col() {
-                error!("Parse error at line {:}, column {:}", line + 1, column + 1);
-            }
+                "The file {} is not in a valid TOML format,\n\
+                 or it is not in the form xshe is expecting.",
+                file_name
+            );
+            error!("{}", e);
             exit(exitcode::CONFIG)
         }
     };
@@ -130,7 +129,7 @@ fn deprecated_to_specific_shell_source(file_data: &ConfigFile, shell: &Shell) {
 
         let shell_specific_output = convert::to_shell_source(&wrap_specific_vars, shell);
 
-        print!("{}", shell_specific_output);
+        print!("{:?}", shell_specific_output);
     };
 }
 
@@ -200,6 +199,7 @@ fn exit_with_file_error(kind: ErrorKind, file_name: &str, file_option_set: bool)
     exit(exit_code);
 }
 
+// Deprecated
 fn get_specific_shell<'a>(
     shell: &Shell,
     file_data: &'a ConfigFile,
@@ -212,8 +212,8 @@ fn get_specific_shell<'a>(
     //! ...
     //! ```
     //! This function's output is meant to be passed into `to_shell_source(...)`.
-
-    let field_name = shell.to_possible_value()?.get_name();
+    let binding = shell.to_possible_value()?;
+    let field_name = binding.get_name();
     file_data.shell.as_ref()?.get(field_name)
 }
 
